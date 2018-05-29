@@ -12,5 +12,10 @@ package ileinterdite.jeu;
 public class Explorateur extends Aventurier {
 
 	private Couleur couleur = Couleur.VERT;
+        
+        Explorateur() {
+            super(Role.EXPLORATEUR);
+        }
+        
 
 }
