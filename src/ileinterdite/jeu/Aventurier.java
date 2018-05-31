@@ -28,12 +28,6 @@ public abstract class Aventurier {
         return this.role;
     }
     
-
-    //public Aventurier chercherAventurier(int NumJ) {
-    //    // TODO - implement Aventurier.chercherAventurier
-    //    throw new UnsupportedOperationException();
-    //}
-    
     // Renvoi un entier correspondant au nombre de carte du joueur
     public int chercherNombreCartes() {
         return mesCartes.size();
