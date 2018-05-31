@@ -62,8 +62,8 @@ public abstract class Aventurier {
         return carteT;
     }
     
-    public void seDeplacer(int lig, int col) {
-        
+    public void setPosition(Position position) {
+        this.pos = position;
     }
     
     //public boolean verifDeplacement(int lig, int col, int lig2, int col2, Etat etat) {

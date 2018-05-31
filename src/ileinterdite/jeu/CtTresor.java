@@ -8,5 +8,13 @@ package ileinterdite.jeu;
 public class CtTresor extends Carte_Tresor {
 
 	private Piece_Tresor type;
+        
+        public CtTresor(){}
+        
+        
+        @Override
+        public String getType(){
+            return type.toString();
+        }
 
 }

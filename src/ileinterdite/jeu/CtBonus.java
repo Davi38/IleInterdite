@@ -9,8 +9,15 @@ package ileinterdite.jeu;
  *
  * @author giacintf
  */
-public class Bonus extends Carte_Tresor {
+public class CtBonus extends Carte_Tresor {
 
 	private TypeBonus typeBonus;
-
+        
+        public CtBonus(){
+        }
+        
+        @Override
+        public String getType(){
+            return typeBonus.toString() ;
+        }
 }

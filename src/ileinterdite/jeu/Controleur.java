@@ -16,11 +16,11 @@ import java.util.HashMap;
  */
 public class Controleur {
         private NiveauEau NiveauEau;
-	private Collection<Trésor> trésors;
-	private Collection<Carte_Innondation> Pioche;
+	private Collection<Tresor> tresors;
+	private Collection<Carte_Inondation> Pioche;
 	private Grille grille;
         private HashMap<Aventurier,Integer> joueurs;
-	private Collection<Carte_Innondation> DefausseI;
+	private Collection<Carte_Inondation> DefausseI;
 	private Collection<Carte_Tresor> defausseT;
 	private Collection<Carte_Tresor> piocheT;
 	private VueAventurier vueAventurier;
