@@ -16,6 +16,16 @@ public class Explorateur extends Aventurier {
         Explorateur() {
             super(Role.EXPLORATEUR);
         }
+
+    @Override
+    public boolean verifDeplacement(Position pos2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean verifAssechement(Position pos2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
         
 
 }

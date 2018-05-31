@@ -13,4 +13,18 @@ public class Plongeur extends Aventurier {
 
 	private Couleur couleur = Couleur.VIOLET;
 
+    public Plongeur() {
+        super(Role.PLONGEUR);
+    }
+
+    @Override
+    public boolean verifDeplacement(Position pos2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean verifAssechement(Position pos2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
