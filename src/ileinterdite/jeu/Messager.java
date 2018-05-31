@@ -21,7 +21,7 @@ public class Messager extends Aventurier {
         
     public boolean verifDeplacement(Position pos2) {
         Position posj = getPosition();
-        if((abs(posj.col-pos2.col)==1 && (posj.lig-pos2.lig)==0)^((posj.col-pos2.col)==0 && abs(posj.lig-pos2.lig)==1)){
+        if(abs(posj.col-pos2.col)==1 ^ abs(posj.lig-pos2.lig)== 1){
            return true; 
         }
         return false;
@@ -29,7 +29,7 @@ public class Messager extends Aventurier {
         
     public boolean verifAssechement(Position pos2) {
         Position posj = getPosition();
-        if((abs(posj.col-pos2.col)==1 && (posj.lig-pos2.lig)==0)^((posj.col-pos2.col)==0 && abs(posj.lig-pos2.lig)==1)){
+        if(abs(posj.col-pos2.col)==1 ^ abs(posj.lig-pos2.lig)== 1){
            return true; 
         }
         return false;
