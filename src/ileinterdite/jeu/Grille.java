@@ -35,6 +35,10 @@ public class Grille {
                     }
                 }
             }
+        
+        public Tuile getTuile(Piece piece) {
+            
+        }
             
 
 	public Tuile getTuile(Position pos) {

@@ -19,10 +19,10 @@ import java.util.HashMap;
 public class Controleur {
         private NiveauEau niveaueau;
 	private ArrayList<Tresor> tresors;
-	private ArrayList<Carte_Inondation> pioche;
+	private ArrayList<Carte_Inondation> piocheI;
 	private Grille grille;
         private HashMap<Aventurier,String> joueurs;
-	private ArrayList<Carte_Inondation> DefausseI;
+	private ArrayList<Carte_Inondation> defausseI;
 	private ArrayList<Carte_Tresor> defausseT;
 	private ArrayList<Carte_Tresor> piocheT;
 	private VueAventurier vueAventurier;
@@ -38,9 +38,9 @@ public class Controleur {
             }
             
             for (Piece_liste pc : Piece_liste.values()){
-                pioche.add(new Carte_Inondation(pc));
+                piocheI.add(new Carte_Inondation(pc));
             }
-            Collections.shuffle(pioche);
+            Collections.shuffle(piocheI);
             
             grille = new Grille();
             
@@ -71,9 +71,9 @@ public class Controleur {
 		throw new UnsupportedOperationException();
 	}
 
-	public void getGrille() {
+	public Grille getGrille() {
 		// TODO - implement Controleur.getGrille
-		throw new UnsupportedOperationException();
+		return this.grille;
 	}
 
 	public void traiterClicTuile() {
@@ -93,7 +93,10 @@ public class Controleur {
 
 	public void piocherCarteI() {
 		// TODO - implement Controleur.piocherCarteI
-		throw new UnsupportedOperationException();
+		piocheI.get(0).getPiece();
+                // faire quelque chose
+                defausseI.add(piocheI.get(0));
+                piocheI.remove(0);
 	}
 
 	/**
