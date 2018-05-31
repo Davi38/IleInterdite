@@ -96,17 +96,20 @@ public class Controleur {
         throw new UnsupportedOperationException();
     }
 
-    public void piocherCarteT() {
-        // TODO - implement Controleur.piocherCarteT
-        throw new UnsupportedOperationException();
+    public void piocherCarteT(Aventurier aventurier) {
+        aventurier.addCarte(piocheT.get(0));    // on ajoute la premiere carte de la pioche a l'aventurier
+        defausseT.add(piocheT.get(0));          // on ajoute a la defausse la premiere carte de la pioche
+        piocheT.remove(0);                      // on supprime la premiere carte de la pioche
     }
 
     public void piocherCarteI() {
-        // TODO - implement Controleur.piocherCarteI
-        piocheI.get(0).getPiece();
-        // faire quelque chose
-        defausseI.add(piocheI.get(0));
-        piocheI.remove(0);
+        Piece_liste piecepiochee = piocheI.get(0).getPiece();   // on recupere la premiere carte de la pioche (index 0)
+        Tuile tuile = getGrille().getTuile(piecepiochee);       // on recupere la tuile associé à la pièce
+        
+        tuile.innonder();   // on inonde cette carte
+        
+        defausseI.add(piocheI.get(0));  // on ajoute a la defausse la premiere carte de la pioche
+        piocheI.remove(0);  // on supprime de la pioche la premiere carte
     }
 
     /**

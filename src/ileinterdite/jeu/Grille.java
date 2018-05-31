@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  *
@@ -42,7 +43,27 @@ public class Grille {
     }
 
     public Tuile getTuile(Piece piece) {
-
+        Iterator i = tuiles.keySet().iterator();
+        while (i.hasNext()) {
+            Tuile tuile = (Tuile) i.next();
+            if (tuile.getPiece() == piece.name()) {
+                return tuile;
+            }
+        }
+        Tuile tuilenulle = new Tuile_null();
+        return tuilenulle;
+    }
+    
+    public Tuile getTuile(Piece_liste piece) {
+        Iterator i = tuiles.keySet().iterator();
+        while (i.hasNext()) {
+            Tuile tuile = (Tuile) i.next();
+            if (tuile.getPiece() == piece.name()) {
+                return tuile;
+            }
+        }
+        Tuile tuilenulle = new Tuile_null();
+        return tuilenulle;
     }
 
     public Tuile getTuile(Position pos) {

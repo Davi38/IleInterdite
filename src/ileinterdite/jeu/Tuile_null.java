@@ -9,12 +9,13 @@ package ileinterdite.jeu;
  *
  * @author giacintf
  */
-public class Tuile_null extends Tuile{
-        Tuile_null(){
-        super();
-        }
-    
-        public String getPiece(){
-            return "null";
-        }
+public class Tuile_null extends Tuile {
+
+    Tuile_null() {
+        super(Piece_liste.Null);
+    }
+
+    public String getPiece() {
+        return "null";
+    }
 }
