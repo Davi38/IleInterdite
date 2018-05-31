@@ -46,7 +46,7 @@ public class VueAventurier  {
         this.window.add(mainPanel);
 
         mainPanel.setBackground(new Color(230, 230, 230));
-        mainPanel.setBorder(BorderFactory.createLineBorder(Color.red, 2)) ;
+        mainPanel.setBorder(BorderFactory.createLineBorder() ;
 
         // =================================================================================
         // NORD : le titre = nom de l'aventurier sur la couleurActive du pion

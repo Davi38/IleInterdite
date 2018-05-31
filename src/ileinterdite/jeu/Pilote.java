@@ -17,8 +17,8 @@ public class Pilote extends Aventurier {
 	private Color couleur = Color.BLUE;
         private boolean pouvoirdispo;
         
-        Pilote(){
-            super(Role.PILOTE);
+        Pilote(Position pos){
+            super(Role.PILOTE,pos);
         }
 
 

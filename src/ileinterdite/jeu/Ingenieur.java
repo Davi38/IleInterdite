@@ -16,8 +16,8 @@ public class Ingenieur extends Aventurier {
 
 	private Color couleur = Color.ORANGE;
 
-    Ingenieur(Role role) {
-        super(role.INGENIEUR);
+    Ingenieur(Position pos) {
+        super(Role.INGENIEUR,pos);
     }
         
     public boolean verifDeplacement(Position pos2) {

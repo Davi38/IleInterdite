@@ -17,8 +17,8 @@ public class Messager extends Aventurier {
 
         private Color couleur = Color.DARK_GRAY;
             
-    Messager(Role role) {
-        super(role.MESSAGER);
+    Messager(Position pos) {
+        super(Role.MESSAGER,pos);
     }
         
     public boolean verifDeplacement(Position pos2) {

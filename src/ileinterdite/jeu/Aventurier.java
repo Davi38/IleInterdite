@@ -15,12 +15,14 @@ public abstract class Aventurier {
 
     private Position pos;
     private ArrayList<Carte_Tresor> mesCartes;
-    private int numJoueur;
+    private String nomJoueur;
     
     private Role role;
     
-    Aventurier(Role role) {
+    Aventurier(Role role,Position pos) {
         this.role = role;
+        ArrayList<Carte_Tresor> mesCartes = new ArrayList<Carte_Tresor>();
+        this.pos = pos;
     }
     
     // Retourne le role de l'aventurier
