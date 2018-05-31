@@ -5,13 +5,15 @@
  */
 package ileinterdite.jeu;
 
+import java.awt.Color;
+
 /**
  *
  * @author giacintf
  */
 public class Navigateur extends Aventurier {
 
-	private Couleur couleur = Couleur.JAUNE;
+	private Color couleur = Color.YELLOW;
 
     public Navigateur() {
         super(Role.NAVIGATEUR);
@@ -25,6 +27,10 @@ public class Navigateur extends Aventurier {
     @Override
     public boolean verifAssechement(Position pos2) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public Color getColor(){
+        return couleur;
     }
 
 }

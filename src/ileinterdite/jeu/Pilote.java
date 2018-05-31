@@ -5,6 +5,7 @@
  */
 package ileinterdite.jeu;
 
+import java.awt.Color;
 import static java.lang.Math.abs;
 
 /**
@@ -13,7 +14,7 @@ import static java.lang.Math.abs;
  */
 public class Pilote extends Aventurier {
 
-	private Couleur couleur = Couleur.BLEU;
+	private Color couleur = Color.BLUE;
         private boolean pouvoirdispo;
         
         Pilote(){
@@ -41,6 +42,10 @@ public class Pilote extends Aventurier {
            return true; 
         }
         return false;
+    }
+    
+    public Color getColor(){
+        return couleur;
     }
 
 }

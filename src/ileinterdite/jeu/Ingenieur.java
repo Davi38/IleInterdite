@@ -5,6 +5,7 @@
  */
 package ileinterdite.jeu;
 
+import java.awt.Color;
 import static java.lang.Math.abs;
 
 /**
@@ -13,7 +14,7 @@ import static java.lang.Math.abs;
  */
 public class Ingenieur extends Aventurier {
 
-	private Couleur couleur = Couleur.ORANGE;
+	private Color couleur = Color.ORANGE;
 
     Ingenieur(Role role) {
         super(role.INGENIEUR);
@@ -33,6 +34,9 @@ public class Ingenieur extends Aventurier {
            return true; 
         }
         return false;
+    }
+    public Color getColor(){
+        return couleur;
     }
 
 }

@@ -5,6 +5,7 @@
  */
 package ileinterdite.jeu;
 
+import java.awt.Color;
 import static java.lang.Math.abs;
 
 /**
@@ -13,8 +14,9 @@ import static java.lang.Math.abs;
  */
 public class Messager extends Aventurier {
 
-	private Couleur couleur = Couleur.ORANGE;
 
+        private Color couleur = Color.DARK_GRAY;
+            
     Messager(Role role) {
         super(role.MESSAGER);
     }
@@ -33,6 +35,10 @@ public class Messager extends Aventurier {
            return true; 
         }
         return false;
+    }
+    
+    public Color getColor(){
+        return couleur;
     }
 
 }

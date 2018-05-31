@@ -5,6 +5,7 @@
  */
 package ileinterdite.jeu;
 
+import java.awt.Color;
 import static java.lang.Math.abs;
 
 /**
@@ -13,7 +14,7 @@ import static java.lang.Math.abs;
  */
 public class Explorateur extends Aventurier {
 
-    private Couleur couleur = Couleur.VERT;
+    private Color couleur = Color.GREEN;
 
     Explorateur() {
         super(Role.EXPLORATEUR);
@@ -27,6 +28,10 @@ public class Explorateur extends Aventurier {
     
     public boolean verifAssechement(Position pos2) {
         return verifDeplacement(pos2);
+    }
+    
+    public Color getColor(){
+        return couleur;
     }
 
 }
