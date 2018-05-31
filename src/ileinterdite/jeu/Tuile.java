@@ -15,11 +15,13 @@ public abstract class Tuile {
     
         private ArrayList<Aventurier> aventuriers;
 	private Etat etat;
+        private Piece_liste piece;
         
         
-        Tuile(){
-            etat = etat.ASSECHEE;
-            aventuriers = new ArrayList<Aventurier>();
+        Tuile(Piece_liste piece){
+            this.etat = etat.ASSECHEE;
+            this.aventuriers = new ArrayList<Aventurier>();
+            this.piece = piece;
         }
         
 	public void assecher() {
