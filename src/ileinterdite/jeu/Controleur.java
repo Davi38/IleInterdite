@@ -7,7 +7,9 @@ package ileinterdite.jeu;
 
 import ileinterdite.vues.Vue;
 import ileinterdite.vues.VueAventurier;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -15,22 +17,37 @@ import java.util.HashMap;
  * @author giacintf
  */
 public class Controleur {
-        private NiveauEau NiveauEau;
-	private Collection<Tresor> tresors;
-	private Collection<Carte_Inondation> Pioche;
+        private NiveauEau niveaueau;
+	private ArrayList<Tresor> tresors;
+	private ArrayList<Carte_Inondation> pioche;
 	private Grille grille;
-        private HashMap<Aventurier,Integer> joueurs;
-	private Collection<Carte_Inondation> DefausseI;
-	private Collection<Carte_Tresor> defausseT;
-	private Collection<Carte_Tresor> piocheT;
+        private HashMap<Aventurier,String> joueurs;
+	private ArrayList<Carte_Inondation> DefausseI;
+	private ArrayList<Carte_Tresor> defausseT;
+	private ArrayList<Carte_Tresor> piocheT;
 	private VueAventurier vueAventurier;
 	private Vue vue;
 	private Controleur VerifierDeplacementPossible;
 
-	/**
-	 * 
-	 * @param NomBouton
-	 */
+        
+        Controleur(){
+            
+            
+            for (TypeTrésor tres : TypeTrésor.values()){
+                tresors.add(new Tresor(tres));
+            }
+            
+            for (Piece_liste pc : Piece_liste.values()){
+                pioche.add(new Carte_Inondation(pc));
+            }
+            Collections.shuffle(pioche);
+            
+            grille = new Grille();
+            
+                    
+        }
+        
+        
 	public void traiterMessage(Message NomBouton) {
 		// TODO - implement Controleur.traiterMessage
 		throw new UnsupportedOperationException();

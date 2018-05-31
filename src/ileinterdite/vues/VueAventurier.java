@@ -36,7 +36,7 @@ public class VueAventurier  {
    
    
     
-    public VueAventurier(String nomJoueur, Role role){
+    public VueAventurier(String nomJoueur, Role role, Color coul){
 
         this.window = new JFrame();
         window.setSize(350, 200);
@@ -46,13 +46,13 @@ public class VueAventurier  {
         this.window.add(mainPanel);
 
         mainPanel.setBackground(new Color(230, 230, 230));
-        mainPanel.setBorder(BorderFactory.createLineBorder() ;
+        mainPanel.setBorder(BorderFactory.createLineBorder(coul)) ;
 
         // =================================================================================
         // NORD : le titre = nom de l'aventurier sur la couleurActive du pion
 
         this.panelAventurier = new JPanel();
-        panelAventurier.setBackground(Color.red);
+        panelAventurier.setBackground(coul);
         panelAventurier.add(new JLabel(role.toString(),SwingConstants.CENTER ));
         mainPanel.add(panelAventurier, BorderLayout.NORTH);
    
@@ -60,7 +60,7 @@ public class VueAventurier  {
         // CENTRE : 1 ligne pour position courante
         this.panelCentre = new JPanel(new GridLayout(2, 1));
         this.panelCentre.setOpaque(false);
-        this.panelCentre.setBorder(new MatteBorder(0, 0, 2, 0, Color.red));
+        this.panelCentre.setBorder(new MatteBorder(0, 0, 2, 0, coul));
         mainPanel.add(this.panelCentre, BorderLayout.CENTER);
         
         panelCentre.add(new JLabel ("Position", SwingConstants.CENTER));
@@ -114,7 +114,7 @@ public class VueAventurier  {
  
      public static void main(String [] args) {
         // Instanciation de la fenêtre 
-        VueAventurier vueAventurier = new VueAventurier("Manon", Role.EXPLORATEUR );
+        VueAventurier vueAventurier = new VueAventurier("Manon", Role.EXPLORATEUR,Color.GREEN);
     }
 }
 
