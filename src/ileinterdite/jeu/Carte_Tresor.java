@@ -15,7 +15,7 @@ public abstract class Carte_Tresor {
 	 */
 	public void setAventurier(Aventurier aventurier) {
 		// TODO - implement Carte_Tresor.setAventurier
-		throw new UnsupportedOperationException();
+		aventurier.addCarte(this);
 	}
 
 	public abstract String getType();

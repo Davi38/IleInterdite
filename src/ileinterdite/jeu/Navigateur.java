@@ -6,6 +6,7 @@
 package ileinterdite.jeu;
 
 import java.awt.Color;
+import static java.lang.Math.abs;
 
 /**
  *
@@ -21,12 +22,16 @@ public class Navigateur extends Aventurier {
 
     @Override
     public boolean verifDeplacement(Position pos2) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Position posj = getPosition();
+        if(abs(posj.col-pos2.col)<=2 ^ abs(posj.lig-pos2.lig)<= 2){
+           return true; 
+        }
+        return false;
     }
 
     @Override
     public boolean verifAssechement(Position pos2) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return verifDeplacement(pos2);
     }
     
     public Color getColor(){

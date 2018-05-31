@@ -28,7 +28,7 @@ public class Pilote extends Aventurier {
         if (pouvoirdispo){
             pouvoirdispo = false;
             return true;
-        }else if((abs(posj.col-pos2.col)==1 && (posj.lig-pos2.lig)==0)^((posj.col-pos2.col)==0 && abs(posj.lig-pos2.lig)==1)){
+        }else if(abs(posj.col-pos2.col)<=1 ^ abs(posj.lig-pos2.lig)<= 1){
            return true; 
         }
         return false;
