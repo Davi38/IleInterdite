@@ -24,5 +24,9 @@ public class Explorateur extends Aventurier {
         
         return abs(posj.lig - pos2.lig) < 2 && abs(posj.col - pos2.col) < 2;
     }
+    
+    public boolean verifAssechement(Position pos2) {
+        return verifDeplacement(pos2);
+    }
 
 }
