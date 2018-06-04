@@ -90,5 +90,9 @@ public class Grille {
         Position position = new Position(col, lig);
         return tuiles.get(position);
     }
+    
+    public HashMap<Position, Tuile> getGrille() {
+        return tuiles;
+    }
 
 }

@@ -5,10 +5,13 @@
  */
 package ileinterdite.vues;
 
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 /**
  *
  * @author giacintf
  */
-public class Vue {
+public class Vue extends JPanel {
     
 }

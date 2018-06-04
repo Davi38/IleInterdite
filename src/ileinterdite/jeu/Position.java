@@ -9,7 +9,7 @@ package ileinterdite.jeu;
  *
  * @author giacintf
  */
-class Position {
+public class Position {
     int col;
     int lig;
     public Position(int col , int lig){
