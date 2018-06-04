@@ -29,26 +29,20 @@ import javax.swing.SwingConstants;
  */
 public class JeuVue extends JPanel {
 
-    private final JFrame window;
 
     private HashMap<JButton, Position> plateau;
     
     JPanel zoneJeu = new JPanel(new GridLayout(6, 6));
 
     public JeuVue(Grille grille) {
-        window = new JFrame();
-        window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        // Définit la taille de la fenêtre en pixels
-        window.setSize(800, 700);
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        window.setLocation(dim.width / 2 - window.getSize().width / 2, dim.height / 2 - window.getSize().height / 2);
+
 
         JPanel mainPanel = new JPanel(new BorderLayout());
-        window.add(mainPanel);
+        this.add(mainPanel);
 
         // ####################################################################################
         // grille au nord
-        window.add(zoneJeu, BorderLayout.CENTER);
+        this.add(zoneJeu, BorderLayout.CENTER);
         
         int i = 0;
         for (Tuile tuile : grille.getGrille().values()) {
@@ -56,12 +50,6 @@ public class JeuVue extends JPanel {
                 zoneJeu.add(new JLabel());
             } else {
                 JButton bouton = new JButton(tuile.getPiece());
-                bouton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        return grille.getPosition(tuile);
-                    }
-                } );
                 if (tuile.getEtat() == Etat.INNONDEE) {
                     bouton.setBackground(Color.BLUE);
                 } else if (tuile.getEtat() == Etat.NOYEE) {
@@ -75,7 +63,7 @@ public class JeuVue extends JPanel {
         // ####################################################################################
         // les cartes au sud
         JPanel cartes = new JPanel(new GridLayout(1, 6));
-        window.add(cartes, BorderLayout.SOUTH);
+        this.add(cartes, BorderLayout.SOUTH);
 
         cartes.add(new JButton("Ici une carte"));
         cartes.add(new JButton("Ici une carte"));
@@ -86,7 +74,7 @@ public class JeuVue extends JPanel {
         // ####################################################################################
         // les actions a l'est
         JPanel actions = new JPanel(new GridLayout(5, 1));
-        window.add(actions, BorderLayout.EAST);
+        this.add(actions, BorderLayout.EAST);
 
         actions.add(new JButton("Assécher"));
         actions.add(new JButton("Se déplacer"));
@@ -98,9 +86,7 @@ public class JeuVue extends JPanel {
     public void mettreAJourZoneDeJeu() {
     }
 
-    public void afficher() {
-        this.window.setVisible(true);
-    }
+
 
     //public static void main(String[] args) {
     //    JeuVue jeuVue = new JeuVue();

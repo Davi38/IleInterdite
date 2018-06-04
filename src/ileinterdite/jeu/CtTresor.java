@@ -7,9 +7,11 @@ package ileinterdite.jeu;
 
 public class CtTresor extends Carte_Tresor {
 
-	private Piece_Tresor type;
+	private TypeTrésor type;
         
-        public CtTresor(){}
+        public CtTresor(TypeTrésor type){
+            this.type = type;
+        }
         
         
         @Override

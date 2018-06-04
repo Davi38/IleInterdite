@@ -27,8 +27,13 @@ public class Ile extends Tuile{
     public String getPiece() {
         return piece.toString();
     }
+    
+    public ArrayList<Aventurier> getAventuriers(){
+        return aventuriers;
+    }
        
 
        
        
 }
+

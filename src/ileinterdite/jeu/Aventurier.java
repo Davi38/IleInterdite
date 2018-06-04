@@ -16,12 +16,13 @@ public abstract class Aventurier {
     private Position pos;
     private ArrayList<Carte_Tresor> mesCartes;
     private String nomJoueur;
+    private int nbAct;
     
     private Role role;
     
     Aventurier(Role role,Position pos) {
         this.role = role;
-        ArrayList<Carte_Tresor> mesCartes = new ArrayList<Carte_Tresor>();
+        mesCartes = new ArrayList<Carte_Tresor>();
         this.pos = pos;
     }
     
@@ -77,4 +78,12 @@ public abstract class Aventurier {
     
     public abstract boolean verifAssechement(Position pos2);
 
+    public int getNbAct(){
+        return nbAct;
+    }
+    
+    public void setNbAct(int nbAct){
+        this.nbAct = nbAct;
+    }
 }
+

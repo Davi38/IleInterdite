@@ -13,7 +13,8 @@ public class CtBonus extends Carte_Tresor {
 
 	private TypeBonus typeBonus;
         
-        public CtBonus(){
+        public CtBonus(TypeBonus typeBonus){
+            this.typeBonus = typeBonus;
         }
         
         @Override

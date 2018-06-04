@@ -16,4 +16,8 @@ public class Position {
         this.col = col;
         this.lig = lig;
     }
+    
+    public String toString(){
+       return col + "-" + lig; 
+    }
 }

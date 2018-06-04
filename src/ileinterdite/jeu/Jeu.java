@@ -11,13 +11,10 @@ package ileinterdite.jeu;
  */
 public class Jeu {
 
-    Controleur controleur;
+
     
     public static void main(String[] args) {
-        //choixJ();
-        
-        //initJeu();
-        //Jouer();
+        Controleur controleur = new Controleur();
 
     }
     

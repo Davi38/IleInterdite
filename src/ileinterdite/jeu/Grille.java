@@ -19,56 +19,32 @@ public class Grille {
 
     private HashMap<Position, Tuile> tuiles;
 
-    Grille() {
+    Grille(){
         ArrayList<Piece_liste> listepiece = new ArrayList<Piece_liste>();
         for (Piece_liste npiece : Piece_liste.values()) {
             listepiece.add(npiece);
         }
         Collections.shuffle(listepiece);
+        tuiles = new HashMap<Position, Tuile>() ;
+        
 
-        //HashMap<Position, Tuile> tuiles = new HashMap<Position, Tuile>();
         for (int i = 1; i < 7; i++) {
             for (int j = 1; i < 7; i++) {
-                Position pos = new Position(i, j);
-                if ((i == 1 && (j == 1 || j == 2 || j == 5 || j == 6)) || (i == 2 && (j == 1 || j == 6)) || (i == 5 && (j == 1 || j == 2 || j == 5 || j == 6)) || (i == 6 && (j == 1 || j == 6))) {
-                    Tuile_null tuileNulle = new Tuile_null();
-                    tuiles.put(pos, tuileNulle);
-                } else {
-                    Tuile tuile = new Ile(listepiece.get(i * j));
-                    tuiles.put(pos, tuile);
-                }
+                Position pos = new Position(i,j);
+                  if ( ((i==1||i==6)&& (j==1 ||j==2||j==5 || j==6))||((i==2||i==5)&&(j==1 || j==6))){
+                      Tuile_null tuile = new Tuile_null();
+                      tuiles.put(pos, tuile);
+                }else{
+                      Ile tuile = new Ile(listepiece.get(0));
+                      listepiece.remove(0);
+                      tuiles.put(pos, tuile);
+                  }
 
             }
         }
     }
 
-    public Tuile getTuile(Piece piece) {
-        Iterator i = tuiles.keySet().iterator();
-        while (i.hasNext()) {
-            Tuile tuile = (Tuile) i.next();
-            if (tuile.getPiece() == piece.name()) {
-                return tuile;
-            }
-        }
-        Tuile tuilenulle = new Tuile_null();
-        return tuilenulle;
-    }
     
-    public Tuile getTuile(Piece_liste piece) {
-        Iterator i = tuiles.keySet().iterator();
-        while (i.hasNext()) {
-            Tuile tuile = (Tuile) i.next();
-            if (tuile.getPiece() == piece.name()) {
-                return tuile;
-            }
-        }
-        Tuile tuilenulle = new Tuile_null();
-        return tuilenulle;
-    }
-
-    public Tuile getTuile(Position pos) {
-        return tuiles.get(pos);
-    }
 
     /**
      *
@@ -86,13 +62,20 @@ public class Grille {
         return null;
     }
 
-    public Tuile getTuile(int lig, int col) {
-        Position position = new Position(col, lig);
-        return tuiles.get(position);
-    }
     
     public HashMap<Position, Tuile> getGrille() {
         return tuiles;
+    }
+
+   public Tuile getTuilePL(Piece_liste pc) {
+        
+        for (Tuile t : tuiles.values()){
+            System.out.println("1");
+            if(t.getPiece().equals(pc)){
+                return t;
+            }
+        }
+        return null;
     }
 
 }
