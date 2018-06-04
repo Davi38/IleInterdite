@@ -12,7 +12,7 @@ package ileinterdite.jeu;
 public class Tuile_null extends Tuile {
 
     Tuile_null() {
-        super(Piece_liste.Null);
+        super(null);
     }
 
     public String getPiece() {

@@ -30,36 +30,39 @@ import javax.swing.SwingConstants;
 public class JeuVue extends JPanel {
 
 
-    private HashMap<JButton, Position> plateau;
     
-    JPanel zoneJeu = new JPanel(new GridLayout(6, 6));
+    JPanel zoneJeu ;
 
     public JeuVue(Grille grille) {
 
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         this.add(mainPanel);
+        zoneJeu = new JPanel(new GridLayout(6, 6));
 
         // ####################################################################################
         // grille au nord
-        this.add(zoneJeu, BorderLayout.CENTER);
         
-        int i = 0;
-        for (Tuile tuile : grille.getGrille().values()) {
-            if (tuile instanceof Tuile_null) {
+        for (int i = 1; i < 7; i++) {
+            for (int j = 1; j < 7; j++) {
+                Position pos = new Position(i,j);
+                Tuile t = grille.getTuileP(pos);
+            if (t instanceof Tuile_null){
                 zoneJeu.add(new JLabel());
             } else {
-                JButton bouton = new JButton(tuile.getPiece());
-                if (tuile.getEtat() == Etat.INNONDEE) {
+                JButton bouton = new JButton(t.getPiece());
+                if (t.getEtat() == Etat.INNONDEE) {
                     bouton.setBackground(Color.BLUE);
-                } else if (tuile.getEtat() == Etat.NOYEE) {
+                }else if (t.getEtat() == Etat.NOYEE) {
                     bouton.setBackground(Color.BLACK);
+                }else{
+                     bouton.setBackground(Color.ORANGE);
                 }
-                plateau.put(bouton, new Position(i/6, i%6));
                 zoneJeu.add(bouton);
             }
-            i += 1;
-        }
+        }}
+        
+        this.add(zoneJeu, BorderLayout.CENTER);
         // ####################################################################################
         // les cartes au sud
         JPanel cartes = new JPanel(new GridLayout(1, 6));
@@ -83,8 +86,8 @@ public class JeuVue extends JPanel {
         actions.add(new JButton("Finir son tour"));
     }
     
-    public void mettreAJourZoneDeJeu() {
-    }
+    //public void mettreAJourZoneDeJeu() {
+    //}
 
 
 

@@ -49,7 +49,7 @@ public class Controleur {
 
         for (TypeTrésor tres : TypeTrésor.values()) {
             tresors.add(new Tresor(tres));
-            
+
             for (int i = 1; i < 6; i++) {
                 CtTresor carteT = new CtTresor(tres);
                 piocheT.add(carteT);
@@ -57,7 +57,7 @@ public class Controleur {
         }
         for (TypeBonus bonus : TypeBonus.values()) {
             int i = 0;
-            
+
             if (bonus == TypeBonus.SABLE) {
                 i = 2;
             } else {
@@ -77,7 +77,6 @@ public class Controleur {
         Collections.shuffle(piocheI);
 
         grille = new Grille();
-
 
         Scanner sc = new Scanner(System.in);
         int i = 0;
@@ -126,7 +125,7 @@ public class Controleur {
                     choixJoueur = false;
                 }
             }
-            
+
         }
         for (Aventurier adv : joueurs.values()) {
             for (int j = 0; j < 2; j++) {
@@ -139,16 +138,12 @@ public class Controleur {
         for (int j = 0; j < 6; j++) {
             Carte_Inondation ctI = piocheI.get(0);
             Piece_liste pc = ctI.getPiece();
-
             Tuile tu = grille.getTuilePL(pc);
-            
-            System.out.println(tu.getPiece());
-            
             tu.assecher();
             piocheI.remove(0);
             defausseI.add(ctI);
         }
-        
+
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         // Définit la taille de la fenêtre en pixels
@@ -156,13 +151,14 @@ public class Controleur {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         window.setLocation(dim.width / 2 - window.getSize().width / 2, dim.height / 2 - window.getSize().height / 2);
         window.add(new JeuVue(grille));
+        window.setVisible(true);
         Jeu();
 
     }
 
     private void Jeu() {
-        while (!finJeu){
-            for(String nomJ : joueurs.keySet()){
+        while (!finJeu) {
+            for (String nomJ : joueurs.keySet()) {
                 advAct = joueurs.get(nomJ);
                 nouveauTour(nomJ);
             }
@@ -172,34 +168,34 @@ public class Controleur {
     public void nouveauTour(String nomJ) {
         finTour = false;
         advAct.setNbAct(0);
-        while(!finTour && advAct.getNbAct()<3){
-            
+        while (!finTour && advAct.getNbAct() < 3) {
+
         }
-        for (int i=0; i<2; i++){
-            if (piocheT.isEmpty()){
-                piocheT=defausseT;
+        for (int i = 0; i < 2; i++) {
+            if (piocheT.isEmpty()) {
+                piocheT = defausseT;
                 defausseT.clear();
                 Collections.shuffle(piocheT);
             }
             Carte_Tresor ct = piocheT.get(0);
             advAct.addCarte(ct);
-            while(advAct.getCarteTresor().size()>5){
-                }
+            while (advAct.getCarteTresor().size() > 5) {
             }
-        for(int i=0; i < niveaueau.getNbCarte(); i++){
-            if (piocheI.isEmpty()){
-                piocheI=defausseI;
+        }
+        for (int i = 0; i < niveaueau.getNbCarte(); i++) {
+            if (piocheI.isEmpty()) {
+                piocheI = defausseI;
                 defausseI.clear();
                 Collections.shuffle(piocheI);
             }
             Carte_Inondation ctI = piocheI.get(0);
             Ile tl = (Ile) grille.getTuilePL(ctI.getPiece());
             tl.assecher();
-            if(tl.getAventuriers().size()==0 || (tl.getPiece().equals(Piece.Heliport) && tl.getEtat().equals(Etat.NOYEE))){
+            if (tl.getAventuriers().size() == 0 || (tl.getPiece().equals(Piece.Heliport) && tl.getEtat().equals(Etat.NOYEE))) {
                 finJeu = false;
             }
         }
-        
+
     }
 
     public boolean roleDisponible(Role role) {
@@ -276,4 +272,3 @@ public class Controleur {
     }
 
 }
-
