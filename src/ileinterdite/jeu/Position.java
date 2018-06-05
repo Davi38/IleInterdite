@@ -20,4 +20,11 @@ public class Position {
     public String toString(){
        return col + "-" + lig; 
     }
+    public int getLig(){
+        return lig;
+    }
+    
+    public int getCol(){
+        return col;
+    }
 }

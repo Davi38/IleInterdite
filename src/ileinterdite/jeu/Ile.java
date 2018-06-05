@@ -19,7 +19,7 @@ public class Ile extends Tuile{
     Ile(Piece_liste piece){
         super(piece);
         this.piece = piece;
-        ArrayList<Aventurier> aventuriers = new ArrayList<Aventurier>();
+        aventuriers = new ArrayList<Aventurier>();
         
     }
 

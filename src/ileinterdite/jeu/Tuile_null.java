@@ -12,10 +12,10 @@ package ileinterdite.jeu;
 public class Tuile_null extends Tuile {
 
     Tuile_null() {
-        super(null);
+        super(Piece_liste.NULL);
     }
 
     public String getPiece() {
-        return "null";
+        return "NULL";
     }
 }

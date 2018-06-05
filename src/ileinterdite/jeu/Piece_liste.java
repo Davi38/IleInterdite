@@ -33,6 +33,7 @@ public enum Piece_liste {
 	Le_temple_du_soleil,
 	Le_Temple_de_La_Lune,
 	Le_Palais_des_Marees,
-	Le_Jardin_des_Murmures
+	Le_Jardin_des_Murmures,
+        NULL
 
 }

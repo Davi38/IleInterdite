@@ -72,7 +72,9 @@ public class Controleur {
         Collections.shuffle(piocheT);
 
         for (Piece_liste pc : Piece_liste.values()) {
-            piocheI.add(new Carte_Inondation(pc));
+            if (pc != Piece_liste.NULL) {
+                piocheI.add(new Carte_Inondation(pc));
+            }
         }
         Collections.shuffle(piocheI);
 
@@ -100,28 +102,32 @@ public class Controleur {
                 Role r = Role.valueOf(unRole.toUpperCase());
                 if (roleDisponible(r)) {
                     Position posStart = getPositionDepart(r);
+                    Aventurier a = null;
                     switch (r) {
-
+                        
                         case EXPLORATEUR:
-                            joueurs.put(nomJ, new Explorateur(posStart));
+                            a = new Explorateur(posStart);
                             break;
                         case NAVIGATEUR:
-                            joueurs.put(nomJ, new Navigateur(posStart));
+                            a= new Navigateur(posStart);
                             break;
                         case PILOTE:
-                            joueurs.put(nomJ, new Pilote(posStart));
+                            a = new Pilote(posStart);
                             break;
                         case INGENIEUR:
-                            joueurs.put(nomJ, new Ingenieur(posStart));
+                            a = new Ingenieur(posStart);
                             break;
                         case MESSAGER:
-                            joueurs.put(nomJ, new Messager(posStart));
+                            a = new Messager(posStart);
                             break;
                         case PLONGEUR:
-                            joueurs.put(nomJ, new Plongeur(posStart));
+                            a = new Plongeur(posStart);
                             break;
 
                     }
+                    joueurs.put(nomJ, a);
+                    Tuile tuJ = grille.getTuileP(posStart);
+                    tuJ.addAventurier(a);
                     choixJoueur = false;
                 }
             }
@@ -139,7 +145,7 @@ public class Controleur {
             Carte_Inondation ctI = piocheI.get(0);
             Piece_liste pc = ctI.getPiece();
             Tuile tu = grille.getTuilePL(pc);
-            tu.assecher();
+            tu.innonder();
             piocheI.remove(0);
             defausseI.add(ctI);
         }
@@ -147,10 +153,10 @@ public class Controleur {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         // Définit la taille de la fenêtre en pixels
-        window.setSize(800, 700);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        window.setLocation(dim.width / 2 - window.getSize().width / 2, dim.height / 2 - window.getSize().height / 2);
-        window.add(new JeuVue(grille));
+        window.setSize(dim.height, dim.width);
+        vue = new JeuVue(grille);
+        window.add(vue);
         window.setVisible(true);
         Jeu();
 
@@ -159,15 +165,16 @@ public class Controleur {
     private void Jeu() {
         while (!finJeu) {
             for (String nomJ : joueurs.keySet()) {
-                advAct = joueurs.get(nomJ);
                 nouveauTour(nomJ);
             }
         }
     }
 
     public void nouveauTour(String nomJ) {
+        advAct = joueurs.get(nomJ);
         finTour = false;
         advAct.setNbAct(0);
+        vue.initJoueur(advAct);
         while (!finTour && advAct.getNbAct() < 3) {
 
         }

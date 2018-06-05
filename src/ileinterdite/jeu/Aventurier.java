@@ -9,6 +9,7 @@ package ileinterdite.jeu;
  *
  * @author giacintf
  */
+import java.awt.Color;
 import java.util.*;
 
 public abstract class Aventurier {
@@ -85,5 +86,6 @@ public abstract class Aventurier {
     public void setNbAct(int nbAct){
         this.nbAct = nbAct;
     }
+     public abstract Color getColor();
 }
 

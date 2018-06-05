@@ -23,7 +23,8 @@ public class Grille {
         
         ArrayList<Piece_liste> listepiece = new ArrayList<Piece_liste>();
         for (Piece_liste pc : Piece_liste.values()) {
-            listepiece.add(pc);
+            if(pc != Piece_liste.NULL){
+            listepiece.add(pc);}
         }
         
         Collections.shuffle(listepiece);
@@ -74,7 +75,7 @@ public class Grille {
    public Tuile getTuilePL(Piece_liste pc) {
         
         for (Tuile t : tuiles.values()){
-            if(t.getPiece().toString().equalsIgnoreCase(pc.toString())){
+            if(t.getPiece()==pc.toString()){
                 return t;
             }
         }
@@ -82,7 +83,12 @@ public class Grille {
     }
 
     public Tuile getTuileP(Position pos) {
-        return tuiles.get(tuiles.keySet().equals(pos));
+        for(Position p : tuiles.keySet()){
+            if(p.toString().equalsIgnoreCase(pos.toString())){
+                
+                return tuiles.get(p);
+        }}
+        return null;
     }
 
 }
