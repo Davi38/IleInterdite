@@ -53,32 +53,24 @@ public class JeuVue extends JPanel {
                 if (t.getPiece() == Piece_liste.NULL.toString()) {
                     zoneJeu.add(new JLabel());
                 } else {
-                    JButton bouton = new JButton(t.getPiece());
+                    JButton bouton = new JButton("");
                     bouton.setPreferredSize(new Dimension(150, 150));
-                    if (t.getEtat() == Etat.INNONDEE) {
-                        bouton.setBackground(Color.CYAN);
-
-                    } else if (t.getEtat() == Etat.NOYEE) {
-                        bouton.setBackground(Color.BLACK);
-                    } else {
-                        bouton.setBackground(Color.ORANGE);
-                    }
+                    bouton.setLayout(new GridLayout(5,1));
+                    JLabel nomB = new JLabel(t.getPiece());
+                    nomB.setPreferredSize(new Dimension(50,30));
+                    bouton.add(nomB);
+                    bouton.add(new JLabel());
+                    bouton.add(new JLabel());
+                    bouton.add(new JLabel());
+                    bouton.add(new JLabel());
                     boutPieces.put(pos, bouton);
                     zoneJeu.add(bouton);
-                    Ile ile = (Ile) t;
-                    /*ArrayList<Aventurier> advs = ile.getAventuriers();
-                    System.out.println(advs.size());
-                    if(!advs.isEmpty()){
-                        for(int numJ=0; numJ< advs.size();numJ++){
-                           g.setColor(advs.get(numJ).getColor());;
-                           g.fillOval(pos.getLig()*150 +35*numJ+10, pos.getCol()*150 +35*numJ+10, 30, 30);
-                        }
-                    }*/
-
                 }
             }
         }
-        
+        majGrille(grille);
+        System.out.println("Butoon");
+
         mainPanel.add(zoneJeu, BorderLayout.CENTER);
         // ####################################################################################
         // les cartes au sud
@@ -100,7 +92,6 @@ public class JeuVue extends JPanel {
         actions.add(new JButton("Donner une carte trésor"));
         actions.add(new JButton("Gagner un trésor"));
         actions.add(new JButton("Finir son tour"));
-        this.paintComponent(getGraphics(), grille);
     }
 
     public void initJoueur(Aventurier j) {
@@ -114,23 +105,36 @@ public class JeuVue extends JPanel {
 
     }
 
-    public void paintComponent(Graphics graph, Grille grille) {
-        for (int i = 1; i < 7; i++) {
-            for (int j = 1; j < 7; j++) {
-                Position pos = new Position(i, j);
-                Tuile t = grille.getTuileP(pos);
-                if (t.getPiece() != Piece_liste.NULL.toString()) {
-                    Ile ile = (Ile) t;
-                    ArrayList<Aventurier> listeJ = ile.getAventuriers();
-                    if (!listeJ.isEmpty()) {
-                       for(int numJ=0; numJ< listeJ.size();numJ++){
-                           graph.setColor(listeJ.get(numJ).getColor());;
-                           graph.fillOval(pos.getLig()*150 +35*numJ+10, pos.getCol()*150 +35*numJ+10, 30, 30);
-                        }
+    public void majGrille(Grille g) {
+        for (Position pos : boutPieces.keySet()) {
+            System.out.println(pos);
+            JButton bouton = boutPieces.get(pos);
+            Ile t = (Ile) g.getTuileP(pos);
+            if (t.getPiece() != "NULL") {
+                ArrayList<Aventurier> listeJ = t.getAventuriers();
+                for (int i=1; i<5;i++){
+                    JLabel lbl = (JLabel)bouton.getComponent(i);
+                    lbl.setText("");
+                    }
+                if (!listeJ.isEmpty()) {
+                    String nomB = t.getPiece();
+                    for (int numJ = 0; numJ < listeJ.size(); numJ++) {
+                         JLabel lbl = (JLabel)bouton.getComponent(numJ+1);
+                         lbl.setText(listeJ.get(numJ).getRole().toString());
                     }
                 }
+
+                }
+                if (t.getEtat() == Etat.INNONDEE) {
+                    bouton.setBackground(Color.CYAN);
+
+                } else if (t.getEtat() == Etat.NOYEE) {
+                    bouton.setBackground(Color.BLACK);
+                } else {
+                    bouton.setBackground(Color.ORANGE);
+                }
+
             }
         }
     }
 
-}
