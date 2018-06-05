@@ -66,6 +66,15 @@ public class Grille {
         }
         return null;
     }
+    
+    public Position getPositionP(Piece_liste pc) {
+        for(Position pos : tuiles.keySet()){
+            if (tuiles.get(pos).getPiece()==pc.toString()){
+                return pos;
+            }
+        }
+        return null;
+    }
 
     
     public HashMap<Position, Tuile> getGrille() {
@@ -84,7 +93,7 @@ public class Grille {
 
     public Tuile getTuileP(Position pos) {
         for(Position p : tuiles.keySet()){
-            if(p.toString().equalsIgnoreCase(pos.toString())){
+            if(p.equals(pos)){
                 
                 return tuiles.get(p);
         }}

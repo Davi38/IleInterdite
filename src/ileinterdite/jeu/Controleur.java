@@ -126,8 +126,9 @@ public class Controleur {
 
                     }
                     joueurs.put(nomJ, a);
-                    Tuile tuJ = grille.getTuileP(posStart);
+                    Ile tuJ =(Ile) grille.getTuileP(posStart);
                     tuJ.addAventurier(a);
+                    System.out.println(tuJ.getAventuriers());
                     choixJoueur = false;
                 }
             }
@@ -263,17 +264,17 @@ public class Controleur {
     private Position getPositionDepart(Role r) {
         switch (r) {
             case EXPLORATEUR:
-                return grille.getPosition(new Ile(Piece_liste.La_Porte_de_Cuivre));
+                return grille.getPositionP(Piece_liste.La_Porte_de_Cuivre);
             case INGENIEUR:
-                return grille.getPosition(new Ile(Piece_liste.La_Porte_dArgent));
+                return grille.getPositionP(Piece_liste.La_Porte_dArgent);
             case MESSAGER:
-                return grille.getPosition(new Ile(Piece_liste.La_Porte_dOr));
+                return grille.getPositionP(Piece_liste.La_Porte_dOr);
             case NAVIGATEUR:
-                return grille.getPosition(new Ile(Piece_liste.La_Porte_de_Bronze));
+                return grille.getPositionP(Piece_liste.La_Porte_de_Bronze);
             case PILOTE:
-                return grille.getPosition(new Ile(Piece_liste.Heliport));
+                return grille.getPositionP(Piece_liste.Heliport);
             case PLONGEUR:
-                return grille.getPosition(new Ile(Piece_liste.La_Porte_de_Fer));
+                return grille.getPositionP(Piece_liste.La_Porte_de_Fer);
         }
         return null;
     }

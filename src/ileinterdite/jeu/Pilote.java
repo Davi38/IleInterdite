@@ -14,7 +14,7 @@ import static java.lang.Math.abs;
  */
 public class Pilote extends Aventurier {
 
-	private Color couleur = Color.BLUE;
+	private final Color couleur = Color.BLUE;
         private boolean pouvoirdispo;
         
         Pilote(Position pos){

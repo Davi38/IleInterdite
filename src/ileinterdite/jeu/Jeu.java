@@ -7,7 +7,7 @@ package ileinterdite.jeu;
 
 /**
  *
- * @author giacintf
+ * @author giacintfde
  */
 public class Jeu {
 

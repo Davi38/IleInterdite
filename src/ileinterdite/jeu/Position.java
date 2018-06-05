@@ -27,4 +27,9 @@ public class Position {
     public int getCol(){
         return col;
     }
+    
+    public boolean equals(Position pos2){
+        return (col == pos2.col && lig==pos2.lig);
+    }
+            
 }

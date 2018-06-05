@@ -13,14 +13,12 @@ import java.util.*;
 
 public abstract class Tuile {
     
-        private ArrayList<Aventurier> aventuriers;
 	private Etat etat;
         private Piece_liste piece;
         
         
         Tuile(Piece_liste piece){
             this.etat = etat.ASSECHEE;
-            this.aventuriers = new ArrayList<Aventurier>();
             this.piece = piece;
         }
         
@@ -34,16 +32,6 @@ public abstract class Tuile {
             }else {
              etat = Etat.NOYEE;   
             }
-	}
-
-
-	public void addAventurier(Aventurier aventurier) {
-            aventuriers.add(aventurier);
-	}
-
-
-	public void removeAventurier(Aventurier aventurier) {
-		aventuriers.remove(aventurier);
 	}
 
 	public Etat getEtat() {
