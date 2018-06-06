@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
 import ileinterdite.vues.JeuVue;
+import ileinterdite.vues.Observateur;
+import ileinterdite.vues.TypeMessage;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
@@ -22,7 +24,7 @@ import javax.swing.JFrame;
  *
  * @author giacintf
  */
-public class Controleur {
+public class Controleur implements Observateur {
 
     private NiveauEau niveaueau;
     private ArrayList<Tresor> tresors;
@@ -277,6 +279,11 @@ public class Controleur {
                 return grille.getPositionP(Piece_liste.La_Porte_de_Fer);
         }
         return null;
+    }
+
+    @Override
+    public void traiterMessage(TypeMessage msg) {
+        
     }
 
 }

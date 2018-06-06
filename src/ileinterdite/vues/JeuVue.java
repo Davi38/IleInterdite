@@ -33,9 +33,10 @@ public class JeuVue extends JPanel {
 
     HashMap<Position, JButton> boutPieces;
     ArrayList<JButton> boutCartes;
+    Observe obs;
 
     public JeuVue(Grille grille) {
-
+        
         JPanel mainPanel = new JPanel(new BorderLayout());
         this.add(mainPanel);
         JPanel zoneJeu = new JPanel(new GridLayout(6, 6));
@@ -86,8 +87,14 @@ public class JeuVue extends JPanel {
         // les actions a l'est
         JPanel actions = new JPanel(new GridLayout(5, 1));
         mainPanel.add(actions, BorderLayout.EAST);
-
-        actions.add(new JButton("Assécher"));
+        JButton boutonA = new JButton("Assécher");
+        boutonA.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Message m = new Message(TypeMessage.ASSECHER);
+            }
+        });
+        actions.add(boutonA);
         actions.add(new JButton("Se déplacer"));
         actions.add(new JButton("Donner une carte trésor"));
         actions.add(new JButton("Gagner un trésor"));
