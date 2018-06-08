@@ -21,18 +21,22 @@ public class Navigateur extends Aventurier {
     }
 
     @Override
-    public boolean verifDeplacement(Position pos2) {
+    public boolean verifDeplacement(Position pos2, Tuile tuile) {
         Position posj = getPosition();
         if(abs(posj.col-pos2.col)<=2 ^ abs(posj.lig-pos2.lig)<= 2){
-           return true; 
+           return tuile.getEtat() == Etat.ASSECHEE; 
         }
-        return false;
+           return false;
     }
 
     @Override
-    public boolean verifAssechement(Position pos2) {
-        return verifDeplacement(pos2);
-    }
+    public boolean verifAssechement(Position pos2, Tuile tuile) {
+         Position posj = getPosition();
+        if(abs(posj.col-pos2.col)<=2 ^ abs(posj.lig-pos2.lig)<= 2){
+           return tuile.estInnondé(); 
+        }
+           return false;
+        }
     
     public Color getColor(){
         return couleur;

@@ -5,14 +5,14 @@
  */
 package ileinterdite.vues;
 
+import ileinterdite.jeu.Position;
+
 /**
  *
  * @author giacintf
  */
 public class Message {
     public TypeMessage type; // nature du message
-    Message(TypeMessage type){
-       this.type = type; 
-    }
+    public Position pos;
     
 }

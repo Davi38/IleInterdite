@@ -65,7 +65,7 @@ public abstract class Aventurier {
     }
     
     //public boolean verifDeplacement(int lig, int col, int lig2, int col2, Etat etat) {
-    public abstract boolean verifDeplacement( Position pos2);
+    public abstract boolean verifDeplacement(Position pos2,Tuile tuile);
     
     // met a jour la tuile ou est place l'aventurier
     public void setTuile(Position pos) {
@@ -77,7 +77,7 @@ public abstract class Aventurier {
         return this.pos;
     }
     
-    public abstract boolean verifAssechement(Position pos2);
+    public abstract boolean verifAssechement(Position pos2,Tuile tuile);
 
     public int getNbAct(){
         return nbAct;

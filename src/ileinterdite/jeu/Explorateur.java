@@ -20,14 +20,15 @@ public class Explorateur extends Aventurier {
         super(Role.EXPLORATEUR,pos);
     }
 
-    public boolean verifDeplacement(Position pos2) {
+    public boolean verifDeplacement(Position pos2, Tuile tuile) {
         Position posj = getPosition();
         
-        return abs(posj.lig - pos2.lig) < 2 && abs(posj.col - pos2.col) < 2;
+        return (abs(posj.lig - pos2.lig) < 2 && abs(posj.col - pos2.col) < 2)&& tuile.getEtat()==Etat.ASSECHEE;
     }
     
-    public boolean verifAssechement(Position pos2) {
-        return verifDeplacement(pos2);
+    public boolean verifAssechement(Position pos2, Tuile tuile) {
+        Position posj = getPosition();
+        return (abs(posj.lig - pos2.lig) < 2 && abs(posj.col - pos2.col) < 2)&& tuile.estInnondé();
     }
     
     public Color getColor(){

@@ -31,7 +31,7 @@ import javax.swing.SwingConstants;
  */
 public class JeuVue extends JPanel {
 
-    HashMap<Position, JButton> boutPieces;
+    HashMap<JButton, Position> boutPieces;
     ArrayList<JButton> boutCartes;
     Observe obs;
 
@@ -40,7 +40,7 @@ public class JeuVue extends JPanel {
         JPanel mainPanel = new JPanel(new BorderLayout());
         this.add(mainPanel);
         JPanel zoneJeu = new JPanel(new GridLayout(6, 6));
-        boutPieces = new HashMap<Position, JButton>();
+        boutPieces = new HashMap<JButton, Position>();
         boutCartes = new ArrayList<JButton>();
 
         // ####################################################################################
@@ -64,7 +64,8 @@ public class JeuVue extends JPanel {
                     bouton.add(new JLabel());
                     bouton.add(new JLabel());
                     bouton.add(new JLabel());
-                    boutPieces.put(pos, bouton);
+                    boutPieces.put(bouton,pos);
+                    
                     zoneJeu.add(bouton);
                 }
             }
@@ -91,11 +92,21 @@ public class JeuVue extends JPanel {
         boutonA.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Message m = new Message(TypeMessage.ASSECHER);
+                Message m = new Message();
+                m.type = TypeMessage.ASSECHER;
+                
             }
         });
         actions.add(boutonA);
-        actions.add(new JButton("Se déplacer"));
+        JButton boutonD = new JButton("Se déplacer");
+        boutonD.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Message m = new Message();
+                m.type = TypeMessage.DEPLACER;
+            }
+        });
+        actions.add(boutonD);
         actions.add(new JButton("Donner une carte trésor"));
         actions.add(new JButton("Gagner un trésor"));
         actions.add(new JButton("Finir son tour"));
@@ -113,9 +124,9 @@ public class JeuVue extends JPanel {
     }
 
     public void majGrille(Grille g) {
-        for (Position pos : boutPieces.keySet()) {
-            System.out.println(pos);
-            JButton bouton = boutPieces.get(pos);
+        for (JButton bouton : boutPieces.keySet()) {
+            Position pos = boutPieces.get(bouton);
+            
             Ile t = (Ile) g.getTuileP(pos);
             if (t.getPiece() != "NULL") {
                 ArrayList<Aventurier> listeJ = t.getAventuriers();

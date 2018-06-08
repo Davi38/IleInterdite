@@ -12,5 +12,6 @@ package ileinterdite.vues;
 public enum TypeMessage {
     DEPLACER,
     ASSECHER,
+    CLICTUILE,
     FIN_TOUR;
 }
