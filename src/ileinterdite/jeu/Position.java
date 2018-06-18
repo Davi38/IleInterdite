@@ -17,9 +17,9 @@ public class Position {
         this.lig = lig;
     }
     
-    public String toString(){
+    /*public String toString(){
        return col + "-" + lig; 
-    }
+    }*/
     public int getLig(){
         return lig;
     }
@@ -30,6 +30,11 @@ public class Position {
     
     public boolean equals(Position pos2){
         return (col == pos2.col && lig==pos2.lig);
+    }
+    
+    @Override
+    public String toString() {
+        return "Ligne : " + getLig() + " - Col : " + getCol();
     }
             
 }
