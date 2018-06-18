@@ -22,6 +22,14 @@ public class Pilote extends Aventurier {
             pouvoirdispo = true;
         }
 
+    @Override
+    public void initAct() {
+        super.initAct(); //To change body of generated methods, choose Tools | Templates.
+        pouvoirdispo =true;
+    }
+        
+        
+
 
         @Override
     public boolean verifDeplacement( Position pos2, Tuile tuile) {
@@ -30,10 +38,9 @@ public class Pilote extends Aventurier {
         int c = abs(posj.lig-pos2.lig);
         
         if (pouvoirdispo){
-            pouvoirdispo = !(tuile.getEtat()==Etat.ASSECHEE); 
-            return !pouvoirdispo;
+            return  (tuile.getEtat()==Etat.ASSECHEE)&& !posj.equals(pos2); 
         }else if((l==1&&c==0)||(l==0&&c==1)) {
-           return tuile.getEtat()==Etat.ASSECHEE; 
+            return tuile.getEtat()==Etat.ASSECHEE; 
         }
         return false;
     }
@@ -54,5 +61,22 @@ public class Pilote extends Aventurier {
     public Color getColor(){
         return couleur;
     }
+
+    @Override
+    public void setPosition(Position pos) {
+        super.setPosition(pos);
+    
+        Position posj = getPosition();
+        int l = abs(posj.col-pos.col);
+        int c = abs(posj.lig-pos.lig);
+        System.out.println("1");
+        if (!((l==1&&c==0)||(l==0&&c==1))){
+            pouvoirdispo = false;
+        }
+    }
+    
+    
+    
+    
 
 }
