@@ -144,8 +144,7 @@ public class JeuVue extends Observe {
 
     public void majGrille(Grille g) {
         for (JButton bouton : boutPieces.keySet()) {
-            Position pos = boutPieces.get(bouton);
-            
+            Position pos = boutPieces.get(bouton);            
             Ile t = (Ile) g.getTuileP(pos);
             if (t.getPiece() != "NULL") {
                 ArrayList<Aventurier> listeJ = t.getAventuriers();
@@ -180,6 +179,27 @@ public class JeuVue extends Observe {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         window1.setSize(dim.height, dim.width);
         window1.setVisible(true);
+    }
+    
+    public void majDeplacement(Aventurier adv,Grille gr){
+        for(JButton b : boutPieces.keySet()){
+            Position pos = boutPieces.get(b);
+            Tuile t = gr.getTuileP(pos);
+            if(adv.verifDeplacement(pos, t)){
+                b.setBackground(Color.red);
+            }
+        }
+        
+    }
+    
+    public void majAssechement(Aventurier adv,Grille gr){
+        for(JButton b : boutPieces.keySet()){
+            Position pos = boutPieces.get(b);
+            Tuile t = gr.getTuileP(pos);
+            if(adv.verifAssechement(pos, t)){
+                b.setBackground(Color.red);
+            }
+        }        
     }
 
     

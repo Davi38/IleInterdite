@@ -260,10 +260,14 @@ public class Controleur implements Observateur {
         switch(m.type){
             case DEPLACER : 
                 actionG = TypeMessage.DEPLACER;
+                vue.majGrille(grille);
+                vue.majDeplacement(advAct, grille);
                 break;
             
             case ASSECHER :
                 actionG = TypeMessage.ASSECHER;
+                vue.majGrille(grille);
+                vue.majAssechement(advAct, grille);
                 break;
             
             case CLICTUILE : 
