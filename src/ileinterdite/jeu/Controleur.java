@@ -235,6 +235,10 @@ public class Controleur implements Observateur {
                 vue.majGrille(grille);
                 vue.majAssechement(advAct, grille);
                 break;
+                
+            case FIN_TOUR:
+                finTour();
+                break;
             
             case CLICTUILE : 
                 Ile tJ = (Ile) grille.getTuileP(grille.getPosition(advAct.getPosition()));

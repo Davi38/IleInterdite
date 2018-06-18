@@ -37,11 +37,10 @@ public class Pilote extends Aventurier {
         int l = abs(posj.col-pos2.col);
         int c = abs(posj.lig-pos2.lig);
         
-        if (pouvoirdispo){
-            return  (tuile.getEtat()==Etat.ASSECHEE)&& !posj.equals(pos2); 
-        }else if((l==1&&c==0)||(l==0&&c==1)) {
+        if((l==1&&c==0)||(l==0&&c==1)) {
             return tuile.getEtat()==Etat.ASSECHEE; 
-        }
+        }else if (pouvoirdispo){
+            return  (tuile.getEtat()==Etat.ASSECHEE)&& !posj.equals(pos2); }
         return false;
     }
     
@@ -64,14 +63,13 @@ public class Pilote extends Aventurier {
 
     @Override
     public void setPosition(Position pos) {
-        super.setPosition(pos);
     
         Position posj = getPosition();
         int l = abs(posj.col-pos.col);
         int c = abs(posj.lig-pos.lig);
-        System.out.println("1");
         if (!((l==1&&c==0)||(l==0&&c==1))){
-            pouvoirdispo = false;
+            pouvoirdispo = false;}
+        super.setPosition(pos);
         }
     }
     
@@ -79,4 +77,3 @@ public class Pilote extends Aventurier {
     
     
 
-}

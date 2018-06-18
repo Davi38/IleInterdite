@@ -36,6 +36,7 @@ public class JeuVue extends Observe {
     JFrame window1 ;
     JButton boutonA;
     JButton boutonD;
+    JButton boutonFT;
     //
     
 
@@ -130,7 +131,17 @@ public class JeuVue extends Observe {
         actions.add(boutonD);
         actions.add(new JButton("Donner une carte trésor"));
         actions.add(new JButton("Gagner un trésor"));
-        actions.add(new JButton("Finir son tour"));
+        boutonFT = new JButton("Finir son tour");
+        boutonFT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                   Message m = new Message();
+                   m.type = TypeMessage.FIN_TOUR;
+                   notifierObservateur(m);
+            }
+        });
+        actions.add(boutonFT);
+        
     }
 
     public void initJoueur(Aventurier j) {
@@ -144,6 +155,7 @@ public class JeuVue extends Observe {
         
         boutonD.setEnabled(true);
         boutonA.setEnabled(true);
+        boutonFT.setEnabled(true);
 
     }
 
@@ -210,6 +222,7 @@ public class JeuVue extends Observe {
     public void finT() {
         boutonD.setEnabled(false);
         boutonA.setEnabled(false);
+        boutonFT.setEnabled(false);
     }
 
     
