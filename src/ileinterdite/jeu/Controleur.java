@@ -39,6 +39,7 @@ public class Controleur implements Observateur {
     private boolean finJeu;
     private boolean finTour;
     private Aventurier advAct;
+    private int nbAdvAct;
     private TypeMessage actionG;
 
     Controleur() {
@@ -156,6 +157,7 @@ public class Controleur implements Observateur {
         vue = new JeuVue(grille);
         vue.addObservateur(this);
         vue.afficherFenetre();
+        nbAdvAct = 0;
         advAct = joueurs.get(joueurs.keySet().toArray()[0]);
         advAct.initAct();
         vue.initJoueur(advAct);
@@ -282,6 +284,14 @@ public class Controleur implements Observateur {
             ile.innonder();
         }
         vue.majGrille(grille);
+        if(nbAdvAct+1== joueurs.size()){
+            nbAdvAct = 0;
+        }else{
+            nbAdvAct += 1;
+        }
+        advAct = joueurs.get(joueurs.keySet().toArray()[nbAdvAct]);
+        advAct.initAct();
+        vue.initJoueur(advAct);
     }
 
    
