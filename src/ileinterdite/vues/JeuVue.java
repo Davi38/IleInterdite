@@ -16,6 +16,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.Action;
@@ -39,6 +41,7 @@ public class JeuVue extends Observe {
     private JButton boutonD;
     private JButton boutonFT;
     private JPanel pCartes;
+    private JLabel etatJeu;
     //
     
 
@@ -50,9 +53,10 @@ public class JeuVue extends Observe {
         JPanel zoneJeu = new JPanel(new GridLayout(6, 6));
         boutPieces = new HashMap<JButton, Position>();
         boutCartes = new ArrayList<JButton>();
-
+        etatJeu = new JLabel();
+        mainPanel.add(etatJeu,BorderLayout.NORTH);
         // ####################################################################################
-        // grille au nord
+        // grille au centre
         for (int i = 1; i < 7; i++) {
             for (int j = 1; j < 7; j++) {
                 Position pos = new Position(i, j);
@@ -140,12 +144,17 @@ public class JeuVue extends Observe {
         
     }
 
-    public void initJoueur(Aventurier j) { 
+    public void initJoueur(Aventurier j,String nomJ) { 
         majCartes(j);
+        String fullClassName = j.getClass().toString();
+        etatJeu.setText("Tour de "+ nomJ + " (" +fullClassName.substring(fullClassName.lastIndexOf('.')+1)+ ")");
         if(j.getCarteTresor().size()<6){
             boutonD.setEnabled(true);
             boutonA.setEnabled(true);
             boutonFT.setEnabled(true);}
+        else{
+            etatJeu.setText(etatJeu.getText() + " (Defausser "+ (j.getCarteTresor().size()-5) +" carte(s))");
+        }
         
     }
     
@@ -161,19 +170,46 @@ public class JeuVue extends Observe {
             if(cartes.size()<6){
                 b.setEnabled(false);
             }else{
-                b.addActionListener(new ActionListener() {
+               /* b.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        
                         Message m = new Message();
                         m.type = TypeMessage.DEFFAUSE;
                         m.ind = boutCartes.indexOf(b);
                         notifierObservateur(m);
                     }
-                });
+                });*/
+               b.addMouseListener(new MouseListener() {
+                   @Override
+                   public void mouseClicked(MouseEvent e) {
+                       Message m = new Message();
+                        m.type = TypeMessage.DEFFAUSE;
+                        m.ind = boutCartes.indexOf(b);
+                        notifierObservateur(m);
+                   }
+
+                   @Override
+                   public void mousePressed(MouseEvent e) {
+                   }
+
+                   @Override
+                   public void mouseReleased(MouseEvent e) {
+                   }
+
+                   @Override
+                   public void mouseEntered(MouseEvent e) {
+                   }
+
+                   @Override
+                   public void mouseExited(MouseEvent e) {
+                   }
+               });
             }
             
             
         }
+        window1.add(pCartes,BorderLayout.SOUTH);
         
     }
 

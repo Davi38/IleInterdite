@@ -160,7 +160,7 @@ public class Controleur implements Observateur {
         nbAdvAct = 0;
         advAct = joueurs.get(joueurs.keySet().toArray()[0]);
         advAct.initAct();
-        vue.initJoueur(advAct);
+        vue.initJoueur(advAct,joueurs.keySet().toArray()[0].toString());
 
         
 
@@ -243,8 +243,7 @@ public class Controleur implements Observateur {
                 Carte_Tresor cT = advAct.getCarteTresor().get(m.ind);
                 System.out.println(cT.getType());
                 advAct.getCarteTresor().remove(cT);
-                
-                vue.initJoueur(advAct);
+                vue.initJoueur(advAct,joueurs.keySet().toArray()[nbAdvAct].toString());
                 break;
             
             case CLICTUILE : 
@@ -307,7 +306,7 @@ public class Controleur implements Observateur {
     public void initTour(){
         advAct = joueurs.get(joueurs.keySet().toArray()[nbAdvAct]);
         advAct.initAct();
-        vue.initJoueur(advAct);
+        vue.initJoueur(advAct,joueurs.keySet().toArray()[nbAdvAct].toString());
         
     }
 
