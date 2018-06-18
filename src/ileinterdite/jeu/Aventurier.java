@@ -18,13 +18,14 @@ public abstract class Aventurier {
     private ArrayList<Carte_Tresor> mesCartes;
     private String nomJoueur;
     private int nbAct;
-    
+    private int actRestante;
     private Role role;
     
-    Aventurier(Role role,Position pos) {
+    Aventurier(Role role,Position pos,int nbAct) {
         this.role = role;
         mesCartes = new ArrayList<Carte_Tresor>();
         this.pos = pos;
+        this.nbAct=nbAct;
     }
     
     // Retourne le role de l'aventurier
@@ -82,10 +83,14 @@ public abstract class Aventurier {
     public int getNbAct(){
         return nbAct;
     }
-    
-    public void setNbAct(int nbAct){
-        this.nbAct = nbAct;
+    public int getActRest(){
+        return actRestante;
     }
+    
+    public void removeAct(){
+        actRestante -= 1;
+    }
+    
      public abstract Color getColor();
 }
 

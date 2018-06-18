@@ -17,7 +17,7 @@ public class Explorateur extends Aventurier {
     private Color couleur = Color.GREEN;
 
     Explorateur(Position pos) {
-        super(Role.EXPLORATEUR,pos);
+        super(Role.EXPLORATEUR,pos,3);
     }
 
     public boolean verifDeplacement(Position pos2, Tuile tuile) {

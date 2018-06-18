@@ -18,7 +18,7 @@ public class Pilote extends Aventurier {
         private boolean pouvoirdispo;
         
         Pilote(Position pos){
-            super(Role.PILOTE,pos);
+            super(Role.PILOTE,pos,3);
             pouvoirdispo = true;
         }
 

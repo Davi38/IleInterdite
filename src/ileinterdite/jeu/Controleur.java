@@ -172,7 +172,6 @@ public class Controleur implements Observateur {
     public void nouveauTour(String nomJ) {
         advAct = joueurs.get(nomJ);
         finTour = false;
-        advAct.setNbAct(0);
         vue.initJoueur(advAct);
         while (!finTour && advAct.getNbAct() < 3) {
 

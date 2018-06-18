@@ -17,7 +17,7 @@ public class Plongeur extends Aventurier {
 	private Color couleur = Color.BLACK;
 
     public Plongeur(Position pos) {
-        super(Role.PLONGEUR,pos);
+        super(Role.PLONGEUR,pos,3);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class Ingenieur extends Aventurier {
 	private Color couleur = Color.ORANGE;
 
     Ingenieur(Position pos) {
-        super(Role.INGENIEUR,pos);
+        super(Role.INGENIEUR,pos,3);
     }
         
         @Override

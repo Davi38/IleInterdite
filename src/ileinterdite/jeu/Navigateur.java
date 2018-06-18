@@ -17,7 +17,7 @@ public class Navigateur extends Aventurier {
 	private Color couleur = Color.YELLOW;
 
     public Navigateur(Position pos) {
-        super(Role.NAVIGATEUR,pos);
+        super(Role.NAVIGATEUR,pos,4);
     }
 
     @Override
