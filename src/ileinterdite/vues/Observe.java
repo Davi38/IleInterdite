@@ -9,6 +9,8 @@ package ileinterdite.vues;
  *
  * @author giacintf
  */
+
+
 public class Observe {
     private Observateur observateur;
     
@@ -16,7 +18,7 @@ public class Observe {
         this.observateur = o;
     }
     
-    public void notifierObservateur(TypeMessage m) {
+    public void notifierObservateur(Message m) {
         if (observateur != null) {
             observateur.traiterMessage(m);
         }

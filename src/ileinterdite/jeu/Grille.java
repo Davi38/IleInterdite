@@ -99,5 +99,14 @@ public class Grille {
         }}
         return null;
     }
+    public Position getPosition(Position pos){
+        for (Position p: tuiles.keySet()){
+            if(p.equals(pos)){
+                
+            return p;
+        }    
+       }
+        return null;
+    }
 
 }

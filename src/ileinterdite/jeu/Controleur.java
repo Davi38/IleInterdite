@@ -39,6 +39,7 @@ public class Controleur implements Observateur {
     private boolean finJeu;
     private boolean finTour;
     private Aventurier advAct;
+    private TypeMessage actionG;
 
     Controleur() {
         finJeu = false;
@@ -152,16 +153,11 @@ public class Controleur implements Observateur {
             piocheI.remove(0);
             defausseI.add(ctI);
         }
-
-        JFrame window = new JFrame();
-        window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        // Définit la taille de la fenêtre en pixels
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        window.setSize(dim.height, dim.width);
         vue = new JeuVue(grille);
-        window.add(vue);
-        window.setVisible(true);
+        vue.addObservateur(this);
+        vue.afficherFenetre();
         Jeu();
+        
 
     }
 
@@ -217,15 +213,8 @@ public class Controleur implements Observateur {
         return joueurs.get(nomJ);
     }
 
-    public void traiterClicTuile() {
-        // TODO - implement Controleur.traiterClicTuile
-        throw new UnsupportedOperationException();
-    }
 
-    public void traiterMessage() {
-        // TODO - implement Controleur.traiterMessage
-        throw new UnsupportedOperationException();
-    }
+    
 
     public void piocherCarteT(Aventurier aventurier) {
         aventurier.addCarte(piocheT.get(0));    // on ajoute la premiere carte de la pioche a l'aventurier
@@ -235,7 +224,8 @@ public class Controleur implements Observateur {
 
     public void piocherCarteI() {
         Piece_liste piecepiochee = piocheI.get(0).getPiece();   // on recupere la premiere carte de la pioche (index 0)
-        Tuile tuile = grille.getTuilePL(piecepiochee);       // on recupere la tuile associé à la pièce
+        Tuile tuile = grille.getTuilePL(piecepiochee);
+     // on recupere la tuile associé à la pièce
 
         tuile.innonder();   // on inonde cette carte
 
@@ -243,25 +233,9 @@ public class Controleur implements Observateur {
         piocheI.remove(0);  // on supprime de la pioche la premiere carte
     }
 
-    public void traiterClicTuile(int lig, int col) {
-        // TODO - implement Controleur.traiterClicTuile
-        throw new UnsupportedOperationException();
-    }
 
-    public void afficherMessage() {
-        // TODO - implement Controleur.afficherMessage
-        throw new UnsupportedOperationException();
-    }
 
-    /**
-     *
-     * @param lig
-     * @param col
-     */
-    public void NouveauclicTuile(int lig, int col) {
-        // TODO - implement Controleur.NouveauclicTuile
-        throw new UnsupportedOperationException();
-    }
+    
 
     private Position getPositionDepart(Role r) {
         switch (r) {
@@ -282,8 +256,49 @@ public class Controleur implements Observateur {
     }
 
     @Override
-    public void traiterMessage(TypeMessage msg) {
+    public void traiterMessage(ileinterdite.vues.Message m) {
+        switch(m.type){
+            case DEPLACER : 
+                actionG = TypeMessage.DEPLACER;
+                break;
+            
+            case ASSECHER :
+                actionG = TypeMessage.ASSECHER;
+                break;
+            
+            case CLICTUILE : 
+                Ile tJ = (Ile) grille.getTuileP(grille.getPosition(advAct.getPosition()));
+                Position pos = grille.getPosition(m.pos);
+
+                Ile t = (Ile) grille.getTuileP(pos);
+                if (actionG==TypeMessage.DEPLACER && advAct.verifDeplacement(pos, t)){
+                    advAct.setPosition(pos);
+                    tJ.getAventuriers().remove(advAct);
+                    t.addAventurier(advAct);
+                    vue.majGrille(grille);
+                    System.out.println(pos);
+                    
+                }else if(actionG==TypeMessage.ASSECHER && advAct.verifAssechement(m.pos, t)){
+                    t.assecher();
+                    vue.majGrille(grille);
+                }
+                actionG = null;
+            break;
+                
+        }
         
     }
+
+   
+    
+  
+    
+
+   
+
+    
+
+    
+  
 
 }

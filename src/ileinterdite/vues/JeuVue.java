@@ -29,16 +29,19 @@ import javax.swing.SwingConstants;
  *
  * @author davidovl
  */
-public class JeuVue extends JPanel {
+public class JeuVue extends Observe {
 
     HashMap<JButton, Position> boutPieces;
     ArrayList<JButton> boutCartes;
-    Observe obs;
+    JFrame window1 ;
+    //
+    
 
     public JeuVue(Grille grille) {
-        
+        window1 = new JFrame("Jeu");
         JPanel mainPanel = new JPanel(new BorderLayout());
-        this.add(mainPanel);
+        window1.add(mainPanel);
+      
         JPanel zoneJeu = new JPanel(new GridLayout(6, 6));
         boutPieces = new HashMap<JButton, Position>();
         boutCartes = new ArrayList<JButton>();
@@ -65,11 +68,22 @@ public class JeuVue extends JPanel {
                     bouton.add(new JLabel());
                     bouton.add(new JLabel());
                     boutPieces.put(bouton,pos);
+                    bouton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            Message m = new Message();
+                            m.type = TypeMessage.CLICTUILE;
+                            m.pos = boutPieces.get(bouton);
+                            notifierObservateur(m);
+                        }
+                    });
                     
                     zoneJeu.add(bouton);
                 }
             }
         }
+        
+        
         majGrille(grille);
         System.out.println("Butoon");
 
@@ -77,7 +91,8 @@ public class JeuVue extends JPanel {
         // ####################################################################################
         // les cartes au sud
         JPanel cartes = new JPanel(new GridLayout(1, 6));
-        this.add(cartes, BorderLayout.SOUTH);
+        
+        window1.add(cartes, BorderLayout.SOUTH);
         for (int i = 0; i < 5; i++) {
             JButton b = new JButton("Aucune carte");
             cartes.add(b);
@@ -94,16 +109,20 @@ public class JeuVue extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 Message m = new Message();
                 m.type = TypeMessage.ASSECHER;
-                
+                notifierObservateur(m);
             }
         });
         actions.add(boutonA);
         JButton boutonD = new JButton("Se déplacer");
-        boutonD.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Message m = new Message();
-                m.type = TypeMessage.DEPLACER;
+       
+        boutonD.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Message m = new Message();
+                        m.type = TypeMessage.DEPLACER;
+                        
+                        notifierObservateur(m);
             }
         });
         actions.add(boutonD);
@@ -154,5 +173,22 @@ public class JeuVue extends JPanel {
 
             }
         }
+    
+    public void afficherFenetre(){
+       window1.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        // Définit la taille de la fenêtre en pixels
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        window1.setSize(dim.height, dim.width);
+        window1.setVisible(true);
     }
 
+    
+    
+}
+
+   
+    
+
+
+ 
+    

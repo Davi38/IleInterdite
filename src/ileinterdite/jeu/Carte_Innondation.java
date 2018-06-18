@@ -3,12 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ileinterdite.vues;
+package ileinterdite.jeu;
 
 /**
  *
  * @author giacintf
  */
-public interface Observateur {
-    public void traiterMessage(Message msg);
+public class Carte_Innondation {
+
+	private Piece_liste piece;
+        
+        public Carte_Innondation(){}
+        
+
+	public Piece_liste getNomPiece() {
+            return piece;
+	}
+
 }
