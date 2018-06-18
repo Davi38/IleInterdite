@@ -67,7 +67,7 @@ public class Controleur implements Observateur {
             } else {
                 i = 3;
             }
-            for (int j = 1; j > i; j--) {
+            for (int j = 0; j < i; j++) {
                 CtBonus carteB = new CtBonus(bonus);
                 piocheT.add(carteB);
             }
@@ -279,9 +279,13 @@ public class Controleur implements Observateur {
         vue.finT();
         for(int i=0; i<2;i++){
             if(!piocheT.isEmpty()){
-                Carte_Tresor cT = piocheT.get(0);
+                Carte_Tresor cT = piocheT.get(0);                                                            
                 piocheT.remove(0);
-                advAct.addCarte(cT);
+                if(cT.getType() == "MONTEE_EAU"){
+                    niveaueau.MonteeEau();
+                }else{
+                    advAct.addCarte(cT);
+                }
             }
         }
         for(int i = 0; i<niveaueau.getNbCarte();i++){

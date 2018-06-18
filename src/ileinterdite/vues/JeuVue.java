@@ -168,7 +168,11 @@ public class JeuVue extends Observe {
             pCartes.add(b);
             boutCartes.add(b);
             if(cartes.size()<6){
-                b.setEnabled(false);
+                if(b.getText().equals("SABLE")||b.getText().equals("HELICOPTERE"))
+                    b.setEnabled(true);
+                else{
+                    b.setEnabled(false);
+                }
             }else{
                /* b.addActionListener(new ActionListener() {
                     @Override
