@@ -156,52 +156,17 @@ public class Controleur implements Observateur {
         vue = new JeuVue(grille);
         vue.addObservateur(this);
         vue.afficherFenetre();
-        Jeu();
+        advAct = joueurs.get(joueurs.keySet().toArray()[0]);
+        advAct.initAct();
+        vue.initJoueur(advAct);
+
         
 
     }
 
-    private void Jeu() {
-        while (!finJeu) {
-            for (String nomJ : joueurs.keySet()) {
-                nouveauTour(nomJ);
-            }
-        }
-    }
+   
 
-    public void nouveauTour(String nomJ) {
-        advAct = joueurs.get(nomJ);
-        finTour = false;
-        vue.initJoueur(advAct);
-        while (!finTour && advAct.getNbAct() < 3) {
-
-        }
-        for (int i = 0; i < 2; i++) {
-            if (piocheT.isEmpty()) {
-                piocheT = defausseT;
-                defausseT.clear();
-                Collections.shuffle(piocheT);
-            }
-            Carte_Tresor ct = piocheT.get(0);
-            advAct.addCarte(ct);
-            while (advAct.getCarteTresor().size() > 5) {
-            }
-        }
-        for (int i = 0; i < niveaueau.getNbCarte(); i++) {
-            if (piocheI.isEmpty()) {
-                piocheI = defausseI;
-                defausseI.clear();
-                Collections.shuffle(piocheI);
-            }
-            Carte_Inondation ctI = piocheI.get(0);
-            Ile tl = (Ile) grille.getTuilePL(ctI.getPiece());
-            tl.assecher();
-            if (tl.getAventuriers().size() == 0 || (tl.getPiece().equals(Piece.Heliport) && tl.getEtat().equals(Etat.NOYEE))) {
-                finJeu = false;
-            }
-        }
-
-    }
+    
 
     public boolean roleDisponible(Role role) {
 
@@ -278,18 +243,45 @@ public class Controleur implements Observateur {
                     advAct.setPosition(pos);
                     tJ.getAventuriers().remove(advAct);
                     t.addAventurier(advAct);
+                    advAct.removeAct();
 
                     
                 }else if(actionG==TypeMessage.ASSECHER && advAct.verifAssechement(m.pos, t)){
                     t.assecher();
+                    advAct.removeAct();
 
                 }
                 vue.majGrille(grille);
                 actionG = null;
+                System.out.println(advAct.getActRest());
+                if (advAct.getActRest()==0){
+                    finTour();
+                }
             break;
                 
         }
         
+    }
+    
+    public void finTour(){
+        vue.finT();
+        for(int i=0; i<2;i++){
+            if(!piocheT.isEmpty()){
+                Carte_Tresor cT = piocheT.get(0);
+                piocheT.remove(0);
+                advAct.addCarte(cT);
+            }
+        }
+        for(int i = 0; i<niveaueau.getNbCarte();i++){
+            if(piocheI.isEmpty()){
+                piocheI=defausseI;
+                defausseI.clear();
+            }
+            Ile ile = (Ile) grille.getTuilePL(piocheI.get(0).getPiece());
+            piocheI.remove(0);
+            ile.innonder();
+        }
+        vue.majGrille(grille);
     }
 
    

@@ -92,5 +92,9 @@ public abstract class Aventurier {
     }
     
      public abstract Color getColor();
+
+    public void initAct() {
+        actRestante = nbAct;
+    }
 }
 

@@ -34,6 +34,8 @@ public class JeuVue extends Observe {
     HashMap<JButton, Position> boutPieces;
     ArrayList<JButton> boutCartes;
     JFrame window1 ;
+    JButton boutonA;
+    JButton boutonD;
     //
     
 
@@ -103,7 +105,7 @@ public class JeuVue extends Observe {
         // les actions a l'est
         JPanel actions = new JPanel(new GridLayout(5, 1));
         mainPanel.add(actions, BorderLayout.EAST);
-        JButton boutonA = new JButton("Assécher");
+        boutonA = new JButton("Assécher");
         boutonA.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -113,7 +115,7 @@ public class JeuVue extends Observe {
             }
         });
         actions.add(boutonA);
-        JButton boutonD = new JButton("Se déplacer");
+        boutonD = new JButton("Se déplacer");
        
         boutonD.addActionListener(
                 new ActionListener() {
@@ -139,6 +141,9 @@ public class JeuVue extends Observe {
         for (int i = cartes.size(); i < 5; i++) {
             boutCartes.get(i).setText("Acune carte");
         }
+        
+        boutonD.setEnabled(true);
+        boutonA.setEnabled(true);
 
     }
 
@@ -200,6 +205,11 @@ public class JeuVue extends Observe {
                 b.setBackground(Color.red);
             }
         }        
+    }
+
+    public void finT() {
+        boutonD.setEnabled(false);
+        boutonA.setEnabled(false);
     }
 
     
