@@ -279,13 +279,13 @@ public class Controleur implements Observateur {
                     advAct.setPosition(pos);
                     tJ.getAventuriers().remove(advAct);
                     t.addAventurier(advAct);
-                    vue.majGrille(grille);
-                    System.out.println(pos);
+
                     
                 }else if(actionG==TypeMessage.ASSECHER && advAct.verifAssechement(m.pos, t)){
                     t.assecher();
-                    vue.majGrille(grille);
+
                 }
+                vue.majGrille(grille);
                 actionG = null;
             break;
                 
