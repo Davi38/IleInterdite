@@ -11,6 +11,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -31,12 +32,13 @@ import javax.swing.SwingConstants;
  */
 public class JeuVue extends Observe {
 
-    HashMap<JButton, Position> boutPieces;
-    ArrayList<JButton> boutCartes;
-    JFrame window1 ;
-    JButton boutonA;
-    JButton boutonD;
-    JButton boutonFT;
+    private HashMap<JButton, Position> boutPieces;
+    private ArrayList<JButton> boutCartes;
+    private JFrame window1 ;
+    private JButton boutonA;
+    private JButton boutonD;
+    private JButton boutonFT;
+    private JPanel pCartes;
     //
     
 
@@ -88,20 +90,14 @@ public class JeuVue extends Observe {
         
         
         majGrille(grille);
-        System.out.println("Butoon");
 
         mainPanel.add(zoneJeu, BorderLayout.CENTER);
-        // ####################################################################################
-        // les cartes au sud
-        JPanel cartes = new JPanel(new GridLayout(1, 6));
         
-        window1.add(cartes, BorderLayout.SOUTH);
-        for (int i = 0; i < 5; i++) {
-            JButton b = new JButton("Aucune carte");
-            cartes.add(b);
-            boutCartes.add(b);
-        }
-
+        
+        pCartes = new JPanel();
+        
+        
+        window1.add(pCartes, BorderLayout.SOUTH);
         // ####################################################################################
         // les actions a l'est
         JPanel actions = new JPanel(new GridLayout(5, 1));
@@ -144,19 +140,41 @@ public class JeuVue extends Observe {
         
     }
 
-    public void initJoueur(Aventurier j) {
+    public void initJoueur(Aventurier j) { 
+        majCartes(j);
+        if(j.getCarteTresor().size()<6){
+            boutonD.setEnabled(true);
+            boutonA.setEnabled(true);
+            boutonFT.setEnabled(true);}
+        
+    }
+    
+    public void majCartes(Aventurier j){
         ArrayList<Carte_Tresor> cartes = j.getCarteTresor();
+        pCartes.removeAll();
+        boutCartes.clear();
+        pCartes.setLayout(new GridLayout(1,cartes.size()));
         for (int i = 0; i < cartes.size(); i++) {
-            boutCartes.get(i).setText(cartes.get(i).getType());
-        }
-        for (int i = cartes.size(); i < 5; i++) {
-            boutCartes.get(i).setText("Acune carte");
+            JButton b = new JButton( cartes.get(i).getType());
+            pCartes.add(b);
+            boutCartes.add(b);
+            if(cartes.size()<6){
+                b.setEnabled(false);
+            }else{
+                b.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Message m = new Message();
+                        m.type = TypeMessage.DEFFAUSE;
+                        m.ind = boutCartes.indexOf(b);
+                        notifierObservateur(m);
+                    }
+                });
+            }
+            
+            
         }
         
-        boutonD.setEnabled(true);
-        boutonA.setEnabled(true);
-        boutonFT.setEnabled(true);
-
     }
 
     public void majGrille(Grille g) {

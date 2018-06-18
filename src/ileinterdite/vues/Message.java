@@ -5,6 +5,7 @@
  */
 package ileinterdite.vues;
 
+import ileinterdite.jeu.Carte_Tresor;
 import ileinterdite.jeu.Position;
 
 /**
@@ -14,5 +15,6 @@ import ileinterdite.jeu.Position;
 public class Message {
     public TypeMessage type; // nature du message
     public Position pos;
+    public int ind;
     
 }

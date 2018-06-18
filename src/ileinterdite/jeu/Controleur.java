@@ -239,6 +239,13 @@ public class Controleur implements Observateur {
             case FIN_TOUR:
                 finTour();
                 break;
+            case DEFFAUSE:
+                Carte_Tresor cT = advAct.getCarteTresor().get(m.ind);
+                System.out.println(cT.getType());
+                advAct.getCarteTresor().remove(cT);
+                
+                vue.initJoueur(advAct);
+                break;
             
             case CLICTUILE : 
                 Ile tJ = (Ile) grille.getTuileP(grille.getPosition(advAct.getPosition()));
@@ -280,10 +287,11 @@ public class Controleur implements Observateur {
         }
         for(int i = 0; i<niveaueau.getNbCarte();i++){
             if(piocheI.isEmpty()){
-                piocheI=defausseI;
+                piocheI.addAll(defausseI);
                 defausseI.clear();
             }
             Ile ile = (Ile) grille.getTuilePL(piocheI.get(0).getPiece());
+            defausseI.add(piocheI.get(0));
             piocheI.remove(0);
             ile.innonder();
         }
@@ -293,9 +301,14 @@ public class Controleur implements Observateur {
         }else{
             nbAdvAct += 1;
         }
+        initTour();
+    }
+    
+    public void initTour(){
         advAct = joueurs.get(joueurs.keySet().toArray()[nbAdvAct]);
         advAct.initAct();
         vue.initJoueur(advAct);
+        
     }
 
    

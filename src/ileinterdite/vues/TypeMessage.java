@@ -13,5 +13,6 @@ public enum TypeMessage {
     DEPLACER,
     ASSECHER,
     CLICTUILE,
-    FIN_TOUR;
+    FIN_TOUR,
+    DEFFAUSE;
 }
