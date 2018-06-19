@@ -212,6 +212,7 @@ public class Controleur implements Observateur {
             case GAGNER_TRESOR:
                 if(verifGT()){
                     advAct.removeAct();
+                    vue.majCartes(advAct);
                 }
                 if (advAct.getActRest() == 0) {
                     finTour();
@@ -234,13 +235,13 @@ public class Controleur implements Observateur {
                 break;
                 
             case CLIC_CARTE:
-                int i = m.ind;
-                Carte_Tresor ct = advAct.getCarteTresor().get(i);
+                Carte_Tresor ct = advAct.getCarteTresor().get(m.ind+1);
+                if(jADonner!=null){
                 if(jADonner.chercherNombreCartes()<9){
                     advAct.removeAct();
-                    advAct.getCarteTresor().remove(i);
                     jADonner.getCarteTresor().add(ct);
-                }
+                    advAct.getCarteTresor().remove(ct);
+                }}
                 jADonner = null;
                 actionG = null;
                 vue.majCartes(advAct);
@@ -354,9 +355,12 @@ public class Controleur implements Observateur {
     }
     
     public boolean verifGT(){
-        TypeTrésor t =convertTresor((Ile)grille.getTuileP(advAct.getPosition()));
+        Ile ile = (Ile)grille.getTuileP(advAct.getPosition());
+        System.out.println(ile.getPiece());
+        TypeTrésor t = convertTresor(ile);
         if( t != null){
             Tresor tres = getTresor(t);
+            System.out.println(advAct.verifGagnerT(tres) + "et " + !tres.isRecuperé());
             if (!tres.isRecuperé() && advAct.verifGagnerT(tres)){
                 tres.setRecuperé(true);
                 advAct.removeCT(t);
