@@ -5,6 +5,7 @@
  */
 package ileinterdite.vues;
 
+import ileinterdite.jeu.Role;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,6 +15,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import javax.naming.ldap.HasControls;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -25,14 +28,13 @@ import javax.swing.JTextField;
  *
  * @author bouchtir
  */
-public class VueInscription extends JPanel {
-    private JPanel zonehaut;
-    private JPanel panelCentre;
-    private JPanel zonebas;
+public class VueInscription extends Observe {
+
     private JComboBox listeRole1;
     private JComboBox listeRole2;
     private JComboBox listeRole3;
     private JComboBox listeRole4;
+    
     private ArrayList<String> roles;
     private JButton demarrer;
     private JButton addJoueur;
@@ -42,6 +44,8 @@ public class VueInscription extends JPanel {
     private JTextField champNom2;
     private JTextField champNom3;
     private JTextField champNom4;
+    
+    private JFrame fenetre;
 
 
     public VueInscription() {
@@ -49,12 +53,12 @@ public class VueInscription extends JPanel {
 
 
         //déclaration de la fenêtre
-        JFrame fenetre = new JFrame("Choix des Joueurs");
+        fenetre = new JFrame("Choix des Joueurs");
         fenetre.setLayout(new BorderLayout());
 
-        zonebas = new JPanel();
-        panelCentre = new JPanel(new GridLayout(4, 2));
-        zonehaut = new JPanel();
+        JPanel zonebas = new JPanel();
+        JPanel panelCentre = new JPanel(new GridLayout(4, 2));
+        JPanel zonehaut = new JPanel();
 
         listeRole1 = new JComboBox();
         listeRole2 = new JComboBox();
@@ -235,8 +239,28 @@ public class VueInscription extends JPanel {
         demarrer.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
+                if(TestDemarrer()){
+                
+                Message m = new Message();
+                m.type = TypeMessage.DEMARRER;
+                HashMap<Role, String> liste = new HashMap<Role, String>();
+                if(listeRole4.isEnabled()){ 
+                    Role r4 = Role.valueOf(listeRole4.getSelectedItem().toString().toUpperCase());
+                    Role r3 = Role.valueOf(listeRole3.getSelectedItem().toString().toUpperCase());
+                    liste.put(r4,champNom4.getText());
+                    liste.put( r3,champNom3.getText());
+                }else if(listeRole3.isEnabled()){
+                    Role r3 = Role.valueOf(listeRole3.getSelectedItem().toString().toUpperCase());
+                    liste.put(r3,champNom3.getText());
+                }
+                    Role r2 = Role.valueOf(listeRole2.getSelectedItem().toString().toUpperCase());
+                    Role r1 = Role.valueOf(listeRole1.getSelectedItem().toString().toUpperCase());
+                    liste.put(r2, champNom2.getText());
+                    liste.put(r1, champNom1.getText());
 
-
+                m.listeJ = liste;
+                notifierObservateur(m);
+                }
             }
 
         });
@@ -279,14 +303,30 @@ public class VueInscription extends JPanel {
         
 
     }
-    public static void main(String [] args) {
-        // Instanciation de la fenêtre 
-        VueInscription vueInscription = new VueInscription();
+    
+    public void afficherFenetre(){
+        fenetre.setVisible(true);
     }
+    public void cacherFenetre(){
+        fenetre.setVisible(false); 
+    }
+    
+    public boolean TestDemarrer(){
+        boolean test = true;
+        if(listeRole4.isEnabled()){
+            test = listeRole4.getSelectedItem()!=null && listeRole3.getSelectedItem()!=null;
+            
+        }else if(listeRole3.isEnabled()){
+            test = listeRole4.getSelectedItem()!=null && listeRole3.getSelectedItem()!=null;
+        }
+        return test && listeRole1.getSelectedItem()!=null && listeRole2.getSelectedItem()!=null; 
+    }   
+    }
+
 
         
         
 
-    }
+    
     
 

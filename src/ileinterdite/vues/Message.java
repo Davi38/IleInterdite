@@ -8,6 +8,7 @@ package ileinterdite.vues;
 import ileinterdite.jeu.Carte_Tresor;
 import ileinterdite.jeu.Position;
 import ileinterdite.jeu.Role;
+import java.util.HashMap;
 
 /**
  *
@@ -18,5 +19,6 @@ public class Message {
     public Position pos;
     public int ind;
     public Role nomR;
+    public HashMap<Role, String> listeJ;
     
 }

@@ -17,5 +17,6 @@ public enum TypeMessage {
     FIN_TOUR,
     DEFFAUSE,
     DONNER_CARTE, 
-    CLIC_CARTE;
+    CLIC_CARTE, 
+    DEMARRER;
 }
