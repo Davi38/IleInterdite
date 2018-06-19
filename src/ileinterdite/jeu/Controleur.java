@@ -89,15 +89,6 @@ public class Controleur implements Observateur {
         Collections.shuffle(piocheI);
 
         grille = new Grille();
-
-        Scanner sc = new Scanner(System.in);
-        int i = 0;
-        while (i > 5 || i < 1) {
-
-            System.out.println("Entrer un niveau de l'eau : (1-Débutant 2-Normal 3-Expert 4-Legendaire");
-            i = sc.nextInt();
-        }
-        niveaueau = new NiveauEau(i);
         vueI = new VueInscription();
         vueI.addObservateur(this);
         vueI.afficherFenetre();
@@ -177,7 +168,7 @@ public class Controleur implements Observateur {
         System.out.println(m.type);
         switch (m.type) {
             case DEMARRER:
-                demmarerPartie(m.listeJ);
+                demmarerPartie(m.listeJ,m.ind);
                 break;
             case DEPLACER:
                 vue.desactiverB(advAct, grille);
@@ -312,7 +303,8 @@ public class Controleur implements Observateur {
 
     }
 
-    private void demmarerPartie(HashMap<Role, String> listeJ) {
+    private void demmarerPartie(HashMap<Role, String> listeJ,int nv) {
+        niveaueau = new NiveauEau(nv);
         for (Role r : listeJ.keySet()) {
             Position posStart = getPositionDepart(r);
             Aventurier a = null;

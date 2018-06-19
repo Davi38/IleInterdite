@@ -271,6 +271,7 @@ public class VueInscription extends Observe {
                     liste.put(r1, champNom1.getText());
 
                 m.listeJ = liste;
+                m.ind = listeNiveau.getSelectedIndex()+1;
                 notifierObservateur(m);
                 }
             }
