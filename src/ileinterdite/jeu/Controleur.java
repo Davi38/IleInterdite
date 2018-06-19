@@ -243,14 +243,12 @@ public class Controleur implements Observateur {
                     advAct.removeAct();
                     jADonner.getCarteTresor().add(ct);
                     advAct.getCarteTresor().remove(ct);
-                }}
+                }
                 jADonner = null;
                 actionG = null;
                 vue.majCartes(advAct);
                 vue.desactiverB(advAct, grille);
-                if (advAct.getActRest() == 0) {
-                    finTour();
-                }
+
                 break;
 
             case CLICTUILE:
@@ -288,7 +286,6 @@ public class Controleur implements Observateur {
                 break;
 
         }
-
     }
 
     public void finTour() {
