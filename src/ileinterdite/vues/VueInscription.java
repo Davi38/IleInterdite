@@ -29,6 +29,8 @@ import javax.swing.JTextField;
  * @author bouchtir
  */
 public class VueInscription extends Observe {
+    
+    private JComboBox listeNiveau;
 
     private JComboBox listeRole1;
     private JComboBox listeRole2;
@@ -56,19 +58,25 @@ public class VueInscription extends Observe {
         fenetre = new JFrame("Choix des Joueurs");
         fenetre.setLayout(new BorderLayout());
 
+        JPanel zonehaut = new JPanel(new GridLayout(4,2));
         JPanel zonebas = new JPanel();
         JPanel panelCentre = new JPanel(new GridLayout(4, 2));
-        JPanel zonehaut = new JPanel();
+        
+        
+        listeNiveau = new JComboBox(new String[]{"Novice", "Normal" , "Elite", "Légendaire"});
 
         listeRole1 = new JComboBox();
         listeRole2 = new JComboBox();
         listeRole3 = new JComboBox();
         listeRole4 = new JComboBox();
+        
         roles = new ArrayList<String>();
 
         //Déclaration des éléments de la fenêtre
+        JLabel choixNiveau = new JLabel("Choix du niveau de difficulté :");
         JLabel choixJoueur = new JLabel("Choix des joueurs participants :");
-
+        
+     
         //panels
         roles.add("Pilote");
         roles.add("Navigateur");
@@ -109,7 +117,7 @@ public class VueInscription extends Observe {
         champNom2.setEnabled(true);
         champNom3.setEnabled(false);
         champNom4.setEnabled(false);
-        
+        listeNiveau.setSelectedIndex(0);
         
         listeRole1.addItemListener(
                 new ItemListener(){
@@ -197,22 +205,25 @@ public class VueInscription extends Observe {
                     }
                 });
         
-        
-        
-        //elements
-        
 
-        
 
-        
 
         //Ajout des éléments à la fenêtre
         //positionnement des panels
-        fenetre.add(zonebas, BorderLayout.SOUTH);
-        fenetre.add(panelCentre, BorderLayout.CENTER);
+        
+        
         fenetre.add(zonehaut, BorderLayout.NORTH);
+        fenetre.add(panelCentre, BorderLayout.CENTER);
+        fenetre.add(zonebas, BorderLayout.SOUTH);
 
         //positionnement des boutons
+        zonehaut.add(new JLabel("  "));
+        zonehaut.add(new JLabel("  "));
+        zonehaut.add(choixNiveau);
+        zonehaut.add(listeNiveau);
+        
+        zonehaut.add(new JLabel("  "));
+        zonehaut.add(new JLabel("  "));
         zonehaut.add(choixJoueur);
 
         panelCentre.add(champNom1);
@@ -238,6 +249,7 @@ public class VueInscription extends Observe {
         // ActionListeners
         demarrer.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if(TestDemarrer()){
                 
@@ -320,7 +332,9 @@ public class VueInscription extends Observe {
             test = listeRole3.getSelectedItem()!=null;
         }
         return test && listeRole1.getSelectedItem()!= null && listeRole2.getSelectedItem()!=null; 
-    }   
+    }
+    
+   
     }
 
 
