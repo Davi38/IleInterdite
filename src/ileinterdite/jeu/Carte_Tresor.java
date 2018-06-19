@@ -7,16 +7,13 @@ package ileinterdite.jeu;
 
 public abstract class Carte_Tresor {
 
-	private Aventurier appartient;
+
 
 	/**
 	 * 
 	 * @param aventurier
 	 */
-	public void setAventurier(Aventurier aventurier) {
-		// TODO - implement Carte_Tresor.setAventurier
-		aventurier.addCarte(this);
-	}
+
 
 	public abstract String getType();
 }

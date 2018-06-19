@@ -96,5 +96,25 @@ public abstract class Aventurier {
     public void initAct() {
         actRestante = nbAct;
     }
+    
+    public boolean verifGagnerT(Tresor t){
+        
+        if(t != null){
+            int nbCarteT =0;
+            for(Carte_Tresor c : mesCartes){
+                if(c.getType().equalsIgnoreCase(t.getType().toString())){
+                    nbCarteT +=1;
+                }
+            }
+            return nbCarteT<3;
+        }
+        return false;    
+    }
+
+    void removeCT(TypeTrésor t) {
+        for(int i=0; i<4 ;i++){
+            
+        }
+    }
 }
 

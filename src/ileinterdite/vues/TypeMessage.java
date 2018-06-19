@@ -18,5 +18,6 @@ public enum TypeMessage {
     DEFFAUSE,
     DONNER_CARTE, 
     CLIC_CARTE, 
-    DEMARRER;
+    DEMARRER, 
+    GAGNER_TRESOR;
 }

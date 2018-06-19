@@ -209,6 +209,15 @@ public class Controleur implements Observateur {
                 vue.initJoueur(advAct, joueurs.get(advAct));
                 break;
                 
+            case GAGNER_TRESOR:
+                if(verifGT()){
+                    advAct.removeAct();
+                }
+                if (advAct.getActRest() == 0) {
+                    finTour();
+                }
+                break;
+                
             case DONNER_CARTE:
                 vue.majGrille(grille);
                 actionG = TypeMessage.DONNER_CARTE;
@@ -342,6 +351,41 @@ public class Controleur implements Observateur {
         advAct =(Aventurier) joueurs.keySet().toArray()[0];
         advAct.initAct();
         vue.initJoueur(advAct, joueurs.get(advAct));
+    }
+    
+    public boolean verifGT(){
+        TypeTrésor t =convertTresor((Ile)grille.getTuileP(advAct.getPosition()));
+        if( t != null){
+            Tresor tres = getTresor(t);
+            if (!tres.isRecuperé() && advAct.verifGagnerT(tres)){
+                tres.setRecuperé(true);
+                advAct.removeCT(t);
+                return tres.isRecuperé();
+            }
+        }
+        return false;
+    }
+    
+    public TypeTrésor convertTresor(Ile i){
+        if(i.getPiece().contains("Temple")){
+           return TypeTrésor.PIERRE;
+        }else if(i.getPiece().contains("Jardin")){
+           return TypeTrésor.STATUE;
+        }else if(i.getPiece().contains("Caverne")){
+           return TypeTrésor.CRYSTAL;
+        }else if(i.getPiece().contains("Palais")){
+           return TypeTrésor.CALICE; 
+        }
+        return null;
+    }
+
+    public Tresor getTresor(TypeTrésor type){
+        for (Tresor t : tresors){
+            if(t.getType()==(type)){
+                return t;
+            }
+        }
+        return null;
     }
 
 }

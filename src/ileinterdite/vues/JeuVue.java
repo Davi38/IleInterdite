@@ -42,6 +42,7 @@ public class JeuVue extends Observe {
     private JButton boutonD;
     private JButton boutonFT;
     private JButton boutonDC;
+    private JButton boutonGT;
     
     private JPanel pCartes;
     private JLabel etatJeu;
@@ -131,7 +132,15 @@ for (int i = 1; i < 7; i++) {
         });
         
         actions.add(boutonDC);
-        actions.add(new JButton("Gagner un trésor"));
+        boutonGT = new JButton("Gagner un trésor");
+        boutonGT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Message m = new Message();
+                m.type = TypeMessage.GAGNER_TRESOR;
+            }
+        });
+        actions.add(boutonGT);
         boutonFT = new JButton("Finir son tour");
         boutonFT.addActionListener(new ActionListener() {
             @Override
@@ -153,7 +162,8 @@ for (int i = 1; i < 7; i++) {
             boutonD.setEnabled(true);
             boutonA.setEnabled(true);
             boutonFT.setEnabled(true);
-            boutonDC.setEnabled(true);}
+            boutonDC.setEnabled(true);
+            boutonGT.setEnabled(true);}
         else{
             etatJeu.setText(etatJeu.getText() + " (Defausser "+ (j.getCarteTresor().size()-5) +" carte(s))");
         }
@@ -170,9 +180,9 @@ for (int i = 1; i < 7; i++) {
             pCartes.add(b);
             boutCartes.add(b);
             if(cartes.size()<6){
-                if(b.getText().equals("SABLE")||b.getText().equals("HELICOPTERE"))
+                if(b.getText().equals("SABLE")||b.getText().equals("HELICOPTERE")){
                     b.setEnabled(true);
-                else{
+                }else{
                     b.setEnabled(false);
                 }
                 b.addMouseListener(new MouseListener() {
@@ -288,6 +298,7 @@ for (int i = 1; i < 7; i++) {
         boutonA.setEnabled(false);
         boutonFT.setEnabled(false);
         boutonDC.setEnabled(false);
+        boutonGT.setEnabled(false);
     }
 
     public void majNiveau(int niveauEau) {
