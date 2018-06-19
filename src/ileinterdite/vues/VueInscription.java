@@ -34,7 +34,14 @@ public class VueInscription extends JPanel {
     private JComboBox listeRole3;
     private JComboBox listeRole4;
     private ArrayList<String> roles;
+    private JButton demarrer;
+    private JButton addJoueur;
+    private JButton removeJoueur;
     
+    private JTextField champNom1; 
+    private JTextField champNom2;
+    private JTextField champNom3;
+    private JTextField champNom4;
 
 
     public VueInscription() {
@@ -65,6 +72,15 @@ public class VueInscription extends JPanel {
         roles.add("Explorateur");
         roles.add("Plongeur");
         roles.add("Ingénieur");
+        
+        champNom1 = new JTextField("Nom du Joueur 1");
+        champNom2 = new JTextField("Nom du Joueur 2");
+        champNom3 = new JTextField("Nom du Joueur 3");
+        champNom4 = new JTextField("Nom du Joueur 4");
+        
+        demarrer = new JButton("Demarrer partie");
+        addJoueur = new JButton("Add joueur");
+        removeJoueur = new JButton("Remove Joueur");
 
         for (int i = 0; i < roles.size(); i++) {
             listeRole1.addItem(roles.get(i));
@@ -77,12 +93,19 @@ public class VueInscription extends JPanel {
             
             listeRole3.addItem(roles.get(i));
             listeRole3.setSelectedItem(null);
-            listeRole3.setEnabled(true);   
+            listeRole3.setEnabled(false);   
             
             listeRole4.addItem(roles.get(i));
             listeRole4.setSelectedItem(null);
-            listeRole4.setEnabled(true);   
+            listeRole4.setEnabled(false);   
         }
+        
+        removeJoueur.setEnabled(false);
+        champNom1.setEnabled(true);
+        champNom2.setEnabled(true);
+        champNom3.setEnabled(false);
+        champNom4.setEnabled(false);
+        
         
         listeRole1.addItemListener(
                 new ItemListener(){
@@ -175,14 +198,9 @@ public class VueInscription extends JPanel {
         //elements
         
 
-        JButton demarrer = new JButton("Demarrer partie");
-        JButton addjoueur = new JButton("Add joueur");
-        JButton remove = new JButton("Remove Joueur");
+        
 
-        JTextField champNom1 = new JTextField("Nom du Joueur 1");
-        JTextField champNom2 = new JTextField("Nom du Joueur 2");
-        JTextField champNom3 = new JTextField("Nom du Joueur 3");
-        JTextField champNom4 = new JTextField("Nom du Joueur 4");
+        
 
         //Ajout des éléments à la fenêtre
         //positionnement des panels
@@ -206,8 +224,8 @@ public class VueInscription extends JPanel {
         panelCentre.add(listeRole4);
 
         zonebas.add(demarrer);
-        zonebas.add(addjoueur);
-        zonebas.add(remove);
+        zonebas.add(addJoueur);
+        zonebas.add(removeJoueur);
 
         //Dimensions de la fenêtre
         fenetre.setSize(700, 500);
@@ -222,6 +240,41 @@ public class VueInscription extends JPanel {
             }
 
         });
+        
+        addJoueur.addActionListener ( new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!listeRole3.isEnabled()) {
+                    listeRole3.setEnabled(true);
+                    champNom3.setEnabled(true);
+                    
+        
+                    removeJoueur.setEnabled(true);
+                } else if (!listeRole4.isEnabled()) {
+                    listeRole4.setEnabled(true);
+                    champNom4.setEnabled(true);
+                    addJoueur.setEnabled(false);
+                    removeJoueur.setEnabled(true);
+                }
+        }});
+        removeJoueur.addActionListener ( new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (listeRole3.isEnabled() && listeRole4.isEnabled()) {
+                    listeRole4.setEnabled(false);
+                    listeRole4.setSelectedItem(null);
+                    champNom4.setEnabled(false);
+                    addJoueur.setEnabled(true);
+                    
+                } else if (listeRole4.isEnabled() == false) {
+                    listeRole3.setEnabled(false);
+                    listeRole3.setSelectedItem(null);
+                    champNom3.setEnabled(false);
+                    removeJoueur.setEnabled(false);
+                    addJoueur.setEnabled(true);
+                    
+                }
+        }});
 
         
 
