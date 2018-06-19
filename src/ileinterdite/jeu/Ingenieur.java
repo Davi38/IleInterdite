@@ -32,12 +32,12 @@ public class Ingenieur extends Aventurier {
         return false;
     }
     
-    // Pour gerer les 2 actions assechements pour 1 action
+    // Pour gerer les 2 actions assechements pour 1 action. Le reste est gerer dans controleur CLICTUILE
     public int getNbAssechement() {
         return this.nbAssechement;
     }
     
-    // Pour gerer les 2 actions assechements pour 1 action
+    // Pour gerer les 2 actions assechements pour 1 action. Le reste est gerer dans controleur CLICTUILE
     public void incrementerNbAssechement() {
         this.nbAssechement += 1;
     }
