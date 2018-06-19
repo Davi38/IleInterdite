@@ -199,7 +199,7 @@ public class Controleur implements Observateur {
                 Carte_Tresor cT = advAct.getCarteTresor().get(m.ind);
                 System.out.println(cT.getType());
                 advAct.getCarteTresor().remove(cT);
-                vue.initJoueur(advAct, joueurs.keySet().toArray()[nbAdvAct].toString());
+                vue.initJoueur(advAct, joueurs.get(advAct));
                 break;
                 
             case DONNER_CARTE:
