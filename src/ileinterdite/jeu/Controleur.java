@@ -176,17 +176,20 @@ public class Controleur implements Observateur {
 
     @Override
     public void traiterMessage(ileinterdite.vues.Message m) {
+        System.out.println(m.type);
         switch (m.type) {
             case DEMARRER:
                 demmarerPartie(m.listeJ);
                 break;
             case DEPLACER:
+                vue.desactiverB(advAct,grille);
                 actionG = TypeMessage.DEPLACER;
                 vue.majGrille(grille);
                 vue.majDeplacement(advAct, grille);
                 break;
 
             case ASSECHER:
+                vue.desactiverB(advAct,grille);
                 actionG = TypeMessage.ASSECHER;
                 vue.majGrille(grille);
                 vue.majAssechement(advAct, grille);
@@ -203,20 +206,39 @@ public class Controleur implements Observateur {
                 break;
                 
             case DONNER_CARTE:
+                vue.majGrille(grille);
                 actionG = TypeMessage.DONNER_CARTE;
+                vue.colorJ(advAct);
                 break;
                 
             case CLIC_JOUEUR:
                 if(actionG == TypeMessage.DONNER_CARTE ){
                     Role r = m.nomR;
-                    if(!roleDisponible(r)){
-                        jADonner = chercherAventurier(r);
-                    }
+                    jADonner = chercherAventurier(r);
+                    vue.activerB();   
                 }
                     
                 break;
+                
+            case CLIC_CARTE:
+                int i = m.ind;
+                Carte_Tresor ct = advAct.getCarteTresor().get(i);
+                if(jADonner.chercherNombreCartes()<9){
+                    advAct.removeAct();
+                    advAct.getCarteTresor().remove(i);
+                    jADonner.getCarteTresor().add(ct);
+                }
+                jADonner = null;
+                actionG = null;
+                vue.majCartes(advAct);
+                vue.desactiverB(advAct,grille);
+                 if (advAct.getActRest() == 0) {
+                    finTour();
+                }
+                break;
 
             case CLICTUILE:
+                vue.desactiverB(advAct,grille);
                 Ile tJ = (Ile) grille.getTuileP(grille.getPosition(advAct.getPosition()));
                 Position pos = grille.getPosition(m.pos);
 

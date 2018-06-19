@@ -126,6 +126,7 @@ for (int i = 1; i < 7; i++) {
             public void actionPerformed(ActionEvent e) {
                 Message m = new Message();
                 m.type = TypeMessage.DONNER_CARTE;
+                notifierObservateur(m);
             }
         });
         
@@ -292,6 +293,41 @@ for (int i = 1; i < 7; i++) {
     public void majNiveau(int niveauEau) {
         nv.setNiveau(niveauEau);
     }
+    
+    public void activerB(){
+        for(JButton b :boutCartes){
+            b.setEnabled(true);
+        }
+    }
+
+    public void desactiverB(Aventurier advAct,Grille grille) {
+        for(JButton b :boutCartes){
+            if (!(b.getText().equals("SABLE")||b.getText().equals("HELICOPTERE"))){
+                b.setEnabled(false);
+            }
+        }
+        Ile i = (Ile) grille.getTuileP(advAct.getPosition());
+        ArrayList<Aventurier> listeJ = i.getAventuriers();
+        BoutonTuile b = getBT(advAct.getPosition());
+        b.majTuile(listeJ, b.getColor());
+    }
+
+
+    public void colorJ(Aventurier advAct) {
+        BoutonTuile b = getBT(advAct.getPosition());
+        b.activerJ(advAct);
+    }
+    
+    public BoutonTuile getBT(Position pos){
+        for(BoutonTuile b : boutPieces.keySet()){
+            if(boutPieces.get(b).equals(pos)){
+                return b;
+            }
+        }
+        return null;
+    }
+    
+    
 
     
     

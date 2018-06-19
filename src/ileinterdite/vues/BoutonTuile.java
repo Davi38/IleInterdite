@@ -7,8 +7,10 @@ package ileinterdite.vues;
 
 import ileinterdite.jeu.Aventurier;
 import ileinterdite.jeu.Position;
+import ileinterdite.jeu.Role;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,21 +26,21 @@ import javax.swing.JPanel;
  */
 public class BoutonTuile extends Observe{
     
-    JButton Tuile;
+    JButton tuile;
     JPanel pions;
     HashMap<JButton,Aventurier> listeA;
     Position pos;
     
     BoutonTuile(String nomP,Position pos,Observateur o){
         this.addObservateur(o);
-        Tuile = new JButton();
-        Tuile.setLayout(new BorderLayout());
-        Tuile.add(new JLabel(nomP.replace("_", " ")),BorderLayout.NORTH);
+        tuile = new JButton();
+        tuile.setLayout(new BorderLayout());
+        tuile.add(new JLabel(nomP.replace("_", " ")),BorderLayout.NORTH);
         pions= new JPanel(new GridLayout(2,2));
-        Tuile.add(pions,BorderLayout.CENTER);
+        tuile.add(pions,BorderLayout.CENTER);
         listeA = new HashMap<JButton,Aventurier>();
         this.pos = pos;
-        Tuile.addActionListener(new ActionListener() {
+        tuile.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             Message m = new Message();
@@ -51,13 +53,14 @@ public class BoutonTuile extends Observe{
     
 
     void majTuile(ArrayList<Aventurier> listeJ, Color bg) {
-        Tuile.setBackground(bg);
+        tuile.setBackground(bg);
         listeA.clear();
         pions.removeAll();
         pions.setBackground(bg);
         for (Aventurier a : listeJ){
             JButton pion = new JButton(a.getRole().toString());
             pion.setBackground(a.getColor());
+            pion.setEnabled(false);
             listeA.put(pion, a);
             pion.addActionListener(new ActionListener() {
                 @Override
@@ -77,12 +80,28 @@ public class BoutonTuile extends Observe{
     }
     
     public JButton getBoutonTuile(){
-        return Tuile;
+        return tuile;
     }
     
     public void paint(Color bg){
-        Tuile.setBackground(bg);
+        tuile.setBackground(bg);
         pions.setBackground(bg);
     }
+
+    public void activerJ(Aventurier adv) {
+        for(Component c : pions.getComponents()){
+            if(c instanceof JButton){
+                JButton b =(JButton) c;
+                if(!b.getText().equalsIgnoreCase(adv.getRole().toString())){ 
+               b.setBackground(Color.red);
+               b.setEnabled(true);}
+            }
+        }
+    }
+    
+    public Color getColor(){
+        return tuile.getBackground();
+    }
+    
     
 }
