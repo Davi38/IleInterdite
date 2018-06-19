@@ -62,10 +62,10 @@ public class Controleur implements Observateur {
         for (TypeBonus bonus : TypeBonus.values()) {
             int i = 0;
 
-            if (bonus == TypeBonus.SABLE) {
-                i = 2;
-            } else {
+            if (bonus == TypeBonus.HELICOPTERE) {
                 i = 3;
+            } else {
+                i = 2;
             }
             for (int j = 0; j < i; j++) {
                 CtBonus carteB = new CtBonus(bonus);
@@ -108,12 +108,12 @@ public class Controleur implements Observateur {
                     Position posStart = getPositionDepart(r);
                     Aventurier a = null;
                     switch (r) {
-                        
+
                         case EXPLORATEUR:
                             a = new Explorateur(posStart);
                             break;
                         case NAVIGATEUR:
-                            a= new Navigateur(posStart);
+                            a = new Navigateur(posStart);
                             break;
                         case PILOTE:
                             a = new Pilote(posStart);
@@ -130,7 +130,7 @@ public class Controleur implements Observateur {
 
                     }
                     joueurs.put(nomJ, a);
-                    Ile tuJ =(Ile) grille.getTuileP(posStart);
+                    Ile tuJ = (Ile) grille.getTuileP(posStart);
                     tuJ.addAventurier(a);
                     System.out.println(tuJ.getAventuriers());
                     choixJoueur = false;
@@ -140,35 +140,22 @@ public class Controleur implements Observateur {
         }
         for (Aventurier adv : joueurs.values()) {
             for (int j = 0; j < 2; j++) {
-                Carte_Tresor ctT = piocheT.get(0);
-                adv.addCarte(ctT);
-                piocheT.remove(0);
+                piocherCarteT(adv);
             }
 
         }
         for (int j = 0; j < 6; j++) {
-            Carte_Inondation ctI = piocheI.get(0);
-            Piece_liste pc = ctI.getPiece();
-            Tuile tu = grille.getTuilePL(pc);
-            tu.innonder();
-            piocheI.remove(0);
-            defausseI.add(ctI);
+            piocherCarteI();
         }
-        vue = new JeuVue(grille);
+        vue = new JeuVue(grille, niveaueau.getNv());
         vue.addObservateur(this);
         vue.afficherFenetre();
         nbAdvAct = 0;
         advAct = joueurs.get(joueurs.keySet().toArray()[0]);
         advAct.initAct();
-        vue.initJoueur(advAct,joueurs.keySet().toArray()[0].toString());
-
-        
+        vue.initJoueur(advAct, joueurs.keySet().toArray()[0].toString());
 
     }
-
-   
-
-    
 
     public boolean roleDisponible(Role role) {
 
@@ -179,29 +166,35 @@ public class Controleur implements Observateur {
         return joueurs.get(nomJ);
     }
 
-
-    
-
     public void piocherCarteT(Aventurier aventurier) {
-        aventurier.addCarte(piocheT.get(0));    // on ajoute la premiere carte de la pioche a l'aventurier
-        defausseT.add(piocheT.get(0));          // on ajoute a la defausse la premiere carte de la pioche
-        piocheT.remove(0);                      // on supprime la premiere carte de la pioche
+        if (piocheT.isEmpty() && !defausseT.isEmpty()) {
+            piocheT.addAll(defausseT);
+            defausseT.clear();
+        }
+        if (!piocheT.isEmpty()) {
+            Carte_Tresor cT = piocheT.get(0);
+            piocheT.remove(0);
+            if (cT.getType() == "MONTEE_EAU") {
+                niveaueau.MonteeEau();
+                piocheI.addAll(defausseI);
+                Collections.shuffle(piocheI);
+                vue.majNiveau(niveaueau.getNv());
+            } else {
+                aventurier.addCarte(cT);
+            }
+        }
     }
 
     public void piocherCarteI() {
-        Piece_liste piecepiochee = piocheI.get(0).getPiece();   // on recupere la premiere carte de la pioche (index 0)
-        Tuile tuile = grille.getTuilePL(piecepiochee);
-     // on recupere la tuile associé à la pièce
-
-        tuile.innonder();   // on inonde cette carte
-
-        defausseI.add(piocheI.get(0));  // on ajoute a la defausse la premiere carte de la pioche
-        piocheI.remove(0);  // on supprime de la pioche la premiere carte
+        if (piocheI.isEmpty()) {
+            piocheI.addAll(defausseI);
+            defausseI.clear();
+        }
+        Ile ile = (Ile) grille.getTuilePL(piocheI.get(0).getPiece());
+        defausseI.add(piocheI.get(0));
+        piocheI.remove(0);
+        ile.innonder();  // on supprime de la pioche la premiere carte
     }
-
-
-
-    
 
     private Position getPositionDepart(Role r) {
         switch (r) {
@@ -223,19 +216,19 @@ public class Controleur implements Observateur {
 
     @Override
     public void traiterMessage(ileinterdite.vues.Message m) {
-        switch(m.type){
-            case DEPLACER : 
+        switch (m.type) {
+            case DEPLACER:
                 actionG = TypeMessage.DEPLACER;
                 vue.majGrille(grille);
                 vue.majDeplacement(advAct, grille);
                 break;
-            
-            case ASSECHER :
+
+            case ASSECHER:
                 actionG = TypeMessage.ASSECHER;
                 vue.majGrille(grille);
                 vue.majAssechement(advAct, grille);
                 break;
-                
+
             case FIN_TOUR:
                 finTour();
                 break;
@@ -243,22 +236,21 @@ public class Controleur implements Observateur {
                 Carte_Tresor cT = advAct.getCarteTresor().get(m.ind);
                 System.out.println(cT.getType());
                 advAct.getCarteTresor().remove(cT);
-                vue.initJoueur(advAct,joueurs.keySet().toArray()[nbAdvAct].toString());
+                vue.initJoueur(advAct, joueurs.keySet().toArray()[nbAdvAct].toString());
                 break;
-            
-            case CLICTUILE : 
+
+            case CLICTUILE:
                 Ile tJ = (Ile) grille.getTuileP(grille.getPosition(advAct.getPosition()));
                 Position pos = grille.getPosition(m.pos);
 
                 Ile t = (Ile) grille.getTuileP(pos);
-                if (actionG==TypeMessage.DEPLACER && advAct.verifDeplacement(pos, t)){
+                if (actionG == TypeMessage.DEPLACER && advAct.verifDeplacement(pos, t)) {
                     advAct.setPosition(pos);
                     tJ.getAventuriers().remove(advAct);
                     t.addAventurier(advAct);
                     advAct.removeAct();
 
-                    
-                }else if(actionG==TypeMessage.ASSECHER && advAct.verifAssechement(m.pos, t)){
+                } else if (actionG == TypeMessage.ASSECHER && advAct.verifAssechement(m.pos, t)) {
                     t.assecher();
                     advAct.removeAct();
 
@@ -266,64 +258,37 @@ public class Controleur implements Observateur {
                 vue.majGrille(grille);
                 actionG = null;
                 System.out.println(advAct.getActRest());
-                if (advAct.getActRest()==0){
+                if (advAct.getActRest() == 0) {
                     finTour();
                 }
-            break;
-                
+                break;
+
         }
-        
+
     }
-    
-    public void finTour(){
+
+    public void finTour() {
         vue.finT();
-        for(int i=0; i<2;i++){
-            if(!piocheT.isEmpty()){
-                Carte_Tresor cT = piocheT.get(0);                                                            
-                piocheT.remove(0);
-                if(cT.getType() == "MONTEE_EAU"){
-                    niveaueau.MonteeEau();
-                }else{
-                    advAct.addCarte(cT);
-                }
-            }
+        for (int i = 0; i < 2; i++) {
+            piocherCarteT(advAct);
         }
-        for(int i = 0; i<niveaueau.getNbCarte();i++){
-            if(piocheI.isEmpty()){
-                piocheI.addAll(defausseI);
-                defausseI.clear();
-            }
-            Ile ile = (Ile) grille.getTuilePL(piocheI.get(0).getPiece());
-            defausseI.add(piocheI.get(0));
-            piocheI.remove(0);
-            ile.innonder();
+        for (int i = 0; i < niveaueau.getNbCarte(); i++) {
+            piocherCarteI();
         }
         vue.majGrille(grille);
-        if(nbAdvAct+1== joueurs.size()){
+        if (nbAdvAct + 1 == joueurs.size()) {
             nbAdvAct = 0;
-        }else{
+        } else {
             nbAdvAct += 1;
         }
         initTour();
     }
-    
-    public void initTour(){
+
+    public void initTour() {
         advAct = joueurs.get(joueurs.keySet().toArray()[nbAdvAct]);
         advAct.initAct();
-        vue.initJoueur(advAct,joueurs.keySet().toArray()[nbAdvAct].toString());
-        
+        vue.initJoueur(advAct, joueurs.keySet().toArray()[nbAdvAct].toString());
+
     }
-
-   
-    
-  
-    
-
-   
-
-    
-
-    
-  
 
 }

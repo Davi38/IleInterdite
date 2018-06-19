@@ -42,10 +42,11 @@ public class JeuVue extends Observe {
     private JButton boutonFT;
     private JPanel pCartes;
     private JLabel etatJeu;
+    private VueNiveau nv;
     //
     
 
-    public JeuVue(Grille grille) {
+    public JeuVue(Grille grille,int niveauEau) {
         window1 = new JFrame("Jeu");
         JPanel mainPanel = new JPanel(new BorderLayout());
         window1.add(mainPanel);
@@ -55,9 +56,12 @@ public class JeuVue extends Observe {
         boutCartes = new ArrayList<JButton>();
         etatJeu = new JLabel();
         mainPanel.add(etatJeu,BorderLayout.NORTH);
+        nv = new VueNiveau(niveauEau);
+        mainPanel.add(nv,BorderLayout.WEST);
+         
         // ####################################################################################
         // grille au centre
-        for (int i = 1; i < 7; i++) {
+for (int i = 1; i < 7; i++) {
             for (int j = 1; j < 7; j++) {
                 Position pos = new Position(i, j);
 
@@ -217,9 +221,10 @@ public class JeuVue extends Observe {
         
     }
 
-    public void majGrille(Grille g) {
+     public void majGrille(Grille g) {
         for (JButton bouton : boutPieces.keySet()) {
-            Position pos = boutPieces.get(bouton);            
+            Position pos = boutPieces.get(bouton);
+            
             Ile t = (Ile) g.getTuileP(pos);
             if (t.getPiece() != "NULL") {
                 ArrayList<Aventurier> listeJ = t.getAventuriers();
@@ -281,6 +286,10 @@ public class JeuVue extends Observe {
         boutonD.setEnabled(false);
         boutonA.setEnabled(false);
         boutonFT.setEnabled(false);
+    }
+
+    public void majNiveau(int niveauEau) {
+        nv.setNiveau(niveauEau);
     }
 
     

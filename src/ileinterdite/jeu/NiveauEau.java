@@ -29,5 +29,9 @@ public class NiveauEau {
             niveau = niveau+1;
         }
 
+    public int getNv() {
+        return niveau;
+    }
+
 }
 
