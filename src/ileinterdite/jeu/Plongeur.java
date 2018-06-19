@@ -123,7 +123,9 @@ public class Plongeur extends Aventurier {
     @Override
     public boolean verifAssechement(Position pos2, Tuile tuile) {
         Position posj = getPosition();
-        if (abs(posj.col - pos2.col) <= 2 ^ abs(posj.lig - pos2.lig) <= 2) {
+        int l = abs(posj.col-pos2.col);
+        int c = abs(posj.lig-pos2.lig);
+        if((l==1&&c==0)||(l==0&&c==1)||(l==0&&c==0)) {
             return tuile.estInnondé();
         }
         return false;

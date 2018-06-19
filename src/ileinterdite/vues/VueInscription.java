@@ -83,7 +83,7 @@ public class VueInscription extends Observe {
         roles.add("Messager");
         roles.add("Explorateur");
         roles.add("Plongeur");
-        roles.add("Ingénieur");
+        roles.add("Ingenieur");
         
         champNom1 = new JTextField("Nom du Joueur 1");
         champNom2 = new JTextField("Nom du Joueur 2");

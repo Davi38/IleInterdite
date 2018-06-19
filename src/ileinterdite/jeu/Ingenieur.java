@@ -14,26 +14,41 @@ import static java.lang.Math.abs;
  */
 public class Ingenieur extends Aventurier {
 
-	private Color couleur = Color.ORANGE;
+    private Color couleur = Color.ORANGE;
+    private int nbAssechement = 0;
 
     Ingenieur(Position pos) {
         super(Role.INGENIEUR,pos,3);
     }
         
-        @Override
+    @Override
     public boolean verifDeplacement(Position pos2, Tuile tuile) {
         Position posj = getPosition();
-        if(abs(posj.col-pos2.col)==1 ^ abs(posj.lig-pos2.lig)== 1){
-           return tuile.getEtat()==Etat.ASSECHEE; 
+        int l = abs(posj.col-pos2.col);
+        int c = abs(posj.lig-pos2.lig);
+        if((l==1&&c==0)||(l==0&&c==1)||(l==0&&c==0)) {
+            return tuile.estInnondé() || tuile.getEtat() == Etat.ASSECHEE;
         }
         return false;
     }
+    
+    // Pour gerer les 2 actions assechements pour 1 action
+    public int getNbAssechement() {
+        return this.nbAssechement;
+    }
+    
+    // Pour gerer les 2 actions assechements pour 1 action
+    public void incrementerNbAssechement() {
+        this.nbAssechement += 1;
+    }
         
-        @Override
+    @Override
     public boolean verifAssechement(Position pos2, Tuile tuile) {
         Position posj = getPosition();
-        if(abs(posj.col-pos2.col)==1 ^ abs(posj.lig-pos2.lig)== 1){
-           return tuile.estInnondé(); 
+        int l = abs(posj.col-pos2.col);
+        int c = abs(posj.lig-pos2.lig);
+        if((l==1&&c==0)||(l==0&&c==1)||(l==0&&c==0)) {
+            return tuile.estInnondé();
         }
         return false;
     }

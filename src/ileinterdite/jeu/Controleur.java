@@ -32,14 +32,14 @@ public class Controleur implements Observateur {
 
     private ArrayList<Carte_Inondation> piocheI;
     private Grille grille;
-    private HashMap<Aventurier,String> joueurs;
+    private HashMap<Aventurier, String> joueurs;
     private ArrayList<Carte_Inondation> defausseI;
     private ArrayList<Carte_Tresor> defausseT;
     private ArrayList<Carte_Tresor> piocheT;
-    
+
     private JeuVue vue;
     private VueInscription vueI;
-    
+
     private boolean finJeu;
     private boolean finTour;
     private Aventurier advAct;
@@ -53,7 +53,7 @@ public class Controleur implements Observateur {
         defausseI = new ArrayList<Carte_Inondation>();
         piocheI = new ArrayList<Carte_Inondation>();
         piocheT = new ArrayList<Carte_Tresor>();
-        joueurs = new HashMap<Aventurier,String>();
+        joueurs = new HashMap<Aventurier, String>();
 
         tresors = new ArrayList<Tresor>();
 
@@ -101,25 +101,23 @@ public class Controleur implements Observateur {
         vueI = new VueInscription();
         vueI.addObservateur(this);
         vueI.afficherFenetre();
-        
 
     }
 
     public boolean roleDisponible(Role role) {
 
-        for(Aventurier a : joueurs.keySet()){
-            if(a.getRole()== role){
+        for (Aventurier a : joueurs.keySet()) {
+            if (a.getRole() == role) {
                 return false;
             }
-                
+
         }
         return true;
     }
 
-    
     public Aventurier chercherAventurier(Role r) {
-        for(Aventurier a : joueurs.keySet()){
-            if(a.getRole()==r){
+        for (Aventurier a : joueurs.keySet()) {
+            if (a.getRole() == r) {
                 return a;
             }
         }
@@ -182,7 +180,7 @@ public class Controleur implements Observateur {
                 demmarerPartie(m.listeJ);
                 break;
             case DEPLACER:
-                vue.desactiverB(advAct,grille);
+                vue.desactiverB(advAct, grille);
                 actionG = TypeMessage.DEPLACER;
                 if (advAct instanceof Plongeur) {
                     Plongeur plongeur = (Plongeur) advAct;
@@ -193,7 +191,11 @@ public class Controleur implements Observateur {
                 break;
 
             case ASSECHER:
-                vue.desactiverB(advAct,grille);
+                if (advAct instanceof Plongeur) {
+                    Plongeur plongeur = (Plongeur) advAct;
+                    plongeur.setGrille(grille);
+                }
+                vue.desactiverB(advAct, grille);
                 actionG = TypeMessage.ASSECHER;
                 vue.majGrille(grille);
                 vue.majAssechement(advAct, grille);
@@ -208,9 +210,9 @@ public class Controleur implements Observateur {
                 advAct.getCarteTresor().remove(cT);
                 vue.initJoueur(advAct, joueurs.get(advAct));
                 break;
-                
+
             case GAGNER_TRESOR:
-                if(verifGT()){
+                if (verifGT()) {
                     advAct.removeAct();
                     vue.majCartes(advAct);
                 }
@@ -218,26 +220,26 @@ public class Controleur implements Observateur {
                     finTour();
                 }
                 break;
-                
+
             case DONNER_CARTE:
                 vue.majGrille(grille);
                 actionG = TypeMessage.DONNER_CARTE;
                 vue.colorJ(advAct);
                 break;
-                
+
             case CLIC_JOUEUR:
-                if(actionG == TypeMessage.DONNER_CARTE ){
+                if (actionG == TypeMessage.DONNER_CARTE) {
                     Role r = m.nomR;
                     jADonner = chercherAventurier(r);
-                    vue.activerB();   
+                    vue.activerB();
                 }
-                    
+
                 break;
-                
+
             case CLIC_CARTE:
-                Carte_Tresor ct = advAct.getCarteTresor().get(m.ind+1);
-                if(jADonner!=null){
-                if(jADonner.chercherNombreCartes()<9){
+                int i = m.ind;
+                Carte_Tresor ct = advAct.getCarteTresor().get(i);
+                if (jADonner.chercherNombreCartes() < 9) {
                     advAct.removeAct();
                     jADonner.getCarteTresor().add(ct);
                     advAct.getCarteTresor().remove(ct);
@@ -245,19 +247,19 @@ public class Controleur implements Observateur {
                 jADonner = null;
                 actionG = null;
                 vue.majCartes(advAct);
-                vue.desactiverB(advAct,grille);
-                 if (advAct.getActRest() == 0) {
+                vue.desactiverB(advAct, grille);
+                if (advAct.getActRest() == 0) {
                     finTour();
                 }
                 break;
 
             case CLICTUILE:
-                vue.desactiverB(advAct,grille);
+                vue.desactiverB(advAct, grille);
                 Ile tJ = (Ile) grille.getTuileP(grille.getPosition(advAct.getPosition()));
                 Position pos = grille.getPosition(m.pos);
 
                 Ile t = (Ile) grille.getTuileP(pos);
-                if (actionG==TypeMessage.DEPLACER && advAct.verifDeplacement(pos, t)){
+                if (actionG == TypeMessage.DEPLACER && advAct.verifDeplacement(pos, t)) {
                     advAct.setPosition(pos);
                     tJ.getAventuriers().remove(advAct);
                     t.addAventurier(advAct);
@@ -265,7 +267,16 @@ public class Controleur implements Observateur {
 
                 } else if (actionG == TypeMessage.ASSECHER && advAct.verifAssechement(m.pos, t)) {
                     t.assecher();
-                    advAct.removeAct();
+
+                    if (advAct instanceof Ingenieur) {
+                        Ingenieur ingenieur = (Ingenieur) advAct;
+                        ingenieur.incrementerNbAssechement();
+                        if (ingenieur.getNbAssechement() % 2 == 0) {
+                            advAct.removeAct();
+                        }
+                    } else {
+                        advAct.removeAct();
+                    }
 
                 }
                 vue.majGrille(grille);
@@ -305,38 +316,38 @@ public class Controleur implements Observateur {
     }
 
     private void demmarerPartie(HashMap<Role, String> listeJ) {
-        for(Role r : listeJ.keySet()){
+        for (Role r : listeJ.keySet()) {
             Position posStart = getPositionDepart(r);
-                    Aventurier a = null;
-                    switch (r) {
+            Aventurier a = null;
+            switch (r) {
 
-                        case EXPLORATEUR:
-                            a = new Explorateur(posStart);
-                            break;
-                        case NAVIGATEUR:
-                            a = new Navigateur(posStart);
-                            break;
-                        case PILOTE:
-                            a = new Pilote(posStart);
-                            break;
-                        case INGENIEUR:
-                            a = new Ingenieur(posStart);
-                            break;
-                        case MESSAGER:
-                            a = new Messager(posStart);
-                            break;
-                        case PLONGEUR:
-                            a = new Plongeur(posStart);
-                            break;
+                case EXPLORATEUR:
+                    a = new Explorateur(posStart);
+                    break;
+                case NAVIGATEUR:
+                    a = new Navigateur(posStart);
+                    break;
+                case PILOTE:
+                    a = new Pilote(posStart);
+                    break;
+                case INGENIEUR:
+                    a = new Ingenieur(posStart);
+                    break;
+                case MESSAGER:
+                    a = new Messager(posStart);
+                    break;
+                case PLONGEUR:
+                    a = new Plongeur(posStart);
+                    break;
 
-                    }
-                    joueurs.put(a,listeJ.get(r));
-                    Ile tuJ = (Ile) grille.getTuileP(posStart);
-                    tuJ.addAventurier(a);
+            }
+            joueurs.put(a, listeJ.get(r));
+            Ile tuJ = (Ile) grille.getTuileP(posStart);
+            tuJ.addAventurier(a);
         }
         vueI.cacherFenetre();
-        vue = new JeuVue(grille, niveaueau.getNv(),this);
-        
+        vue = new JeuVue(grille, niveaueau.getNv(), this);
+
         for (Aventurier adv : joueurs.keySet()) {
             for (int j = 0; j < 2; j++) {
                 piocherCarteT(adv);
@@ -349,19 +360,16 @@ public class Controleur implements Observateur {
         vue.majGrille(grille);
         vue.afficherFenetre();
         nbAdvAct = 0;
-        advAct =(Aventurier) joueurs.keySet().toArray()[0];
+        advAct = (Aventurier) joueurs.keySet().toArray()[0];
         advAct.initAct();
         vue.initJoueur(advAct, joueurs.get(advAct));
     }
-    
-    public boolean verifGT(){
-        Ile ile = (Ile)grille.getTuileP(advAct.getPosition());
-        System.out.println(ile.getPiece());
-        TypeTrésor t = convertTresor(ile);
-        if( t != null){
+
+    public boolean verifGT() {
+        TypeTrésor t = convertTresor((Ile) grille.getTuileP(advAct.getPosition()));
+        if (t != null) {
             Tresor tres = getTresor(t);
-            System.out.println(advAct.verifGagnerT(tres) + "et " + !tres.isRecuperé());
-            if (!tres.isRecuperé() && advAct.verifGagnerT(tres)){
+            if (!tres.isRecuperé() && advAct.verifGagnerT(tres)) {
                 tres.setRecuperé(true);
                 advAct.removeCT(t);
                 return tres.isRecuperé();
@@ -369,23 +377,23 @@ public class Controleur implements Observateur {
         }
         return false;
     }
-    
-    public TypeTrésor convertTresor(Ile i){
-        if(i.getPiece().contains("Temple")){
-           return TypeTrésor.PIERRE;
-        }else if(i.getPiece().contains("Jardin")){
-           return TypeTrésor.STATUE;
-        }else if(i.getPiece().contains("Caverne")){
-           return TypeTrésor.CRYSTAL;
-        }else if(i.getPiece().contains("Palais")){
-           return TypeTrésor.CALICE; 
+
+    public TypeTrésor convertTresor(Ile i) {
+        if (i.getPiece().contains("Temple")) {
+            return TypeTrésor.PIERRE;
+        } else if (i.getPiece().contains("Jardin")) {
+            return TypeTrésor.STATUE;
+        } else if (i.getPiece().contains("Caverne")) {
+            return TypeTrésor.CRYSTAL;
+        } else if (i.getPiece().contains("Palais")) {
+            return TypeTrésor.CALICE;
         }
         return null;
     }
 
-    public Tresor getTresor(TypeTrésor type){
-        for (Tresor t : tresors){
-            if(t.getType()==(type)){
+    public Tresor getTresor(TypeTrésor type) {
+        for (Tresor t : tresors) {
+            if (t.getType() == (type)) {
                 return t;
             }
         }
