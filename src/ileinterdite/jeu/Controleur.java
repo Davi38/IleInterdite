@@ -184,6 +184,10 @@ public class Controleur implements Observateur {
             case DEPLACER:
                 vue.desactiverB(advAct,grille);
                 actionG = TypeMessage.DEPLACER;
+                if (advAct instanceof Plongeur) {
+                    Plongeur plongeur = (Plongeur) advAct;
+                    plongeur.setGrille(grille);
+                }
                 vue.majGrille(grille);
                 vue.majDeplacement(advAct, grille);
                 break;
@@ -243,10 +247,6 @@ public class Controleur implements Observateur {
                 Position pos = grille.getPosition(m.pos);
 
                 Ile t = (Ile) grille.getTuileP(pos);
-                if (advAct instanceof Plongeur) {
-                    Plongeur plongeur = (Plongeur) advAct;
-                    plongeur.setGrille(grille);
-                }
                 if (actionG==TypeMessage.DEPLACER && advAct.verifDeplacement(pos, t)){
                     advAct.setPosition(pos);
                     tJ.getAventuriers().remove(advAct);
