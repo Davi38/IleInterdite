@@ -11,6 +11,7 @@ import ileinterdite.jeu.Role;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,7 +36,9 @@ public class BoutonTuile extends Observe{
         this.addObservateur(o);
         tuile = new JButton();
         tuile.setLayout(new BorderLayout());
-        tuile.add(new JLabel(nomP.replace("_", " ")),BorderLayout.NORTH);
+        JLabel nomT  = new JLabel(nomP.replace("_", " "));
+        nomT.setFont((new Font("Arial", Font.PLAIN, 20)));
+        tuile.add(nomT,BorderLayout.NORTH);
         pions= new JPanel(new GridLayout(2,2));
         tuile.add(pions,BorderLayout.CENTER);
         listeA = new HashMap<JButton,Aventurier>();
