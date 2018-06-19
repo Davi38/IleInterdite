@@ -16,6 +16,7 @@ import java.util.Scanner;
 import ileinterdite.vues.JeuVue;
 import ileinterdite.vues.Observateur;
 import ileinterdite.vues.TypeMessage;
+import ileinterdite.vues.VueInscription;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
@@ -31,11 +32,14 @@ public class Controleur implements Observateur {
 
     private ArrayList<Carte_Inondation> piocheI;
     private Grille grille;
-    private HashMap<String, Aventurier> joueurs;
+    private HashMap<Aventurier,String> joueurs;
     private ArrayList<Carte_Inondation> defausseI;
     private ArrayList<Carte_Tresor> defausseT;
     private ArrayList<Carte_Tresor> piocheT;
+    
     private JeuVue vue;
+    private VueInscription vueI;
+    
     private boolean finJeu;
     private boolean finTour;
     private Aventurier advAct;
@@ -49,7 +53,7 @@ public class Controleur implements Observateur {
         defausseI = new ArrayList<Carte_Inondation>();
         piocheI = new ArrayList<Carte_Inondation>();
         piocheT = new ArrayList<Carte_Tresor>();
-        joueurs = new HashMap<String, Aventurier>();
+        joueurs = new HashMap<Aventurier,String>();
 
         tresors = new ArrayList<Tresor>();
 
@@ -94,75 +98,16 @@ public class Controleur implements Observateur {
             i = sc.nextInt();
         }
         niveaueau = new NiveauEau(i);
-
-        boolean choixJoueur = true;
-
-        while (choixJoueur) {
-            String nomJ = sc.nextLine();
-            System.out.println("Entrez le nom d'un Joueur:");
-            nomJ = sc.nextLine();
-            System.out.println("Entrez un role:");
-            String unRole = sc.nextLine();
-
-            if (Role.valueOf(unRole.toUpperCase()) != null) {
-                Role r = Role.valueOf(unRole.toUpperCase());
-                if (roleDisponible(r)) {
-                    Position posStart = getPositionDepart(r);
-                    Aventurier a = null;
-                    switch (r) {
-
-                        case EXPLORATEUR:
-                            a = new Explorateur(posStart);
-                            break;
-                        case NAVIGATEUR:
-                            a = new Navigateur(posStart);
-                            break;
-                        case PILOTE:
-                            a = new Pilote(posStart);
-                            break;
-                        case INGENIEUR:
-                            a = new Ingenieur(posStart);
-                            break;
-                        case MESSAGER:
-                            a = new Messager(posStart);
-                            break;
-                        case PLONGEUR:
-                            a = new Plongeur(posStart);
-                            break;
-
-                    }
-                    joueurs.put(nomJ, a);
-                    Ile tuJ = (Ile) grille.getTuileP(posStart);
-                    tuJ.addAventurier(a);
-                    System.out.println(tuJ.getAventuriers());
-                    choixJoueur = false;
-                }
-            }
-
-        }
-        vue = new JeuVue(grille, niveaueau.getNv(),this);
+        vueI = new VueInscription();
+        vueI.addObservateur(this);
+        vueI.afficherFenetre();
         
-        for (Aventurier adv : joueurs.values()) {
-            for (int j = 0; j < 2; j++) {
-                piocherCarteT(adv);
-            }
-
-        }
-        for (int j = 0; j < 6; j++) {
-            piocherCarteI();
-        }
-        vue.majGrille(grille);
-        vue.afficherFenetre();
-        nbAdvAct = 0;
-        advAct = joueurs.get(joueurs.keySet().toArray()[0]);
-        advAct.initAct();
-        vue.initJoueur(advAct, joueurs.keySet().toArray()[0].toString());
 
     }
 
     public boolean roleDisponible(Role role) {
 
-        for(Aventurier a : joueurs.values()){
+        for(Aventurier a : joueurs.keySet()){
             if(a.getRole()== role){
                 return false;
             }
@@ -171,12 +116,9 @@ public class Controleur implements Observateur {
         return true;
     }
 
-    public Aventurier chercherAventurier(String nomJ) {
-        return joueurs.get(nomJ);
-    }
     
     public Aventurier chercherAventurier(Role r) {
-        for(Aventurier a : joueurs.values()){
+        for(Aventurier a : joueurs.keySet()){
             if(a.getRole()==r){
                 return a;
             }
@@ -235,6 +177,9 @@ public class Controleur implements Observateur {
     @Override
     public void traiterMessage(ileinterdite.vues.Message m) {
         switch (m.type) {
+            case DEMARRER:
+                demmarerPartie(m.listeJ);
+                break;
             case DEPLACER:
                 actionG = TypeMessage.DEPLACER;
                 vue.majGrille(grille);
@@ -321,10 +266,60 @@ public class Controleur implements Observateur {
     }
 
     public void initTour() {
-        advAct = joueurs.get(joueurs.keySet().toArray()[nbAdvAct]);
+        advAct = (Aventurier) joueurs.keySet().toArray()[nbAdvAct];;
         advAct.initAct();
-        vue.initJoueur(advAct, joueurs.keySet().toArray()[nbAdvAct].toString());
+        vue.initJoueur(advAct, joueurs.get(advAct));
 
+    }
+
+    private void demmarerPartie(HashMap<Role, String> listeJ) {
+        for(Role r : listeJ.keySet()){
+            Position posStart = getPositionDepart(r);
+                    Aventurier a = null;
+                    switch (r) {
+
+                        case EXPLORATEUR:
+                            a = new Explorateur(posStart);
+                            break;
+                        case NAVIGATEUR:
+                            a = new Navigateur(posStart);
+                            break;
+                        case PILOTE:
+                            a = new Pilote(posStart);
+                            break;
+                        case INGENIEUR:
+                            a = new Ingenieur(posStart);
+                            break;
+                        case MESSAGER:
+                            a = new Messager(posStart);
+                            break;
+                        case PLONGEUR:
+                            a = new Plongeur(posStart);
+                            break;
+
+                    }
+                    joueurs.put(a,listeJ.get(r));
+                    Ile tuJ = (Ile) grille.getTuileP(posStart);
+                    tuJ.addAventurier(a);
+        }
+        vueI.cacherFenetre();
+        vue = new JeuVue(grille, niveaueau.getNv(),this);
+        
+        for (Aventurier adv : joueurs.keySet()) {
+            for (int j = 0; j < 2; j++) {
+                piocherCarteT(adv);
+            }
+
+        }
+        for (int j = 0; j < 6; j++) {
+            piocherCarteI();
+        }
+        vue.majGrille(grille);
+        vue.afficherFenetre();
+        nbAdvAct = 0;
+        advAct =(Aventurier) joueurs.keySet().toArray()[0];
+        advAct.initAct();
+        vue.initJoueur(advAct, joueurs.get(advAct));
     }
 
 }
