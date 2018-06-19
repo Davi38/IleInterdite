@@ -19,45 +19,43 @@ public class Grille {
 
     private HashMap<Position, Tuile> tuiles;
 
-    Grille(){
-        
+    Grille() {
+
         ArrayList<Piece_liste> listepiece = new ArrayList<Piece_liste>();
         for (Piece_liste pc : Piece_liste.values()) {
-            if(pc != Piece_liste.NULL){
-            listepiece.add(pc);}
+            if (pc != Piece_liste.NULL) {
+                listepiece.add(pc);
+            }
         }
-        
+
         Collections.shuffle(listepiece);
-        tuiles = new HashMap<>() ;
-        
+        tuiles = new HashMap<>();
 
         for (int i = 1; i < 7; i++) {
             for (int j = 1; j < 7; j++) {
-                Position pos = new Position(i,j);
-                  if ( ((i==1||i==6)&& (j==1 ||j==2||j==5 || j==6))||((i==2||i==5)&&(j==1 || j==6))){
-                      Tuile_null tuile = new Tuile_null();
-                      System.out.println(i+ "-"+j);
-                      tuiles.put(pos, tuile);
-                  }else{
-                      System.out.println(i+ "--"+j);
-                      Ile tuile = new Ile(listepiece.get(0));
-                      listepiece.remove(0);
-                      tuiles.put(pos, tuile);
-                  }
+                Position pos = new Position(i, j);
+                if (((i == 1 || i == 6) && (j == 1 || j == 2 || j == 5 || j == 6)) || ((i == 2 || i == 5) && (j == 1 || j == 6))) {
+                    Tuile_null tuile = new Tuile_null();
+                    //System.out.println(i+ "-"+j);
+                    tuiles.put(pos, tuile);
+                } else {
+                    //System.out.println(i+ "--"+j);
+                    Ile tuile = new Ile(listepiece.get(0));
+                    listepiece.remove(0);
+                    tuiles.put(pos, tuile);
+                }
 
             }
         }
     }
 
-    
-
     /**
      *
      * @param tuilep
      */
-    public Position getPosition(Tuile tuile) {
-        for (int i = 0; i > 7; i++) {
-            for (int j = 0; i > 7; i++) {
+    /*public Position getPosition(Tuile tuile) {
+        for (int i = 1; i < 7; i++) {
+            for (int j = 1; i < 7; i++) {
                 Position pos = new Position(i, j);
                 if (tuiles.get(pos).equals(tuile)) {
                     return pos;
@@ -65,26 +63,33 @@ public class Grille {
             }
         }
         return null;
-    }
-    
-    public Position getPositionP(Piece_liste pc) {
-        for(Position pos : tuiles.keySet()){
-            if (tuiles.get(pos).getPiece()==pc.toString()){
+    } */
+    public Position getPositionP(Tuile tuile) {
+        for (Position pos : tuiles.keySet()) {
+            if (tuiles.get(pos).getPiece() == tuile.getPiece()) {
                 return pos;
             }
         }
         return null;
     }
 
-    
+    public Position getPositionP(Piece_liste pc) {
+        for (Position pos : tuiles.keySet()) {
+            if (tuiles.get(pos).getPiece() == pc.toString()) {
+                return pos;
+            }
+        }
+        return null;
+    }
+
     public HashMap<Position, Tuile> getGrille() {
         return tuiles;
     }
 
-   public Tuile getTuilePL(Piece_liste pc) {
-        
-        for (Tuile t : tuiles.values()){
-            if(t.getPiece()==pc.toString()){
+    public Tuile getTuilePL(Piece_liste pc) {
+
+        for (Tuile t : tuiles.values()) {
+            if (t.getPiece() == pc.toString()) {
                 return t;
             }
         }
@@ -92,20 +97,22 @@ public class Grille {
     }
 
     public Tuile getTuileP(Position pos) {
-        for(Position p : tuiles.keySet()){
-            if(p.equals(pos)){
-                
+        for (Position p : tuiles.keySet()) {
+            if (p.equals(pos)) {
+
                 return tuiles.get(p);
-        }}
+            }
+        }
         return null;
     }
-    public Position getPosition(Position pos){
-        for (Position p: tuiles.keySet()){
-            if(p.equals(pos)){
-                
-            return p;
-        }    
-       }
+
+    public Position getPosition(Position pos) {
+        for (Position p : tuiles.keySet()) {
+            if (p.equals(pos)) {
+
+                return p;
+            }
+        }
         return null;
     }
 
