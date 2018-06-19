@@ -317,9 +317,9 @@ public class VueInscription extends Observe {
             test = listeRole4.getSelectedItem()!=null && listeRole3.getSelectedItem()!=null;
             
         }else if(listeRole3.isEnabled()){
-            test = listeRole4.getSelectedItem()!=null && listeRole3.getSelectedItem()!=null;
+            test = listeRole3.getSelectedItem()!=null;
         }
-        return test && listeRole1.getSelectedItem()!=null && listeRole2.getSelectedItem()!=null; 
+        return test && listeRole1.getSelectedItem()!= null && listeRole2.getSelectedItem()!=null; 
     }   
     }
 
