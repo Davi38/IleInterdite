@@ -25,7 +25,7 @@ public class Plongeur extends Aventurier {
 
     public ArrayList<Tuile> get4CartesAutourPosition(Grille grille, Position pos2) {
         ArrayList<Tuile> tuiles = new ArrayList<>();
-        if (pos2.col > 1 && pos2.col < 6 && pos2.lig > 1 && pos2.lig < 6) {
+        if (pos2.col > 1 && pos2.col < 7 && pos2.lig > 0 && pos2.lig < 7) {
 
             Position posGauche = new Position(pos2.col - 1, pos2.lig);
             int i = posGauche.col;
@@ -33,24 +33,28 @@ public class Plongeur extends Aventurier {
             if (!(((i == 1 || i == 6) && (j == 1 || j == 2 || j == 5 || j == 6)) || ((i == 2 || i == 5) && (j == 1 || j == 6)))) {
                 tuiles.add(grille.getTuileP(posGauche));
             }
+        }
+        if (pos2.col > 0 && pos2.col < 6 && pos2.lig > 0 && pos2.lig < 7) {
 
             Position posDroite = new Position(pos2.col + 1, pos2.lig);
-            i = posDroite.col;
-            j = posDroite.lig;
+            int i = posDroite.col;
+            int j = posDroite.lig;
             if (!(((i == 1 || i == 6) && (j == 1 || j == 2 || j == 5 || j == 6)) || ((i == 2 || i == 5) && (j == 1 || j == 6)))) {
                 tuiles.add(grille.getTuileP(posDroite));
             }
-
+        }
+        if (pos2.col > 0 && pos2.col < 7 && pos2.lig > 0 && pos2.lig < 6) {
             Position posBas = new Position(pos2.col, pos2.lig + 1);
-            i = posBas.col;
-            j = posBas.lig;
+            int i = posBas.col;
+            int j = posBas.lig;
             if (!(((i == 1 || i == 6) && (j == 1 || j == 2 || j == 5 || j == 6)) || ((i == 2 || i == 5) && (j == 1 || j == 6)))) {
                 tuiles.add(grille.getTuileP(posBas));
             }
-
+        }
+        if (pos2.col > 0 && pos2.col < 7 && pos2.lig > 1 && pos2.lig < 7) {
             Position posHaut = new Position(pos2.col, pos2.lig - 1);
-            i = posHaut.col;
-            j = posHaut.lig;
+            int i = posHaut.col;
+            int j = posHaut.lig;
             if (!(((i == 1 || i == 6) && (j == 1 || j == 2 || j == 5 || j == 6)) || ((i == 2 || i == 5) && (j == 1 || j == 6)))) {
                 tuiles.add(grille.getTuileP(posHaut));
             }
@@ -65,18 +69,22 @@ public class Plongeur extends Aventurier {
         Position posj = getPosition();
 
         for (Tuile tuil : get4CartesAutourPosition(grille, posj)) {
-            if (tuil.getEtat() == Etat.ASSECHEE) {
+            if (tuil.getEtat() == Etat.ASSECHEE || tuil.getEtat() == Etat.INNONDEE) {
                 tuilesAccessibles.add(tuil);
-            } else if (tuil.getEtat() == Etat.INNONDEE) {
+            }
+            if (tuil.getEtat() == Etat.INNONDEE || tuil.getEtat() == Etat.NOYEE) {
 
                 //System.out.println(grille.getPositionP(tuil));
                 for (Tuile tuil2 : get4CartesAutourPosition(grille, grille.getPositionP(tuil))) {
-                    if (tuil2.getEtat() == Etat.ASSECHEE) {
+                    if (tuil2.getEtat() == Etat.ASSECHEE || tuil2.getEtat() == Etat.INNONDEE) {
                         tuilesAccessibles.add(tuil2);
-                    } else if (tuil2.getEtat() == Etat.INNONDEE) {
+                    }
+                    if (tuil2.getEtat() == Etat.INNONDEE || tuil.getEtat() == Etat.NOYEE) {
 
                         for (Tuile tuil3 : get4CartesAutourPosition(grille, grille.getPositionP(tuil2))) {
-                            if (tuil3.getEtat() == Etat.ASSECHEE) {
+                            //System.out.println("Tuiles presente : " + tuilesAccessibles.size());
+                            //System.out.println(get4CartesAutourPosition(grille, grille.getPositionP(tuil2)));
+                            if (tuil3.getEtat() == Etat.ASSECHEE || tuil3.getEtat() == Etat.INNONDEE) {
                                 tuilesAccessibles.add(tuil3);
                             }
 
@@ -86,8 +94,7 @@ public class Plongeur extends Aventurier {
                 }
             }
         }
-        System.out.println("Tuiles presente : " + tuilesAccessibles.size());
-        
+        //System.out.println("Tuiles presente : " + tuilesAccessibles.size());
 
         //System.out.println("Tuiles presente : " + tuilesAccessibles.size());
         if (tuilesAccessibles.contains(tuile)) {
