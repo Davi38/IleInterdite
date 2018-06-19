@@ -177,7 +177,7 @@ for (int i = 1; i < 7; i++) {
         boutCartes.clear();
         pCartes.setLayout(new GridLayout(1,cartes.size()));
         for (int i = 0; i < cartes.size(); i++) {
-            JButton b = new JButton( cartes.get(i).getType());
+            JButton b = new JButton(cartes.get(i).getType());
             pCartes.add(b);
             boutCartes.add(b);
             if(cartes.size()<6){
@@ -191,7 +191,7 @@ for (int i = 1; i < 7; i++) {
                     public void mouseClicked(MouseEvent e) {
                         Message m = new Message();
                         m.type = TypeMessage.CLIC_CARTE;
-                        boutCartes.indexOf(b);
+                        m.ind = boutCartes.indexOf(b);
                         notifierObservateur(m); 
                     }
 

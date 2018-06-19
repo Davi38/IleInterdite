@@ -51,6 +51,7 @@ public class Controleur implements Observateur {
     Controleur() {
         finJeu = false;
         defausseI = new ArrayList<Carte_Inondation>();
+        defausseT = new ArrayList<Carte_Tresor>();
         piocheI = new ArrayList<Carte_Inondation>();
         piocheT = new ArrayList<Carte_Tresor>();
         joueurs = new HashMap<Aventurier, String>();
@@ -116,7 +117,9 @@ public class Controleur implements Observateur {
     }
 
     public void piocherCarteT(Aventurier aventurier) {
-        if (piocheT.isEmpty() && !defausseT.isEmpty()) {
+        System.out.println("pt: "+piocheT.size());
+        System.out.println("dt: "+defausseT.size());
+        if (piocheT.isEmpty()) {
             piocheT.addAll(defausseT);
             defausseT.clear();
         }
@@ -124,6 +127,7 @@ public class Controleur implements Observateur {
             Carte_Tresor cT = piocheT.get(0);
             piocheT.remove(0);
             if (cT.getType() == "MONTEE_EAU") {
+                defausseT.add(cT);
                 niveaueau.MonteeEau();
                 piocheI.addAll(defausseI);
                 Collections.shuffle(piocheI);
@@ -197,7 +201,7 @@ public class Controleur implements Observateur {
                 break;
             case DEFFAUSE:
                 Carte_Tresor cT = advAct.getCarteTresor().get(m.ind);
-                System.out.println(cT.getType());
+                defausseT.add(cT);
                 advAct.getCarteTresor().remove(cT);
                 vue.initJoueur(advAct, joueurs.get(advAct));
                 break;
@@ -228,13 +232,14 @@ public class Controleur implements Observateur {
                 break;
 
             case CLIC_CARTE:
-                int i = m.ind;
-                Carte_Tresor ct = advAct.getCarteTresor().get(i);
+                Carte_Tresor ct = advAct.getCarteTresor().get(m.ind);
+                System.out.println(ct.getType());
+                if(jADonner != null){
                 if (jADonner.chercherNombreCartes() < 9) {
                     advAct.removeAct();
-                    jADonner.getCarteTresor().add(ct);
+                    jADonner.addCarte(ct);
                     advAct.getCarteTresor().remove(ct);
-                }
+                }}
                 jADonner = null;
                 actionG = null;
                 vue.majCartes(advAct);
@@ -297,7 +302,7 @@ public class Controleur implements Observateur {
     }
 
     public void initTour() {
-        advAct = (Aventurier) joueurs.keySet().toArray()[nbAdvAct];;
+        advAct = (Aventurier) joueurs.keySet().toArray()[nbAdvAct];
         advAct.initAct();
         vue.initJoueur(advAct, joueurs.get(advAct));
 
