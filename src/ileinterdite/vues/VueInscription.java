@@ -26,14 +26,267 @@ import javax.swing.JTextField;
  * @author bouchtir
  */
 public class VueInscription extends JPanel {
+    private JPanel zonehaut;
+    private JPanel panelCentre;
+    private JPanel zonebas;
+    private JComboBox listeRole1;
+    private JComboBox listeRole2;
+    private JComboBox listeRole3;
+    private JComboBox listeRole4;
+    private ArrayList<String> roles;
+    private JButton demarrer;
+    private JButton addJoueur;
+    private JButton removeJoueur;
     
+    private JTextField champNom1; 
+    private JTextField champNom2;
+    private JTextField champNom3;
+    private JTextField champNom4;
 
 
     public VueInscription() {
+        
+
+
+        //déclaration de la fenêtre
+        JFrame fenetre = new JFrame("Choix des Joueurs");
+        fenetre.setLayout(new BorderLayout());
+
+        zonebas = new JPanel();
+        panelCentre = new JPanel(new GridLayout(4, 2));
+        zonehaut = new JPanel();
+
+        listeRole1 = new JComboBox();
+        listeRole2 = new JComboBox();
+        listeRole3 = new JComboBox();
+        listeRole4 = new JComboBox();
+        roles = new ArrayList<String>();
+
+        //Déclaration des éléments de la fenêtre
+        JLabel choixJoueur = new JLabel("Choix des joueurs participants :");
+
+        //panels
+        roles.add("Pilote");
+        roles.add("Navigateur");
+        roles.add("Messager");
+        roles.add("Explorateur");
+        roles.add("Plongeur");
+        roles.add("Ingénieur");
+        
+        champNom1 = new JTextField("Nom du Joueur 1");
+        champNom2 = new JTextField("Nom du Joueur 2");
+        champNom3 = new JTextField("Nom du Joueur 3");
+        champNom4 = new JTextField("Nom du Joueur 4");
+        
+        demarrer = new JButton("Demarrer partie");
+        addJoueur = new JButton("Add joueur");
+        removeJoueur = new JButton("Remove Joueur");
+
+        for (int i = 0; i < roles.size(); i++) {
+            listeRole1.addItem(roles.get(i));
+            listeRole1.setSelectedItem(null);
+            listeRole1.setEnabled(true);
+            
+            listeRole2.addItem(roles.get(i));
+            listeRole2.setSelectedItem(null);
+            listeRole2.setEnabled(true);
+            
+            listeRole3.addItem(roles.get(i));
+            listeRole3.setSelectedItem(null);
+            listeRole3.setEnabled(false);   
+            
+            listeRole4.addItem(roles.get(i));
+            listeRole4.setSelectedItem(null);
+            listeRole4.setEnabled(false);   
+        }
+        
+        removeJoueur.setEnabled(false);
+        champNom1.setEnabled(true);
+        champNom2.setEnabled(true);
+        champNom3.setEnabled(false);
+        champNom4.setEnabled(false);
+        
+        
+        listeRole1.addItemListener(
+                new ItemListener(){
+                    @Override
+                    public void itemStateChanged(ItemEvent ie){
+                        Object a1 = ie.getItem();
+                        Object a2 =  listeRole1.getSelectedItem();
+
+                        if (ie.getStateChange() == ItemEvent.DESELECTED) {
+                            listeRole2.addItem(ie.getItem());
+                            listeRole3.addItem(ie.getItem());
+                            listeRole4.addItem(ie.getItem());
+                            listeRole2.removeItem(a2);
+                            listeRole3.removeItem(a2);
+                            listeRole4.removeItem(a2);
+                        } else if(ie.getStateChange() == ItemEvent.SELECTED){
+                            listeRole2.removeItem(a2);
+                            listeRole3.removeItem(a2);
+                            listeRole4.removeItem(a2);
+                        } 
+                    }
+                });
+        listeRole2.addItemListener(
+                new ItemListener(){
+                    @Override
+                    public void itemStateChanged(ItemEvent ie){
+                        Object b1 = ie.getItem();
+                        Object b2 =  listeRole2.getSelectedItem();
+
+                        if (ie.getStateChange() == ItemEvent.DESELECTED) {
+                            listeRole1.addItem(ie.getItem());
+                            listeRole3.addItem(ie.getItem());
+                            listeRole4.addItem(ie.getItem());
+                            listeRole1.removeItem(b2);
+                            listeRole3.removeItem(b2);
+                            listeRole4.removeItem(b2);
+                        } else if(ie.getStateChange() == ItemEvent.SELECTED){
+                            listeRole1.removeItem(b2);
+                            listeRole3.removeItem(b2);
+                            listeRole4.removeItem(b2);
+                        }
+                    }
+                });
+        
+        listeRole3.addItemListener(
+                new ItemListener(){
+                    @Override
+                    public void itemStateChanged(ItemEvent ie){
+                        Object c1 = ie.getItem();
+                        Object c2 =  listeRole3.getSelectedItem();  
+                        
+                        if (ie.getStateChange() == ItemEvent.DESELECTED) {
+                            listeRole1.addItem(ie.getItem());
+                            listeRole2.addItem(ie.getItem());
+                            listeRole4.addItem(ie.getItem());
+                            listeRole1.removeItem(c2);
+                            listeRole2.removeItem(c2);
+                            listeRole4.removeItem(c2);
+                        } else if(ie.getStateChange() == ItemEvent.SELECTED){
+                            listeRole1.removeItem(c2);
+                            listeRole2.removeItem(c2);
+                            listeRole4.removeItem(c2);
+                        }
+                    }
+                });
+        listeRole4.addItemListener(
+                new ItemListener(){
+                    @Override
+                    public void itemStateChanged(ItemEvent ie){
+                        Object d1 = ie.getItem();
+                        Object d2 =  listeRole4.getSelectedItem();
+                        
+                        if (ie.getStateChange() == ItemEvent.DESELECTED) {
+                            listeRole1.addItem(ie.getItem());
+                            listeRole2.addItem(ie.getItem());
+                            listeRole3.addItem(ie.getItem());
+                            listeRole1.removeItem(d2);
+                            listeRole2.removeItem(d2);
+                            listeRole3.removeItem(d2);
+                        } else if(ie.getStateChange() == ItemEvent.SELECTED){
+                            listeRole1.removeItem(d2);
+                            listeRole2.removeItem(d2);
+                            listeRole3.removeItem(d2);
+                        }
+                    }
+                });
+        
+        
+        
+        //elements
+        
+
+        
+
+        
+
+        //Ajout des éléments à la fenêtre
+        //positionnement des panels
+        fenetre.add(zonebas, BorderLayout.SOUTH);
+        fenetre.add(panelCentre, BorderLayout.CENTER);
+        fenetre.add(zonehaut, BorderLayout.NORTH);
+
+        //positionnement des boutons
+        zonehaut.add(choixJoueur);
+
+        panelCentre.add(champNom1);
+        panelCentre.add(listeRole1);
+
+        panelCentre.add(champNom2);
+        panelCentre.add(listeRole2);
+
+        panelCentre.add(champNom3);
+        panelCentre.add(listeRole3);
+
+        panelCentre.add(champNom4);
+        panelCentre.add(listeRole4);
+
+        zonebas.add(demarrer);
+        zonebas.add(addJoueur);
+        zonebas.add(removeJoueur);
+
+        //Dimensions de la fenêtre
+        fenetre.setSize(700, 500);
+        fenetre.setVisible(true);
+
+        // ActionListeners
+        demarrer.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+
+
+            }
+
+        });
+        
+        addJoueur.addActionListener ( new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!listeRole3.isEnabled()) {
+                    listeRole3.setEnabled(true);
+                    champNom3.setEnabled(true);
+                    
+        
+                    removeJoueur.setEnabled(true);
+                } else if (!listeRole4.isEnabled()) {
+                    listeRole4.setEnabled(true);
+                    champNom4.setEnabled(true);
+                    addJoueur.setEnabled(false);
+                    removeJoueur.setEnabled(true);
+                }
+        }});
+        removeJoueur.addActionListener ( new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (listeRole3.isEnabled() && listeRole4.isEnabled()) {
+                    listeRole4.setEnabled(false);
+                    listeRole4.setSelectedItem(null);
+                    champNom4.setEnabled(false);
+                    addJoueur.setEnabled(true);
+                    
+                } else if (listeRole4.isEnabled() == false) {
+                    listeRole3.setEnabled(false);
+                    listeRole3.setSelectedItem(null);
+                    champNom3.setEnabled(false);
+                    removeJoueur.setEnabled(false);
+                    addJoueur.setEnabled(true);
+                    
+                }
+        }});
+
+        
+
+    }
+    public static void main(String [] args) {
+        // Instanciation de la fenêtre 
+        VueInscription vueInscription = new VueInscription();
+    }
 
         
         
 
     }
     
-}
+
