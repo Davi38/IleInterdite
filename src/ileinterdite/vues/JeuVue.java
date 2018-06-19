@@ -138,6 +138,7 @@ for (int i = 1; i < 7; i++) {
             public void actionPerformed(ActionEvent e) {
                 Message m = new Message();
                 m.type = TypeMessage.GAGNER_TRESOR;
+                notifierObservateur(m);
             }
         });
         actions.add(boutonGT);

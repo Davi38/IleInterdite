@@ -106,14 +106,18 @@ public abstract class Aventurier {
                     nbCarteT +=1;
                 }
             }
-            return nbCarteT<3;
+            return nbCarteT>3;
         }
         return false;    
     }
 
     void removeCT(TypeTrésor t) {
         for(int i=0; i<4 ;i++){
-            
+            int numC = 0;
+            while(!mesCartes.get(numC).getType().equalsIgnoreCase(t.toString())){
+                numC += 1;
+            }
+            mesCartes.remove(numC);
         }
     }
 }
