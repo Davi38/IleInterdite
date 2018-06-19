@@ -41,6 +41,8 @@ public class Controleur implements Observateur {
     private Aventurier advAct;
     private int nbAdvAct;
     private TypeMessage actionG;
+    private Carte_Tresor carteADonner;
+    private Aventurier jADonner;
 
     Controleur() {
         finJeu = false;
@@ -138,6 +140,8 @@ public class Controleur implements Observateur {
             }
 
         }
+        vue = new JeuVue(grille, niveaueau.getNv(),this);
+        
         for (Aventurier adv : joueurs.values()) {
             for (int j = 0; j < 2; j++) {
                 piocherCarteT(adv);
@@ -147,8 +151,7 @@ public class Controleur implements Observateur {
         for (int j = 0; j < 6; j++) {
             piocherCarteI();
         }
-        vue = new JeuVue(grille, niveaueau.getNv());
-        vue.addObservateur(this);
+        vue.majGrille(grille);
         vue.afficherFenetre();
         nbAdvAct = 0;
         advAct = joueurs.get(joueurs.keySet().toArray()[0]);
@@ -159,11 +162,26 @@ public class Controleur implements Observateur {
 
     public boolean roleDisponible(Role role) {
 
-        return !joueurs.containsKey(role);
+        for(Aventurier a : joueurs.values()){
+            if(a.getRole()== role){
+                return false;
+            }
+                
+        }
+        return true;
     }
 
     public Aventurier chercherAventurier(String nomJ) {
         return joueurs.get(nomJ);
+    }
+    
+    public Aventurier chercherAventurier(Role r) {
+        for(Aventurier a : joueurs.values()){
+            if(a.getRole()==r){
+                return a;
+            }
+        }
+        return null;
     }
 
     public void piocherCarteT(Aventurier aventurier) {
@@ -237,6 +255,20 @@ public class Controleur implements Observateur {
                 System.out.println(cT.getType());
                 advAct.getCarteTresor().remove(cT);
                 vue.initJoueur(advAct, joueurs.keySet().toArray()[nbAdvAct].toString());
+                break;
+                
+            case DONNER_CARTE:
+                actionG = TypeMessage.DONNER_CARTE;
+                break;
+                
+            case CLIC_JOUEUR:
+                if(actionG == TypeMessage.DONNER_CARTE ){
+                    Role r = m.nomR;
+                    if(!roleDisponible(r)){
+                        jADonner = chercherAventurier(r);
+                    }
+                }
+                    
                 break;
 
             case CLICTUILE:

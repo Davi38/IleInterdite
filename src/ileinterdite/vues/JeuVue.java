@@ -34,25 +34,29 @@ import javax.swing.SwingConstants;
  */
 public class JeuVue extends Observe {
 
-    private HashMap<JButton, Position> boutPieces;
+    private HashMap<BoutonTuile, Position> boutPieces;
     private ArrayList<JButton> boutCartes;
     private JFrame window1 ;
+    
     private JButton boutonA;
     private JButton boutonD;
     private JButton boutonFT;
+    private JButton boutonDC;
+    
     private JPanel pCartes;
     private JLabel etatJeu;
     private VueNiveau nv;
     //
     
 
-    public JeuVue(Grille grille,int niveauEau) {
+    public JeuVue(Grille grille,int niveauEau,Observateur o) {
+        this.addObservateur(o);
         window1 = new JFrame("Jeu");
         JPanel mainPanel = new JPanel(new BorderLayout());
         window1.add(mainPanel);
       
         JPanel zoneJeu = new JPanel(new GridLayout(6, 6));
-        boutPieces = new HashMap<JButton, Position>();
+        boutPieces = new HashMap<BoutonTuile, Position>();
         boutCartes = new ArrayList<JButton>();
         etatJeu = new JLabel();
         mainPanel.add(etatJeu,BorderLayout.NORTH);
@@ -70,27 +74,10 @@ for (int i = 1; i < 7; i++) {
                 if (t.getPiece() == Piece_liste.NULL.toString()) {
                     zoneJeu.add(new JLabel());
                 } else {
-                    JButton bouton = new JButton("");
-                    bouton.setPreferredSize(new Dimension(150, 150));
-                    bouton.setLayout(new GridLayout(5,1));
-                    JLabel nomB = new JLabel(t.getPiece());
-                    nomB.setPreferredSize(new Dimension(50,30));
-                    bouton.add(nomB);
-                    bouton.add(new JLabel());
-                    bouton.add(new JLabel());
-                    bouton.add(new JLabel());
-                    bouton.add(new JLabel());
-                    boutPieces.put(bouton,pos);
-                    bouton.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            Message m = new Message();
-                            m.type = TypeMessage.CLICTUILE;
-                            m.pos = boutPieces.get(bouton);
-                            notifierObservateur(m);
-                        }
-                    });
-                    
+                    String nomP = t.getPiece();
+                    BoutonTuile bT = new BoutonTuile(nomP,pos,o);  
+                    JButton bouton = bT.getBoutonTuile();
+                    boutPieces.put(bT,pos);
                     zoneJeu.add(bouton);
                 }
             }
@@ -133,7 +120,16 @@ for (int i = 1; i < 7; i++) {
             }
         });
         actions.add(boutonD);
-        actions.add(new JButton("Donner une carte trésor"));
+        boutonDC = new JButton("Donner une carte trésor");
+        boutonDC.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Message m = new Message();
+                m.type = TypeMessage.DONNER_CARTE;
+            }
+        });
+        
+        actions.add(boutonDC);
         actions.add(new JButton("Gagner un trésor"));
         boutonFT = new JButton("Finir son tour");
         boutonFT.addActionListener(new ActionListener() {
@@ -155,7 +151,8 @@ for (int i = 1; i < 7; i++) {
         if(j.getCarteTresor().size()<6){
             boutonD.setEnabled(true);
             boutonA.setEnabled(true);
-            boutonFT.setEnabled(true);}
+            boutonFT.setEnabled(true);
+            boutonDC.setEnabled(true);}
         else{
             etatJeu.setText(etatJeu.getText() + " (Defausser "+ (j.getCarteTresor().size()-5) +" carte(s))");
         }
@@ -177,17 +174,33 @@ for (int i = 1; i < 7; i++) {
                 else{
                     b.setEnabled(false);
                 }
-            }else{
-               /* b.addActionListener(new ActionListener() {
+                b.addMouseListener(new MouseListener() {
                     @Override
-                    public void actionPerformed(ActionEvent e) {
-                        
+                    public void mouseClicked(MouseEvent e) {
                         Message m = new Message();
-                        m.type = TypeMessage.DEFFAUSE;
-                        m.ind = boutCartes.indexOf(b);
-                        notifierObservateur(m);
+                        m.type = TypeMessage.CLIC_CARTE;
+                        boutCartes.indexOf(b);
+                        notifierObservateur(m); 
                     }
-                });*/
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                    }
+                });
+            }else{
+               
                b.addMouseListener(new MouseListener() {
                    @Override
                    public void mouseClicked(MouseEvent e) {
@@ -222,33 +235,20 @@ for (int i = 1; i < 7; i++) {
     }
 
      public void majGrille(Grille g) {
-        for (JButton bouton : boutPieces.keySet()) {
+        for (BoutonTuile bouton : boutPieces.keySet()) {
             Position pos = boutPieces.get(bouton);
-            
             Ile t = (Ile) g.getTuileP(pos);
-            if (t.getPiece() != "NULL") {
-                ArrayList<Aventurier> listeJ = t.getAventuriers();
-                for (int i=1; i<5;i++){
-                    JLabel lbl = (JLabel)bouton.getComponent(i);
-                    lbl.setText("");
-                    }
-                if (!listeJ.isEmpty()) {
-                    String nomB = t.getPiece();
-                    for (int numJ = 0; numJ < listeJ.size(); numJ++) {
-                         JLabel lbl = (JLabel)bouton.getComponent(numJ+1);
-                         lbl.setText(listeJ.get(numJ).getRole().toString());
-                    }
-                }
-
-                }
+            ArrayList<Aventurier> listeJ = t.getAventuriers();
+            Color bg;
                 if (t.getEtat() == Etat.INNONDEE) {
-                    bouton.setBackground(Color.CYAN);
+                    bg=Color.CYAN;
 
                 } else if (t.getEtat() == Etat.NOYEE) {
-                    bouton.setBackground(Color.BLACK);
+                     bg=Color.BLACK;
                 } else {
-                    bouton.setBackground(Color.ORANGE);
+                     bg=Color.ORANGE;
                 }
+            bouton.majTuile(listeJ,bg);
 
             }
         }
@@ -262,22 +262,22 @@ for (int i = 1; i < 7; i++) {
     }
     
     public void majDeplacement(Aventurier adv,Grille gr){
-        for(JButton b : boutPieces.keySet()){
+        for(BoutonTuile b : boutPieces.keySet()){
             Position pos = boutPieces.get(b);
             Tuile t = gr.getTuileP(pos);
             if(adv.verifDeplacement(pos, t)){
-                b.setBackground(Color.red);
+                b.paint(Color.red);
             }
         }
         
     }
     
     public void majAssechement(Aventurier adv,Grille gr){
-        for(JButton b : boutPieces.keySet()){
+        for(BoutonTuile b : boutPieces.keySet()){
             Position pos = boutPieces.get(b);
             Tuile t = gr.getTuileP(pos);
             if(adv.verifAssechement(pos, t)){
-                b.setBackground(Color.red);
+               b.paint(Color.red); 
             }
         }        
     }
@@ -286,6 +286,7 @@ for (int i = 1; i < 7; i++) {
         boutonD.setEnabled(false);
         boutonA.setEnabled(false);
         boutonFT.setEnabled(false);
+        boutonDC.setEnabled(false);
     }
 
     public void majNiveau(int niveauEau) {

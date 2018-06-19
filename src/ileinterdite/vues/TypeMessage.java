@@ -13,6 +13,9 @@ public enum TypeMessage {
     DEPLACER,
     ASSECHER,
     CLICTUILE,
+    CLIC_JOUEUR,
     FIN_TOUR,
-    DEFFAUSE;
+    DEFFAUSE,
+    DONNER_CARTE, 
+    CLIC_CARTE;
 }
