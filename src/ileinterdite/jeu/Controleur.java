@@ -190,6 +190,9 @@ public class Controleur implements Observateur {
 
             case FIN_TOUR:
                 finTour();
+                if (verifPertePartie1()){
+                    
+                }
                 break;
             case DEFFAUSE:
                 Carte_Tresor cT = advAct.getCarteTresor().get(m.ind);
@@ -392,6 +395,12 @@ public class Controleur implements Observateur {
         }
         return null;
     }
+    
+    
+    public boolean verifFinPartie(){
+        return verifPertePartie1()||verifPertePartie2()||verifPertePartie3()||verifPertePartie4();
+    }
+    
     public boolean verifPertePartie1(){
         
         return false;
