@@ -292,6 +292,7 @@ for (int i = 1; i < 7; i++) {
                 } else {
                      bg=Color.ORANGE;
                 }
+            bouton.getBoutonTuile().setEnabled(false);
             bouton.majTuile(listeJ,bg);
 
             }
@@ -315,6 +316,7 @@ for (int i = 1; i < 7; i++) {
             Tuile t = gr.getTuileP(pos);
             if(adv.verifDeplacement(pos, t)){
                 b.paint(Color.red);
+                b.getBoutonTuile().setEnabled(true);
             }
         }
         
@@ -325,7 +327,8 @@ for (int i = 1; i < 7; i++) {
             Position pos = boutPieces.get(b);
             Tuile t = gr.getTuileP(pos);
             if(adv.verifAssechement(pos, t)){
-               b.paint(Color.red); 
+               b.paint(Color.red);
+               b.getBoutonTuile().setEnabled(true);
             }
         }        
     }
@@ -371,7 +374,7 @@ for (int i = 1; i < 7; i++) {
     // TRES SUREMENT A REVOIR !!!!
     public void colorTousLesJ() {
         for (BoutonTuile bouton : boutPieces.keySet()) {
-            bouton.activerJ();
+            bouton.activerJ2();
         }
     }
     

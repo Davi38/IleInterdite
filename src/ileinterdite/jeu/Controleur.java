@@ -261,14 +261,20 @@ public class Controleur implements Observateur {
                         advAct.getCarteTresor().remove(ct);
                     }
                 }else{
+                    if(ct instanceof CtBonus){
                     CtBonus cb =(CtBonus) ct;
-                    System.out.println(ct.getType());
+                    System.out.println(ct.getType()+"Bonus");
+                    advAct.getCarteTresor().remove(cb);
                     actionBonus(cb);
+                    }
                 }
                 jADonner = null;
                 actionG = null;
                 vue.majCartes(advAct);
                 vue.desactiverB(grille);
+                if (advAct.getActRest() == 0) {
+                    finTour();
+                }
 
                 break;
 
@@ -423,7 +429,8 @@ public class Controleur implements Observateur {
     
     
     public boolean verifFinPartie(){
-        return verifPertePartie1()||verifPertePartie2()||verifPertePartie3()||verifPertePartie4();
+        //return verifPertePartie1()||verifPertePartie2()||verifPertePartie3()||verifPertePartie4();
+        return false;
     }
     
     public boolean verifPertePartie1(){
@@ -474,10 +481,12 @@ public class Controleur implements Observateur {
     }
     
     public void actionBonus(CtBonus cb){
-            
         if (cb.getType()=="SABLE"){
+            actionG = TypeMessage.SABLE;
+            
             
         }else if(cb.getType()=="HELICOPTERE"){
+            actionG = TypeMessage.HELICOPTERE;
             vue.colorTousLesJ();
         }
     }

@@ -102,7 +102,7 @@ public class BoutonTuile extends Observe {
         }
     }
 
-    public void activerJ() {
+    public void activerJ2() {
         for (Component c : pions.getComponents()) {
             if (c instanceof JButton) {
                 JButton b = (JButton) c;

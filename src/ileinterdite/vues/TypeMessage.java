@@ -20,5 +20,5 @@ public enum TypeMessage {
     CLIC_CARTE, 
     DEMARRER, 
     GAGNER_TRESOR,
-    RECOMMENCER;
+    RECOMMENCER, HELICOPTERE, SABLE;
 }
