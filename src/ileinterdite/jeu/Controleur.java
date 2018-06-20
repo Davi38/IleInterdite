@@ -394,6 +394,20 @@ public class Controleur implements Observateur {
     }
     public boolean verifPertePartie1(){
         
+        for (Tresor t: tresors){   
+            if(!t.isRecuperé()){
+                ArrayList<Ile> ileT = getIlesT(t.getType());
+                boolean testN = true;
+                for(Ile iT : ileT){
+                    if (!iT.estNoyee()){
+                        testN = false;
+                    }
+                }
+                return testN;
+            }
+            return false;
+        }
+        
         return false;
     }
 
@@ -423,6 +437,30 @@ public class Controleur implements Observateur {
     
     public boolean verifPertePartie4(){
         return niveauEau.getNv()==10;
+    }
+    
+    public ArrayList<Ile> getIlesT(TypeTrésor typeT){
+        ArrayList<Ile> ileT = new ArrayList<Ile>();
+        switch(typeT){
+            case CALICE : 
+                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Jardin_des_Hurlements));
+                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Jardin_des_Murmures));
+                break;
+            case CRYSTAL:
+                ileT.add((Ile)grille.getTuilePL(Piece_liste.La_Caverne_des_Ombres));
+                ileT.add((Ile)grille.getTuilePL(Piece_liste.La_Caverne_du_Brasier));
+                break;
+            case PIERRE:
+                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Palais_de_Corail));
+                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Palais_des_Marees));
+                break;
+            case STATUE:
+                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Temple_de_La_Lune));
+                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Temple_du_soleil));
+                break;          
+        }
+        return ileT;
+        
     }
     
 
