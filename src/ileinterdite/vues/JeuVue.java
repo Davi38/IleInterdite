@@ -48,6 +48,7 @@ public class JeuVue extends Observe {
     private JPanel pCartes;
     private JLabel etatJeu;
     private VueNiveau nv;
+    private VueRegles regles;
     //
     
 
@@ -56,12 +57,31 @@ public class JeuVue extends Observe {
         window1 = new JFrame("Jeu");
         JPanel mainPanel = new JPanel(new BorderLayout());
         window1.add(mainPanel);
-      
+        
+        regles = new VueRegles();
         JPanel zoneJeu = new JPanel(new GridLayout(6, 6));
         boutPieces = new HashMap<BoutonTuile, Position>();
         boutCartes = new ArrayList<JButton>();
+        
+        JPanel haut = new JPanel(new GridLayout(1,5));
+        JButton Bregles = new JButton("Regles du jeu");
+        Bregles.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!regles.estVisible()){
+                    regles.afficher();
+                }
+            }
+        });
+        haut.add(Bregles);
+        haut.add(new JLabel());
         etatJeu = new JLabel();
-        mainPanel.add(etatJeu,BorderLayout.NORTH);
+        haut.add(etatJeu);
+        haut.add(new JLabel());
+        JButton quitter = new JButton("Quitter");
+        haut.add(quitter);
+        mainPanel.add(haut,BorderLayout.NORTH);
+        
         nv = new VueNiveau(niveauEau);
         mainPanel.add(nv,BorderLayout.WEST);
          
