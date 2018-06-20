@@ -17,7 +17,7 @@ public class Messager extends Aventurier {
     private Color couleur = Color.DARK_GRAY;
     
     Messager(Position pos) {
-        super(Role.MESSAGER,pos,4);
+        super(Role.MESSAGER,pos,3);
     }
 
     @Override
