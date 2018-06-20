@@ -41,12 +41,15 @@ public class Controleur implements Observateur {
     private TypeMessage actionG;
     private Carte_Tresor carteADonner;
     private Aventurier jADonner;
+    private ArrayList<Aventurier> jADepl;
+    private CtBonus cBact;
 
     Controleur() {
         initJeu();
     }
     
     public void initJeu() {
+        actionG = null;
         finJeu = false;
         defausseI = new ArrayList<Carte_Inondation>();
         defausseT = new ArrayList<Carte_Tresor>();
@@ -247,6 +250,15 @@ public class Controleur implements Observateur {
                     Role r = m.nomR;
                     jADonner = chercherAventurier(r);
                     vue.activerB();
+                }else if(actionG == TypeMessage.HELICOPTERE){
+                    Role r = m.nomR;
+                    jADepl.add(chercherAventurier(r));
+                    System.out.println("Action");
+                    if(!vue.colorJ(jADepl,grille)){
+                        vue.majDeplacement(new Pilote(new Position(0,0)), grille);
+                        System.out.println("Action2");
+                    }
+                    
                 }
 
                 break;
@@ -259,20 +271,20 @@ public class Controleur implements Observateur {
                         advAct.removeAct();
                         jADonner.addCarte(ct);
                         advAct.getCarteTresor().remove(ct);
+                        actionG = null;
                     }
                     vue.desactiverB(grille);
                 }else{
+                    actionG = null;
                     if(ct instanceof CtBonus){
                     CtBonus cb =(CtBonus) ct;
                     System.out.println(ct.getType()+"Bonus");
-                    advAct.getCarteTresor().remove(cb);
-                    vue.majCartes(advAct);
+                    cBact = cb;
                     actionBonus(cb);
                     
                     }
                 }
                 jADonner = null;
-                actionG = null;
                 vue.majCartes(advAct);
                 
                 if (advAct.getActRest() == 0) {
@@ -306,6 +318,19 @@ public class Controleur implements Observateur {
                         advAct.removeAct();
                     }
 
+                }else if(actionG==TypeMessage.HELICOPTERE){
+                    
+                    Ile ile =(Ile) grille.getTuileP(grille.getPosition(jADepl.get(0).getPosition()));
+                    for (Aventurier a : jADepl){
+                        System.out.println(a.getRole().toString());
+                        ile.removeAventurier(a);
+                        a.setPosition(pos);
+                        t.addAventurier(a);
+                        
+                    }
+                    advAct.getCarteTresor().remove(cBact);
+                    vue.majCartes(advAct);
+                    cBact=null;
                 }
                 vue.majGrille(grille);
                 actionG = null;
@@ -484,6 +509,7 @@ public class Controleur implements Observateur {
     }
     
     public void actionBonus(CtBonus cb){
+        vue.desactiverB(grille);
         if (cb.getType()=="SABLE"){
             actionG = TypeMessage.SABLE;
             
@@ -494,6 +520,7 @@ public class Controleur implements Observateur {
                 vueFinJeu = new VueFinJeu(true);
             }else{
             actionG = TypeMessage.HELICOPTERE;
+            jADepl = new ArrayList<Aventurier>();
             vue.colorTousLesJ();}
         }
     }

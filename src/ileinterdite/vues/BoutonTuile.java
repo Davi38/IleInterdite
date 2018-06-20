@@ -101,6 +101,21 @@ public class BoutonTuile extends Observe {
             }
         }
     }
+    
+    public boolean activerJ(ArrayList<Aventurier> adv) {
+        boolean change =false;
+        for(JButton b : listeA.keySet()){
+            if(!adv.contains(listeA.get(b))){
+               b.setEnabled(true);
+               b.setBackground(Color.red);
+               change = true;
+            }
+        }
+        return change;
+         
+    }
+    
+    
 
     public void activerJ2() {
         for (Component c : pions.getComponents()) {

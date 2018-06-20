@@ -392,5 +392,14 @@ for (int i = 1; i < 7; i++) {
         img.setRecupere(etat);
         
     }
+
+    public boolean colorJ(ArrayList<Aventurier> jADepl,Grille grille) {
+        if(!jADepl.isEmpty()){
+            desactiverB(grille);
+            BoutonTuile b = getBT(jADepl.get(0).getPosition());
+            return b.activerJ(jADepl);
+        }
+        return false;
+    }
     
 }
