@@ -305,6 +305,10 @@ for (int i = 1; i < 7; i++) {
         window1.setVisible(true);
     }
     
+    public void cacherFenetre(){
+        window1.setVisible(false); 
+    }
+    
     public void majDeplacement(Aventurier adv,Grille gr){
         for(BoutonTuile b : boutPieces.keySet()){
             Position pos = boutPieces.get(b);
@@ -383,4 +387,5 @@ for (int i = 1; i < 7; i++) {
         img.setRecupere(etat);
         
     }
+    
 }

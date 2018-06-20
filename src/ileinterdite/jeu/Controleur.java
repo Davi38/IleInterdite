@@ -11,6 +11,7 @@ import java.util.HashMap;
 import ileinterdite.vues.JeuVue;
 import ileinterdite.vues.Observateur;
 import ileinterdite.vues.TypeMessage;
+import ileinterdite.vues.VueFinJeu;
 import ileinterdite.vues.VueInscription;
 
 /**
@@ -31,6 +32,7 @@ public class Controleur implements Observateur {
 
     private JeuVue vue;
     private VueInscription vueI;
+    private VueFinJeu vueFinJeu;
 
     private boolean finJeu;
     private boolean finTour;
@@ -41,6 +43,10 @@ public class Controleur implements Observateur {
     private Aventurier jADonner;
 
     Controleur() {
+        initJeu();
+    }
+    
+    public void initJeu() {
         finJeu = false;
         defausseI = new ArrayList<Carte_Inondation>();
         defausseT = new ArrayList<Carte_Tresor>();
@@ -85,7 +91,8 @@ public class Controleur implements Observateur {
         vueI = new VueInscription();
         vueI.addObservateur(this);
         vueI.afficherFenetre();
-
+        
+        
     }
 
     public boolean roleDisponible(Role role) {
@@ -166,6 +173,11 @@ public class Controleur implements Observateur {
             case DEMARRER:
                 demmarerPartie(m.listeJ, m.ind);
                 break;
+                
+            case RECOMMENCER:
+                initJeu();
+                break;
+                
             case DEPLACER:
                 vue.desactiverB(advAct, grille);
                 actionG = TypeMessage.DEPLACER;
@@ -190,6 +202,12 @@ public class Controleur implements Observateur {
 
             case FIN_TOUR:
                 finTour();
+                if (verifPertePartie1()){
+                    vue.cacherFenetre();
+                    VueFinJeu vueFinJeu = new VueFinJeu(false);
+                    vueFinJeu.addObservateur(this);
+                    vueFinJeu.afficherFenetre();
+                }
                 break;
             case DEFFAUSE:
                 Carte_Tresor cT = advAct.getCarteTresor().get(m.ind);
@@ -392,6 +410,12 @@ public class Controleur implements Observateur {
         }
         return null;
     }
+    
+    
+    public boolean verifFinPartie(){
+        return verifPertePartie1()||verifPertePartie2()||verifPertePartie3()||verifPertePartie4();
+    }
+    
     public boolean verifPertePartie1(){
         
         for (Tresor t: tresors){   
