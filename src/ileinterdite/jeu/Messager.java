@@ -17,7 +17,7 @@ public class Messager extends Aventurier {
     private Color couleur = Color.DARK_GRAY;
     
     Messager(Position pos) {
-        super(Role.MESSAGER,pos,4);
+        super(Role.MESSAGER,pos,3);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class Messager extends Aventurier {
         int l = abs(posj.col-pos2.col);
         int c = abs(posj.lig-pos2.lig);
         if((l==1&&c==0)||(l==0&&c==1)) {
-            return tuile.getEtat()==Etat.ASSECHEE || tuile.getEtat()==Etat.INNONDEE;
+            return (tuile.getEtat()==Etat.ASSECHEE || tuile.getEtat()==Etat.INNONDEE ) && !posj.equals(pos2);
         }
         return false;
     }
