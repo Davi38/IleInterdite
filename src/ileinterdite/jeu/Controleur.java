@@ -490,7 +490,8 @@ public class Controleur implements Observateur {
             
         }else if(cb.getType()=="HELICOPTERE"){
             if(testJeuGagnant()){
-                
+                vue.cacherFenetre();
+                vueFinJeu = new VueFinJeu(true);
             }else{
             actionG = TypeMessage.HELICOPTERE;
             vue.colorTousLesJ();}
