@@ -19,5 +19,6 @@ public enum TypeMessage {
     DONNER_CARTE, 
     CLIC_CARTE, 
     DEMARRER, 
-    GAGNER_TRESOR;
+    GAGNER_TRESOR,
+    RECOMMENCER;
 }
