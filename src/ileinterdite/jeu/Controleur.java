@@ -260,18 +260,21 @@ public class Controleur implements Observateur {
                         jADonner.addCarte(ct);
                         advAct.getCarteTresor().remove(ct);
                     }
+                    vue.desactiverB(grille);
                 }else{
                     if(ct instanceof CtBonus){
                     CtBonus cb =(CtBonus) ct;
                     System.out.println(ct.getType()+"Bonus");
                     advAct.getCarteTresor().remove(cb);
+                    vue.majCartes(advAct);
                     actionBonus(cb);
+                    
                     }
                 }
                 jADonner = null;
                 actionG = null;
                 vue.majCartes(advAct);
-                vue.desactiverB(grille);
+                
                 if (advAct.getActRest() == 0) {
                     finTour();
                 }
@@ -317,7 +320,7 @@ public class Controleur implements Observateur {
 
     public void finTour() {
         vue.finT();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++){
             piocherCarteT(advAct);
         }
         for (int i = 0; i < niveauEau.getNbCarte(); i++) {
@@ -486,8 +489,11 @@ public class Controleur implements Observateur {
             
             
         }else if(cb.getType()=="HELICOPTERE"){
+            if(testJeuGagnant()){
+                
+            }else{
             actionG = TypeMessage.HELICOPTERE;
-            vue.colorTousLesJ();
+            vue.colorTousLesJ();}
         }
     }
     public ArrayList<Ile> getIlesT(TypeTrésor typeT){
@@ -512,6 +518,19 @@ public class Controleur implements Observateur {
         }
         return ileT;
         
+    }
+    
+    public boolean testJeuGagnant(){
+        boolean tres=true,heliport =true;
+        for(Tresor t : tresors){
+            if(!t.isRecuperé()){
+                tres=false;
+            }
+        }
+        Ile ile = (Ile) grille.getTuilePL(Piece_liste.Heliport);
+        heliport = ile.getAventuriers().size()==joueurs.size();
+        
+        return tres && heliport;
     }
     
 
