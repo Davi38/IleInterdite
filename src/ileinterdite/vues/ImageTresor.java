@@ -42,9 +42,6 @@ public class ImageTresor extends JPanel{
         int w = getWidth();
         int h = getHeight();
         int taille =(w<h?w:h);
-        
-        
-        g.setColor(Color.white);
         if(!recupere){
             g.drawImage(tresor,0, 0,taille ,taille ,null,this );
         }else{
