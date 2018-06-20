@@ -36,6 +36,7 @@ public class JeuVue extends Observe {
 
     private HashMap<BoutonTuile, Position> boutPieces;
     private ArrayList<JButton> boutCartes;
+    private HashMap<TypeTrésor, ImageTresor> imgTres;
     private JFrame window1 ;
     
     private JButton boutonA;
@@ -66,6 +67,9 @@ public class JeuVue extends Observe {
          
         // ####################################################################################
         // grille au centre
+        int comptTres =0;
+        TypeTrésor[] listeT = TypeTrésor.values();
+        imgTres = new HashMap<TypeTrésor, ImageTresor>();
 for (int i = 1; i < 7; i++) {
             for (int j = 1; j < 7; j++) {
                 Position pos = new Position(i, j);
@@ -73,7 +77,15 @@ for (int i = 1; i < 7; i++) {
                 Tuile t = grille.getTuileP(pos);
 
                 if (t.getPiece() == Piece_liste.NULL.toString()) {
-                    zoneJeu.add(new JLabel());
+                   if((pos.getLig()==1||pos.getLig()==6)&&(pos.getCol()==1||pos.getCol()==6)){
+                       
+                       ImageTresor tres = new ImageTresor(listeT[comptTres]);
+                       zoneJeu.add(tres);
+                       imgTres.put(listeT[comptTres],tres);
+                       comptTres+=1;
+                       
+                   }else{
+                    zoneJeu.add(new JLabel());}
                 } else {
                     String nomP = t.getPiece();
                     BoutonTuile bT = new BoutonTuile(nomP,pos,o);  
@@ -84,7 +96,7 @@ for (int i = 1; i < 7; i++) {
             }
         }
         
-        
+        //setImgTresEtat(TypeTrésor.CALICE,true);
         majGrille(grille);
 
         mainPanel.add(zoneJeu, BorderLayout.CENTER);
@@ -337,6 +349,12 @@ for (int i = 1; i < 7; i++) {
             }
         }
         return null;
+    }
+    
+    public void setImgTresEtat(TypeTrésor type,boolean etat){
+        ImageTresor img = imgTres.get(type);
+        img.setRecupere(etat);
+        
     }
     
     

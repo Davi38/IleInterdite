@@ -366,6 +366,8 @@ public class Controleur implements Observateur {
             if (!tres.isRecuperé() && advAct.verifGagnerT(tres)) {
                 tres.setRecuperé(true);
                 advAct.removeCT(t);
+                vue.setImgTresEtat(t, tres.isRecuperé());
+                vue.majCartes(advAct);
                 return tres.isRecuperé();
             }
         }
