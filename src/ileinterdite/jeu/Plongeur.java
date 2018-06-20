@@ -99,7 +99,7 @@ public class Plongeur extends Aventurier {
         //System.out.println("Tuiles presente : " + tuilesAccessibles.size());
         if (tuilesAccessibles.contains(tuile)) {
             tuilesAccessibles.clear();
-            return true;
+            return !posj.equals(pos2);
         } else {
             tuilesAccessibles.clear();
             return false;
