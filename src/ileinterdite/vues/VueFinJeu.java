@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class VueFinJeu {
+public class VueFinJeu extends Observe {
 
     private JFrame fenetreFin;
 
@@ -70,6 +70,9 @@ public class VueFinJeu {
             public void actionPerformed(ActionEvent e) {
 
                 fenetreFin.setVisible(false);
+                Message m = new Message();
+                m.type = TypeMessage.RECOMMENCER;
+                notifierObservateur(m);
 
             }
 
@@ -108,4 +111,12 @@ public class VueFinJeu {
             }
         };
     }
+    
+    public void afficherFenetre(){
+        fenetreFin.setVisible(true);
+    }
+    public void cacherFenetre(){
+        fenetreFin.setVisible(false); 
+    }
+    
 }
