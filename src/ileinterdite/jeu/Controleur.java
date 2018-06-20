@@ -167,7 +167,8 @@ public class Controleur implements Observateur {
                 demmarerPartie(m.listeJ, m.ind);
                 break;
             case DEPLACER:
-                vue.desactiverB(advAct, grille);
+                jADonner = null;
+                vue.desactiverB( grille);
                 actionG = TypeMessage.DEPLACER;
                 if (advAct instanceof Plongeur) {
                     Plongeur plongeur = (Plongeur) advAct;
@@ -178,17 +179,19 @@ public class Controleur implements Observateur {
                 break;
 
             case ASSECHER:
+                jADonner = null;
                 if (advAct instanceof Plongeur) {
                     Plongeur plongeur = (Plongeur) advAct;
                     plongeur.setGrille(grille);
                 }
-                vue.desactiverB(advAct, grille);
+                vue.desactiverB( grille);
                 actionG = TypeMessage.ASSECHER;
                 vue.majGrille(grille);
                 vue.majAssechement(advAct, grille);
                 break;
 
             case FIN_TOUR:
+                jADonner = null;
                 finTour();
                 if (verifPertePartie1()){
                     
@@ -202,6 +205,8 @@ public class Controleur implements Observateur {
                 break;
 
             case GAGNER_TRESOR:
+                jADonner = null;
+                vue.majGrille(grille);
                 if (verifGT()) {
                     advAct.removeAct();
                     vue.majCartes(advAct);
@@ -212,10 +217,11 @@ public class Controleur implements Observateur {
                 break;
 
             case DONNER_CARTE:
+                jADonner = null;
                 vue.majGrille(grille);
                 actionG = TypeMessage.DONNER_CARTE;
                 if (advAct instanceof Messager) {
-                    vue.colorTousLesJ();
+                    vue.colorTousLesJ(advAct);
                 } else {
                     vue.colorJ(advAct);
                 }
@@ -239,16 +245,20 @@ public class Controleur implements Observateur {
                         jADonner.addCarte(ct);
                         advAct.getCarteTresor().remove(ct);
                     }
+                }else{
+                    CtBonus cb =(CtBonus) ct;
+                    System.out.println(ct.getType());
+                    actionBonus(cb);
                 }
                 jADonner = null;
                 actionG = null;
                 vue.majCartes(advAct);
-                vue.desactiverB(advAct, grille);
+                vue.desactiverB(grille);
 
                 break;
 
             case CLICTUILE:
-                vue.desactiverB(advAct, grille);
+                vue.desactiverB(grille);
                 Ile tJ = (Ile) grille.getTuileP(grille.getPosition(advAct.getPosition()));
                 Position pos = grille.getPosition(m.pos);
 
@@ -432,6 +442,16 @@ public class Controleur implements Observateur {
     
     public boolean verifPertePartie4(){
         return niveauEau.getNv()==10;
+    }
+    
+    public void actionBonus(CtBonus cb){
+            
+        if (cb.getType()=="SABLE"){
+            
+        }else if(cb.getType()=="HELICOPTERE"){
+            vue.colorTousLesJ();
+        }
+        
     }
     
 

@@ -344,16 +344,13 @@ for (int i = 1; i < 7; i++) {
         }
     }
 
-    public void desactiverB(Aventurier advAct,Grille grille) {
+    public void desactiverB(Grille grille) {
         for(JButton b :boutCartes){
             if (!(b.getText().equals("SABLE")||b.getText().equals("HELICOPTERE"))){
                 b.setEnabled(false);
             }
         }
-        Ile i = (Ile) grille.getTuileP(advAct.getPosition());
-        ArrayList<Aventurier> listeJ = i.getAventuriers();
-        BoutonTuile b = getBT(advAct.getPosition());
-        b.majTuile(listeJ, b.getColor());
+        majGrille(grille);
     }
 
 
@@ -362,6 +359,11 @@ for (int i = 1; i < 7; i++) {
         b.activerJ(advAct);
     }
     
+    public void colorTousLesJ(Aventurier advAct) {
+        for (BoutonTuile bouton : boutPieces.keySet()) {
+            bouton.activerJ(advAct);
+        }
+    }
     // TRES SUREMENT A REVOIR !!!!
     public void colorTousLesJ() {
         for (BoutonTuile bouton : boutPieces.keySet()) {
