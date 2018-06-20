@@ -120,5 +120,16 @@ public abstract class Aventurier {
             mesCartes.remove(numC);
         }
     }
+    
+    public ArrayList<Position> getPosPossible(Grille grille) {
+        ArrayList<Position> posPos = new ArrayList<Position>();
+        for(Position pos: grille.getGrille().keySet()){
+            if(verifDeplacement(pos, grille.getTuileP(pos))){
+                posPos.add(pos);
+            }
+        }
+        return posPos;
+        
+    }
 }
 

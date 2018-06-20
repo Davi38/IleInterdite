@@ -37,8 +37,11 @@ public abstract class Tuile {
 	public Etat getEtat() {
 		return etat;
 	}
+        public boolean estNoyee() {
+		return etat == Etat.INNONDEE;
+	}
         
-	public boolean estInnondé() {
+	public boolean estInnondee() {
 		return etat == Etat.INNONDEE;
 	}
 

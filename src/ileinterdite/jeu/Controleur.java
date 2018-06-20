@@ -5,21 +5,13 @@
  */
 package ileinterdite.jeu;
 
-import ileinterdite.vues.Vue;
-import ileinterdite.vues.VueAventurier;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Scanner;
 import ileinterdite.vues.JeuVue;
 import ileinterdite.vues.Observateur;
 import ileinterdite.vues.TypeMessage;
 import ileinterdite.vues.VueInscription;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import javax.swing.JFrame;
 
 /**
  *
@@ -27,7 +19,7 @@ import javax.swing.JFrame;
  */
 public class Controleur implements Observateur {
 
-    private NiveauEau niveaueau;
+    private NiveauEau niveauEau;
     private ArrayList<Tresor> tresors;
 
     private ArrayList<Carte_Inondation> piocheI;
@@ -128,10 +120,10 @@ public class Controleur implements Observateur {
             piocheT.remove(0);
             if (cT.getType() == "MONTEE_EAU") {
                 defausseT.add(cT);
-                niveaueau.MonteeEau();
+                niveauEau.MonteeEau();
                 piocheI.addAll(defausseI);
                 Collections.shuffle(piocheI);
-                vue.majNiveau(niveaueau.getNv());
+                vue.majNiveau(niveauEau.getNv());
             } else {
                 aventurier.addCarte(cT);
             }
@@ -294,7 +286,7 @@ public class Controleur implements Observateur {
         for (int i = 0; i < 2; i++) {
             piocherCarteT(advAct);
         }
-        for (int i = 0; i < niveaueau.getNbCarte(); i++) {
+        for (int i = 0; i < niveauEau.getNbCarte(); i++) {
             piocherCarteI();
         }
         vue.majGrille(grille);
@@ -314,7 +306,7 @@ public class Controleur implements Observateur {
     }
 
     private void demmarerPartie(HashMap<Role, String> listeJ, int nv) {
-        niveaueau = new NiveauEau(nv);
+        niveauEau = new NiveauEau(nv);
         for (Role r : listeJ.keySet()) {
             Position posStart = getPositionDepart(r);
             Aventurier a = null;
@@ -345,7 +337,7 @@ public class Controleur implements Observateur {
             tuJ.addAventurier(a);
         }
         vueI.cacherFenetre();
-        vue = new JeuVue(grille, niveaueau.getNv(), this);
+        vue = new JeuVue(grille, niveauEau.getNv(), this);
 
         for (Aventurier adv : joueurs.keySet()) {
             for (int j = 0; j < 2; j++) {
@@ -400,5 +392,38 @@ public class Controleur implements Observateur {
         }
         return null;
     }
+    public boolean verifPertePartie1(){
+        
+        return false;
+    }
+
+    public boolean verifPertePartie2() {
+        Position posHeliport = grille.getPositionP(Piece_liste.Heliport);
+        Ile ile = (Ile) grille.getTuileP(posHeliport);
+        if (ile.estNoyee()){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean verifPertePartie3() {
+        for (Aventurier a : joueurs.keySet()) {
+            Position posJ = a.getPosition();
+            Ile ile = (Ile) grille.getTuileP(posJ);
+            if (ile.estNoyee()){
+                ArrayList<Position> deplPos = new ArrayList<Position>();
+                deplPos = a.getPosPossible(grille);
+                if(deplPos.isEmpty()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean verifPertePartie4(){
+        return niveauEau.getNv()==10;
+    }
+    
 
 }

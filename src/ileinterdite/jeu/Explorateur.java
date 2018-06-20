@@ -28,7 +28,7 @@ public class Explorateur extends Aventurier {
     
     public boolean verifAssechement(Position pos2, Tuile tuile) {
         Position posj = getPosition();
-        return (abs(posj.lig - pos2.lig) < 2 && abs(posj.col - pos2.col) < 2)&& tuile.estInnondé();
+        return (abs(posj.lig - pos2.lig) < 2 && abs(posj.col - pos2.col) < 2)&& tuile.estInnondee();
     }
     
     public Color getColor(){

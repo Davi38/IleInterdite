@@ -52,7 +52,7 @@ public class Pilote extends Aventurier {
         int l = abs(posj.col-pos2.col);
         int c = abs(posj.lig-pos2.lig);
         if((l==1&&c==0)||(l==0&&c==1)||(l==0&&c==0)){
-           return tuile.estInnondé();
+           return tuile.estInnondee();
         }
         return false;
     }
