@@ -25,42 +25,41 @@ import javax.swing.JPanel;
  *
  * @author Florian
  */
-public class BoutonTuile extends Observe{
-    
+public class BoutonTuile extends Observe {
+
     JButton tuile;
     JPanel pions;
-    HashMap<JButton,Aventurier> listeA;
+    HashMap<JButton, Aventurier> listeA;
     Position pos;
-    
-    BoutonTuile(String nomP,Position pos,Observateur o){
+
+    BoutonTuile(String nomP, Position pos, Observateur o) {
         this.addObservateur(o);
         tuile = new JButton();
         tuile.setLayout(new BorderLayout());
-        JLabel nomT  = new JLabel(nomP.replace("_", " "));
+        JLabel nomT = new JLabel(nomP.replace("_", " "));
         nomT.setFont((new Font("Arial", Font.PLAIN, 20)));
-        tuile.add(nomT,BorderLayout.NORTH);
-        pions= new JPanel(new GridLayout(2,2));
-        tuile.add(pions,BorderLayout.CENTER);
-        listeA = new HashMap<JButton,Aventurier>();
+        tuile.add(nomT, BorderLayout.NORTH);
+        pions = new JPanel(new GridLayout(2, 2));
+        tuile.add(pions, BorderLayout.CENTER);
+        listeA = new HashMap<JButton, Aventurier>();
         this.pos = pos;
         tuile.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            Message m = new Message();
-                            m.type = TypeMessage.CLICTUILE;
-                            m.pos = pos;
-                            notifierObservateur(m);
-                        }
-                    });
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Message m = new Message();
+                m.type = TypeMessage.CLICTUILE;
+                m.pos = pos;
+                notifierObservateur(m);
+            }
+        });
     }
-    
 
     void majTuile(ArrayList<Aventurier> listeJ, Color bg) {
         tuile.setBackground(bg);
         listeA.clear();
         pions.removeAll();
         pions.setBackground(bg);
-        for (Aventurier a : listeJ){
+        for (Aventurier a : listeJ) {
             JButton pion = new JButton(a.getRole().toString());
             pion.setBackground(a.getColor());
             pion.setEnabled(false);
@@ -69,42 +68,53 @@ public class BoutonTuile extends Observe{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Message m = new Message();
-                    m.type= TypeMessage.CLIC_JOUEUR;
+                    m.type = TypeMessage.CLIC_JOUEUR;
                     m.nomR = listeA.get(pion).getRole();
                     notifierObservateur(m);
                 }
             });
             pions.add(pion);
         }
-        for (int i =0; i+listeJ.size()<4;i++){
+        for (int i = 0; i + listeJ.size() < 4; i++) {
             pions.add(new JLabel(""));
         }
         pions.revalidate();
     }
-    
-    public JButton getBoutonTuile(){
+
+    public JButton getBoutonTuile() {
         return tuile;
     }
-    
-    public void paint(Color bg){
+
+    public void paint(Color bg) {
         tuile.setBackground(bg);
         pions.setBackground(bg);
     }
 
     public void activerJ(Aventurier adv) {
-        for(Component c : pions.getComponents()){
-            if(c instanceof JButton){
-                JButton b =(JButton) c;
-                if(!b.getText().equalsIgnoreCase(adv.getRole().toString())){ 
-               b.setBackground(Color.red);
-               b.setEnabled(true);}
+        for (Component c : pions.getComponents()) {
+            if (c instanceof JButton) {
+                JButton b = (JButton) c;
+                if (!b.getText().equalsIgnoreCase(adv.getRole().toString())) {
+                    b.setBackground(Color.red);
+                    b.setEnabled(true);
+                }
             }
         }
     }
-    
-    public Color getColor(){
+
+    public void activerJ() {
+        for (Component c : pions.getComponents()) {
+            if (c instanceof JButton) {
+                JButton b = (JButton) c;
+                b.setBackground(Color.red);
+                b.setEnabled(true);
+            }
+        }
+
+    }
+
+    public Color getColor() {
         return tuile.getBackground();
     }
-    
-    
+
 }

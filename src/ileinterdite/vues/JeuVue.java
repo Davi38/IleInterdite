@@ -342,6 +342,13 @@ for (int i = 1; i < 7; i++) {
         b.activerJ(advAct);
     }
     
+    // TRES SUREMENT A REVOIR !!!!
+    public void colorTousLesJ() {
+        for (BoutonTuile bouton : boutPieces.keySet()) {
+            bouton.activerJ();
+        }
+    }
+    
     public BoutonTuile getBT(Position pos){
         for(BoutonTuile b : boutPieces.keySet()){
             if(boutPieces.get(b).equals(pos)){

@@ -117,8 +117,8 @@ public class Controleur implements Observateur {
     }
 
     public void piocherCarteT(Aventurier aventurier) {
-        System.out.println("pt: "+piocheT.size());
-        System.out.println("dt: "+defausseT.size());
+        System.out.println("pt: " + piocheT.size());
+        System.out.println("dt: " + defausseT.size());
         if (piocheT.isEmpty()) {
             piocheT.addAll(defausseT);
             defausseT.clear();
@@ -172,7 +172,7 @@ public class Controleur implements Observateur {
         System.out.println(m.type);
         switch (m.type) {
             case DEMARRER:
-                demmarerPartie(m.listeJ,m.ind);
+                demmarerPartie(m.listeJ, m.ind);
                 break;
             case DEPLACER:
                 vue.desactiverB(advAct, grille);
@@ -219,7 +219,11 @@ public class Controleur implements Observateur {
             case DONNER_CARTE:
                 vue.majGrille(grille);
                 actionG = TypeMessage.DONNER_CARTE;
-                vue.colorJ(advAct);
+                if (advAct instanceof Messager) {
+                    vue.colorTousLesJ();
+                } else {
+                    vue.colorJ(advAct);
+                }
                 break;
 
             case CLIC_JOUEUR:
@@ -234,12 +238,13 @@ public class Controleur implements Observateur {
             case CLIC_CARTE:
                 Carte_Tresor ct = advAct.getCarteTresor().get(m.ind);
                 System.out.println(ct.getType());
-                if(jADonner != null){
-                if (jADonner.chercherNombreCartes() < 9) {
-                    advAct.removeAct();
-                    jADonner.addCarte(ct);
-                    advAct.getCarteTresor().remove(ct);
-                }}
+                if (jADonner != null) {
+                    if (jADonner.chercherNombreCartes() < 9) {
+                        advAct.removeAct();
+                        jADonner.addCarte(ct);
+                        advAct.getCarteTresor().remove(ct);
+                    }
+                }
                 jADonner = null;
                 actionG = null;
                 vue.majCartes(advAct);
@@ -308,7 +313,7 @@ public class Controleur implements Observateur {
 
     }
 
-    private void demmarerPartie(HashMap<Role, String> listeJ,int nv) {
+    private void demmarerPartie(HashMap<Role, String> listeJ, int nv) {
         niveaueau = new NiveauEau(nv);
         for (Role r : listeJ.keySet()) {
             Position posStart = getPositionDepart(r);

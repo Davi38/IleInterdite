@@ -38,7 +38,7 @@ public class VueFinJeu {
 
         if (gagne == false) {
 
-            JLabel jlabelB = new JLabel("BRAVO !");
+            JLabel jlabelB = new JLabel("PERDU !");
             jlabelB.setFont(new Font("Verdana", 1, 15));
             zonehaut.add(jlabelB);
 
@@ -50,7 +50,7 @@ public class VueFinJeu {
 
         if (gagne == true) {
 
-            JLabel jlabelP = new JLabel("PERDU !");
+            JLabel jlabelP = new JLabel("BRAVO !");
             jlabelP.setFont(new Font("Verdana", 1, 15));
             zonehaut.add(jlabelP);
 
