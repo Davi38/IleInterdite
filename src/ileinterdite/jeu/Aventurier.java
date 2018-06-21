@@ -124,7 +124,7 @@ public abstract class Aventurier {
     public ArrayList<Position> getPosPossible(Grille grille) {
         ArrayList<Position> posPos = new ArrayList<Position>();
         for(Position pos: grille.getGrille().keySet()){
-            if(verifDeplacement(pos, grille.getTuileP(pos))){
+            if(verifDeplacement(pos, grille.getTuileP(pos)) && !(grille.getTuileP(pos).getPiece() == "NULL")){
                 posPos.add(pos);
             }
         }

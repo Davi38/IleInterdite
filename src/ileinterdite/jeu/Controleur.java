@@ -520,18 +520,17 @@ public class Controleur implements Observateur {
         System.out.println("3");
         for (Aventurier a : joueurs.keySet()) {
             Position posJ = a.getPosition();
-            Ile ile = (Ile) grille.getTuileP(posJ);
-            if (ile.estNoyee()) {
-                System.out.println("La tuile du " + a.getRole() + "est noyée ");
-                ArrayList<Position> deplPos = new ArrayList<Position>();
-                deplPos = a.getPosPossible(grille);
-                if (deplPos.isEmpty()) {
-                    System.out.println("Il n'y a pas de tuile ou il peut se déplacer");
-                    return true;
-                } else {
-                    return false;
-                }
+            ArrayList<Position> deplPos = new ArrayList<Position>();
+            deplPos = a.getPosPossible(grille);
+            if (deplPos.isEmpty()) {
+                System.out.println("Il n'y a pas de tuile ou il peut se déplacer");
+                return true;
+            } else {
+                System.out.println(deplPos);
+                System.out.println("Il y a des tuiles ou il peut se deplacer");
+                return false;
             }
+
         }
         System.out.println("verifPertePartie3");
         return false;

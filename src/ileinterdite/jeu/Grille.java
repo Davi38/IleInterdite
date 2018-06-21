@@ -31,7 +31,8 @@ public class Grille {
         Collections.shuffle(listepiece);
         tuiles = new HashMap<>();
         
-        
+        // si true : toutes les tuiles sont coulées : permet de tester la fin de jeu quand un joueur est bloquée entre des tuiles noyées.
+        // si false : jeu normal
         boolean scenario1 = false;
         
         
