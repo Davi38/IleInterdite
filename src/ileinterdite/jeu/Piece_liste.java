@@ -16,7 +16,7 @@ public enum Piece_liste {
 	La_Porte_dOr,
 	Les_Falaises_de_lOubli,
 	La_Porte_dArgent,
-	Les_Dunes_de_lIllusion,
+	Les_Dunes_de_l_Illusion,
 	Heliport,
 	La_Porte_de_Cuivre,
 	La_Foret_Pourpre,
