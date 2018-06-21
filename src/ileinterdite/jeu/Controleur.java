@@ -230,9 +230,7 @@ public class Controleur implements Observateur {
                     advAct.removeAct();
                     vue.majCartes(advAct);
                 }
-                if (advAct.getActRest() <= 0) {
-                    finTour();
-                }
+                testFinT();
                 break;
 
             case DONNER_CARTE:
@@ -288,9 +286,7 @@ public class Controleur implements Observateur {
                 jADonner = null;
                 vue.majCartes(advAct);
 
-                if (advAct.getActRest() <=  0) {
-                    finTour();
-                }
+                testFinT();
 
                 break;
 
@@ -306,6 +302,7 @@ public class Controleur implements Observateur {
                     advAct.removeAct();
                     actionG = null;
                     vue.majGrille(grille);
+                    testFinT();
 
                 } else if (actionG == TypeMessage.ASSECHER && advAct.verifAssechement(m.pos, t)) {
                     t.assecher();
@@ -321,6 +318,7 @@ public class Controleur implements Observateur {
                     }
                     vue.majGrille(grille);
                     actionG = null;
+                    testFinT();
 
                 } else if (actionG == TypeMessage.HELICOPTERE) {
 
@@ -338,6 +336,7 @@ public class Controleur implements Observateur {
                     vue.majCartes(advAct);
                     cBact = null;
                     vue.majGrille(grille);
+                    testFinT();
                 }else if(actionG==TypeMessage.SABLE){
                     t.assecher();
                     vue.majGrille(grille);
@@ -346,25 +345,18 @@ public class Controleur implements Observateur {
                     
                     if(nbSableRest==0 || posI.size()==0){
                        actionG = null;
+                       testFinT();
                     }else{
+                       vue.desactiverBAct();
                        advAct.getCarteTresor().remove(cBact);
                        defausseT.add(cBact);
                        vue.majCartes(advAct);
                        vue.colorAssechement(posI);
-                       cBact = null;
+                       cBact = null;  
                        
                     }
-                    
-                    
-                    
                 }
-                
-                
-                System.out.println(advAct.getActRest());
-                if (advAct.getActRest() <= 0) {
-                    finTour();
-                }
-                System.out.println(actionG+"B");
+
                 break;
 
         }
@@ -629,5 +621,15 @@ public class Controleur implements Observateur {
 
         return tres && heliport;
     }
+    
+    public void testFinT(){
+        if (advAct.getActRest() <= 0) {
+        if(advAct.testCtBonus()){
+            vue.desactiverBActsaufFT();
+        }else{
+            finTour();
+        }}
+    }
+    
 
 }

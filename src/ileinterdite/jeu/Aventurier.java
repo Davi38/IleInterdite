@@ -131,5 +131,14 @@ public abstract class Aventurier {
         return posPos;
         
     }
+    
+    public boolean testCtBonus(){
+        for(Carte_Tresor cT : mesCartes){
+            if(cT instanceof CtBonus){
+                return true;
+            }
+        }
+        return false;
+    }
 }
 

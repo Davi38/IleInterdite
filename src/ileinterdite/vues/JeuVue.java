@@ -473,5 +473,30 @@ public class JeuVue extends Observe {
             b.getBoutonTuile().setEnabled(true);
         }
     }
+    
+    public void desactiverBAct(){
+        boutonD.setEnabled(false);
+        boutonA.setEnabled(false);
+        boutonFT.setEnabled(false);
+        boutonDC.setEnabled(false);
+        boutonGT.setEnabled(false);
+    }
+    
+    public void desactiverBActsaufFT(){
+        boutonD.setEnabled(false);
+        boutonA.setEnabled(false);
+        boutonDC.setEnabled(false);
+        boutonGT.setEnabled(false);
+    }
+    
+    public void activerBact(){
+        boutonD.setEnabled(true);
+        boutonA.setEnabled(true);
+        boutonFT.setEnabled(true);
+        boutonDC.setEnabled(true);
+        boutonGT.setEnabled(true);
+    }
+    
+    
 
 }
