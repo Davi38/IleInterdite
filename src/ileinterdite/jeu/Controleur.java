@@ -209,7 +209,7 @@ public class Controleur implements Observateur {
                 jADonner = null;
                 finTour();
                 if (verifFinPartie()){
-                    //vue.cacherFenetre();
+                    vue.cacherFenetre();
                     VueFinJeu vueFinJeu = new VueFinJeu(false);
                     vueFinJeu.addObservateur(this);
                     vueFinJeu.afficherFenetre();
@@ -457,8 +457,10 @@ public class Controleur implements Observateur {
     
     
     public boolean verifFinPartie(){
-        return verifPertePartie1()||verifPertePartie2()||verifPertePartie3()||verifPertePartie4();
-        
+        if (verifPertePartie1() || verifPertePartie2() || verifPertePartie3() || verifPertePartie4()){
+            return true ;
+        }
+        return false;
     }
     
     public boolean verifPertePartie1(){
@@ -469,8 +471,10 @@ public class Controleur implements Observateur {
                 boolean testN = true;
                 for(Ile iT : ileT){
                     if (!iT.estNoyee()){
-                        System.out.println("La tuile trésor " + iT.getPiece() + " est noyée");
+                        System.out.println("La tuile trésor " + iT.getPiece() + " n'est pas noyée");
                         testN = false;
+                    } else {
+                        System.out.println("La tuile trésor " + iT.getPiece() + " est  noyée");
                     }
                 }
                 return testN;
@@ -486,7 +490,7 @@ public class Controleur implements Observateur {
         Position posHeliport = grille.getPositionP(Piece_liste.Heliport);
         Ile ile = (Ile) grille.getTuileP(posHeliport);
         if (ile.estNoyee()){
-            System.out.println("L'héliport s'est noyé :");
+            System.out.println("L'héliport s'est noyé ");
             return true;
         }
         return false;
@@ -512,14 +516,16 @@ public class Controleur implements Observateur {
     }
     
     public boolean verifPertePartie4(){
-        System.out.println("verifPertePartie4 :" + niveauEau.getNv());
-        if ( niveauEau.getNv()==10){
-            System.out.println("Le niveau d'eau a atteint le maximum ");
-            return true;
-        }
-        return false;
         
-        
+        System.out.println("verifPertePartie4 :" );
+        System.out.println("Le niveau d'eau est " + niveauEau.getNv());
+        boolean test = false;
+        if ( niveauEau.getNv() == 10){
+            System.out.println("Vous avez perdu : Le niveau d'eau a atteint le maximum ");
+            test = true;
+        } 
+        return test;
+         
     }
     
     public void actionBonus(CtBonus cb){
