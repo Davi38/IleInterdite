@@ -30,7 +30,11 @@ public class Grille {
 
         Collections.shuffle(listepiece);
         tuiles = new HashMap<>();
-
+        
+        
+        boolean scenario1 = false;
+        
+        
         for (int i = 1; i < 7; i++) {
             for (int j = 1; j < 7; j++) {
                 Position pos = new Position(i, j);
@@ -39,10 +43,17 @@ public class Grille {
                     //System.out.println(i+ "-"+j);
                     tuiles.put(pos, tuile);
                 } else {
-                    //System.out.println(i+ "--"+j);
+                    if(!scenario1) {
                     Ile tuile = new Ile(listepiece.get(0));
                     listepiece.remove(0);
                     tuiles.put(pos, tuile);
+                    } else {
+                        Ile tuile = new Ile(listepiece.get(0));
+                        tuile.innonder();
+                        tuile.innonder();
+                        listepiece.remove(0);
+                        tuiles.put(pos, tuile);
+                    }
                 }
 
             }

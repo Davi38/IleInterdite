@@ -47,7 +47,7 @@ public class Controleur implements Observateur {
     Controleur() {
         initJeu();
     }
-    
+
     public void initJeu() {
         actionG = null;
         finJeu = false;
@@ -94,8 +94,7 @@ public class Controleur implements Observateur {
         vueI = new VueInscription();
         vueI.addObservateur(this);
         vueI.afficherFenetre();
-        
-        
+
     }
 
     public boolean roleDisponible(Role role) {
@@ -176,14 +175,15 @@ public class Controleur implements Observateur {
             case DEMARRER:
                 demmarerPartie(m.listeJ, m.ind);
                 break;
-                
+
             case RECOMMENCER:
+                vue.cacherFenetre();
                 initJeu();
                 break;
-                
+
             case DEPLACER:
                 jADonner = null;
-                vue.desactiverB( grille);
+                vue.desactiverB(grille);
                 actionG = TypeMessage.DEPLACER;
                 if (advAct instanceof Plongeur) {
                     Plongeur plongeur = (Plongeur) advAct;
@@ -199,7 +199,7 @@ public class Controleur implements Observateur {
                     Plongeur plongeur = (Plongeur) advAct;
                     plongeur.setGrille(grille);
                 }
-                vue.desactiverB( grille);
+                vue.desactiverB(grille);
                 actionG = TypeMessage.ASSECHER;
                 vue.majGrille(grille);
                 vue.majAssechement(advAct, grille);
@@ -208,7 +208,7 @@ public class Controleur implements Observateur {
             case FIN_TOUR:
                 jADonner = null;
                 finTour();
-                if (verifFinPartie()){
+                if (verifFinPartie()) {
                     //vue.cacherFenetre();
                     VueFinJeu vueFinJeu = new VueFinJeu(false);
                     vueFinJeu.addObservateur(this);
@@ -250,15 +250,15 @@ public class Controleur implements Observateur {
                     Role r = m.nomR;
                     jADonner = chercherAventurier(r);
                     vue.activerB();
-                }else if(actionG == TypeMessage.HELICOPTERE){
+                } else if (actionG == TypeMessage.HELICOPTERE) {
                     Role r = m.nomR;
                     jADepl.add(chercherAventurier(r));
                     System.out.println("Action");
-                    if(!vue.colorJ(jADepl,grille)){
-                        vue.majDeplacement(new Pilote(new Position(0,0)), grille);
+                    if (!vue.colorJ(jADepl, grille)) {
+                        vue.majDeplacement(new Pilote(new Position(0, 0)), grille);
                         System.out.println("Action2");
                     }
-                    
+
                 }
 
                 break;
@@ -274,19 +274,19 @@ public class Controleur implements Observateur {
                         actionG = null;
                     }
                     vue.desactiverB(grille);
-                }else{
+                } else {
                     actionG = null;
-                    if(ct instanceof CtBonus){
-                    CtBonus cb =(CtBonus) ct;
-                    System.out.println(ct.getType()+"Bonus");
-                    cBact = cb;
-                    actionBonus(cb);
-                    
+                    if (ct instanceof CtBonus) {
+                        CtBonus cb = (CtBonus) ct;
+                        System.out.println(ct.getType() + "Bonus");
+                        cBact = cb;
+                        actionBonus(cb);
+
                     }
                 }
                 jADonner = null;
                 vue.majCartes(advAct);
-                
+
                 if (advAct.getActRest() == 0) {
                     finTour();
                 }
@@ -318,19 +318,19 @@ public class Controleur implements Observateur {
                         advAct.removeAct();
                     }
 
-                }else if(actionG==TypeMessage.HELICOPTERE){
-                    
-                    Ile ile =(Ile) grille.getTuileP(grille.getPosition(jADepl.get(0).getPosition()));
-                    for (Aventurier a : jADepl){
+                } else if (actionG == TypeMessage.HELICOPTERE) {
+
+                    Ile ile = (Ile) grille.getTuileP(grille.getPosition(jADepl.get(0).getPosition()));
+                    for (Aventurier a : jADepl) {
                         System.out.println(a.getRole().toString());
                         ile.removeAventurier(a);
                         a.setPosition(pos);
                         t.addAventurier(a);
-                        
+
                     }
                     advAct.getCarteTresor().remove(cBact);
                     vue.majCartes(advAct);
-                    cBact=null;
+                    cBact = null;
                 }
                 vue.majGrille(grille);
                 actionG = null;
@@ -345,7 +345,7 @@ public class Controleur implements Observateur {
 
     public void finTour() {
         vue.finT();
-        for (int i = 0; i < 2; i++){
+        for (int i = 0; i < 2; i++) {
             piocherCarteT(advAct);
         }
         for (int i = 0; i < niveauEau.getNbCarte(); i++) {
@@ -422,9 +422,9 @@ public class Controleur implements Observateur {
         TypeTrésor t = convertTresor((Ile) grille.getTuileP(advAct.getPosition()));
         if (t != null) {
             Tresor tres = getTresor(t);
-            
+
             boolean estSurTresor = false;
-            
+
             if (tres.getType() == TypeTrésor.CALICE && advAct.getPosition() == grille.getPositionP(Piece_liste.Le_Palais_de_Corail)) {
                 estSurTresor = true;
             } else if (tres.getType() == TypeTrésor.CALICE && advAct.getPosition() == grille.getPositionP(Piece_liste.Le_Palais_des_Marees)) {
@@ -442,8 +442,7 @@ public class Controleur implements Observateur {
             } else if (tres.getType() == TypeTrésor.STATUE && advAct.getPosition() == grille.getPositionP(Piece_liste.Le_Jardin_des_Murmures)) {
                 estSurTresor = true;
             }
-            
-            
+
             if (!tres.isRecuperé() && advAct.verifGagnerT(tres) && estSurTresor) {
                 tres.setRecuperé(true);
                 advAct.removeCT(t);
@@ -476,37 +475,40 @@ public class Controleur implements Observateur {
         }
         return null;
     }
-    
-    
-    public boolean verifFinPartie(){
-        return verifPertePartie1()||verifPertePartie2()||verifPertePartie3()||verifPertePartie4();
-        
+
+    public boolean verifFinPartie() {
+        return verifPertePartie3() || verifPertePartie2() || verifPertePartie1() || verifPertePartie4();
+
     }
-    
-    public boolean verifPertePartie1(){
+
+    public boolean verifPertePartie1() {
+        System.out.println("1");
         System.out.println("verifPertePartie1 : ");
-        for (Tresor t: tresors){   
-            if(!t.isRecuperé()){
+        int nbIleInondee = 0;
+        for (Tresor t : tresors) {
+            if (!t.isRecuperé()) {
                 ArrayList<Ile> ileT = getIlesT(t.getType());
-                boolean testN = true;
-                for(Ile iT : ileT){
-                    if (iT.estNoyee()){
+                nbIleInondee = 0;
+                for (Ile iT : ileT) {
+                    if (iT.estNoyee()) {
                         System.out.println("La tuile trésor " + iT.getPiece() + " est noyée");
-                        testN = false;
+                        nbIleInondee++;
                     }
                 }
-                return testN;
+                if (nbIleInondee == 2) {
+                    return true;
+                }
             }
         }
-        
         return false;
     }
 
     public boolean verifPertePartie2() {
+        System.out.println("2");
         System.out.println("verifPertePartie2 : ");
         Position posHeliport = grille.getPositionP(Piece_liste.Heliport);
         Ile ile = (Ile) grille.getTuileP(posHeliport);
-        if (ile.estNoyee()){
+        if (ile.estNoyee()) {
             System.out.println("L'héliport s'est noyé");
             return true;
         } else {
@@ -515,85 +517,89 @@ public class Controleur implements Observateur {
     }
 
     public boolean verifPertePartie3() {
+        System.out.println("3");
         for (Aventurier a : joueurs.keySet()) {
             Position posJ = a.getPosition();
             Ile ile = (Ile) grille.getTuileP(posJ);
-            if (ile.estNoyee()){
+            if (ile.estNoyee()) {
                 System.out.println("La tuile du " + a.getRole() + "est noyée ");
                 ArrayList<Position> deplPos = new ArrayList<Position>();
                 deplPos = a.getPosPossible(grille);
-                if(deplPos.isEmpty()){
+                if (deplPos.isEmpty()) {
                     System.out.println("Il n'y a pas de tuile ou il peut se déplacer");
                     return true;
+                } else {
+                    return false;
                 }
-                return false;
             }
         }
         System.out.println("verifPertePartie3");
         return false;
     }
-    
-    public boolean verifPertePartie4(){
+
+    public boolean verifPertePartie4() {
+        System.out.println("4");
         System.out.println("verifPertePartie4 :" + niveauEau.getNv());
-        if ( niveauEau.getNv()==10){
+        if (niveauEau.getNv() > 9) {
             System.out.println("Le niveau d'eau a atteint le maximum ");
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
-    
-    public void actionBonus(CtBonus cb){
+
+    public void actionBonus(CtBonus cb) {
         vue.desactiverB(grille);
-        if (cb.getType()=="SABLE"){
+        if (cb.getType() == "SABLE") {
             actionG = TypeMessage.SABLE;
-            
-            
-        }else if(cb.getType()=="HELICOPTERE"){
-            if(testJeuGagnant()){
+
+        } else if (cb.getType() == "HELICOPTERE") {
+            if (testJeuGagnant()) {
                 vue.cacherFenetre();
                 vueFinJeu = new VueFinJeu(true);
-            }else{
-            actionG = TypeMessage.HELICOPTERE;
-            jADepl = new ArrayList<Aventurier>();
-            vue.colorTousLesJ();}
+            } else {
+                actionG = TypeMessage.HELICOPTERE;
+                jADepl = new ArrayList<Aventurier>();
+                vue.colorTousLesJ();
+            }
         }
     }
-    public ArrayList<Ile> getIlesT(TypeTrésor typeT){
+
+    public ArrayList<Ile> getIlesT(TypeTrésor typeT) {
         ArrayList<Ile> ileT = new ArrayList<Ile>();
-        switch(typeT){
-            case CALICE : 
-                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Palais_de_Corail));
-                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Palais_des_Marees));
+        switch (typeT) {
+            case CALICE:
+                ileT.add((Ile) grille.getTuilePL(Piece_liste.Le_Palais_de_Corail));
+                ileT.add((Ile) grille.getTuilePL(Piece_liste.Le_Palais_des_Marees));
                 break;
             case CRYSTAL:
-                ileT.add((Ile)grille.getTuilePL(Piece_liste.La_Caverne_des_Ombres));
-                ileT.add((Ile)grille.getTuilePL(Piece_liste.La_Caverne_du_Brasier));
+                ileT.add((Ile) grille.getTuilePL(Piece_liste.La_Caverne_des_Ombres));
+                ileT.add((Ile) grille.getTuilePL(Piece_liste.La_Caverne_du_Brasier));
                 break;
             case PIERRE:
-                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Temple_de_La_Lune));
-                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Temple_du_Soleil));
+                ileT.add((Ile) grille.getTuilePL(Piece_liste.Le_Temple_de_La_Lune));
+                ileT.add((Ile) grille.getTuilePL(Piece_liste.Le_Temple_du_Soleil));
                 break;
             case STATUE:
-                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Jardin_des_Hurlements));
-                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Jardin_des_Murmures));
-                break;          
+                ileT.add((Ile) grille.getTuilePL(Piece_liste.Le_Jardin_des_Hurlements));
+                ileT.add((Ile) grille.getTuilePL(Piece_liste.Le_Jardin_des_Murmures));
+                break;
         }
         return ileT;
-        
+
     }
-    
-    public boolean testJeuGagnant(){
-        boolean tres=true,heliport =true;
-        for(Tresor t : tresors){
-            if(!t.isRecuperé()){
-                tres=false;
+
+    public boolean testJeuGagnant() {
+        boolean tres = true, heliport = true;
+        for (Tresor t : tresors) {
+            if (!t.isRecuperé()) {
+                tres = false;
             }
         }
         Ile ile = (Ile) grille.getTuilePL(Piece_liste.Heliport);
-        heliport = ile.getAventuriers().size()==joueurs.size();
-        
+        heliport = ile.getAventuriers().size() == joueurs.size();
+
         return tres && heliport;
     }
-    
 
 }
