@@ -457,12 +457,12 @@ public class Controleur implements Observateur {
     
     
     public boolean verifFinPartie(){
-        //return verifPertePartie1()||verifPertePartie2()||verifPertePartie3()||verifPertePartie4();
-        return false;
+        return verifPertePartie1()||verifPertePartie2()||verifPertePartie3()||verifPertePartie4();
+        
     }
     
     public boolean verifPertePartie1(){
-        
+        System.out.println("verifPertePartie1 : ");
         for (Tresor t: tresors){   
             if(!t.isRecuperé()){
                 ArrayList<Ile> ileT = getIlesT(t.getType());
@@ -481,9 +481,11 @@ public class Controleur implements Observateur {
     }
 
     public boolean verifPertePartie2() {
+        System.out.println("verifPertePartie2 : ");
         Position posHeliport = grille.getPositionP(Piece_liste.Heliport);
         Ile ile = (Ile) grille.getTuileP(posHeliport);
         if (ile.estNoyee()){
+            System.out.println("L'héliport s'est noyé :");
             return true;
         }
         return false;
@@ -501,11 +503,19 @@ public class Controleur implements Observateur {
                 }
             }
         }
+        System.out.println("verifPertePartie3");
         return false;
     }
     
     public boolean verifPertePartie4(){
-        return niveauEau.getNv()==10;
+        System.out.println("verifPertePartie4 :" + niveauEau.getNv());
+        if ( niveauEau.getNv()==10){
+            System.out.println("Le niveau d'eau a atteint le maximum ");
+            return true;
+        }
+        return false;
+        
+        
     }
     
     public void actionBonus(CtBonus cb){
