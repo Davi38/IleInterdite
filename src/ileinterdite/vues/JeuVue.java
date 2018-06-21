@@ -13,17 +13,13 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.imageio.ImageIO;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -58,28 +54,15 @@ public class JeuVue extends Observe {
     public JeuVue(Grille grille, int niveauEau, Observateur o) {
         this.addObservateur(o);
         window1 = new JFrame("Jeu");
-        Image imgFond = null;
-        
-        try {
-            imgFond = ImageIO.read(new File(System.getProperty("user.dir") + "/src/images/autre/fond.png"));
-        } catch (IOException ex) {
-            System.err.println("Erreur de lecture de fond.png");
-        }
-        
-        
-        
-        JPanel mainPanel = new PanelFond(imgFond,new BorderLayout());
-        
+        JPanel mainPanel = new JPanel(new BorderLayout());
         window1.add(mainPanel);
 
         regles = new VueRegles();
         JPanel zoneJeu = new JPanel(new GridLayout(6, 6));
-        zoneJeu.setOpaque(false);
         boutPieces = new HashMap<BoutonTuile, Position>();
         boutCartes = new ArrayList<JButton>();
 
         JPanel haut = new JPanel(new GridLayout(1, 5));
-        haut.setOpaque(false);
         JButton Bregles = new JButton("Regles du jeu");
         Bregles.addActionListener(new ActionListener() {
             @Override
@@ -105,7 +88,6 @@ public class JeuVue extends Observe {
         mainPanel.add(haut, BorderLayout.NORTH);
 
         nv = new VueNiveau(niveauEau);
-        nv.setOpaque(false);
         mainPanel.add(nv, BorderLayout.WEST);
 
         // ####################################################################################
