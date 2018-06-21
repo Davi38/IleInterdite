@@ -97,26 +97,26 @@ public class VueInscription extends Observe {
         for (int i = 0; i < roles.size(); i++) {
             listeRole1.addItem(roles.get(i));
             listeRole1.setSelectedItem(null);
-            listeRole1.setEnabled(true);
+            listeRole1.setVisible(true);
             
             listeRole2.addItem(roles.get(i));
             listeRole2.setSelectedItem(null);
-            listeRole2.setEnabled(true);
+            listeRole2.setVisible(true);
             
             listeRole3.addItem(roles.get(i));
             listeRole3.setSelectedItem(null);
-            listeRole3.setEnabled(false);   
+            listeRole3.setVisible(false);   
             
             listeRole4.addItem(roles.get(i));
             listeRole4.setSelectedItem(null);
-            listeRole4.setEnabled(false);   
+            listeRole4.setVisible(false);   
         }
         
-        removeJoueur.setEnabled(false);
-        champNom1.setEnabled(true);
-        champNom2.setEnabled(true);
-        champNom3.setEnabled(false);
-        champNom4.setEnabled(false);
+        removeJoueur.setVisible(false);
+        champNom1.setVisible(true);
+        champNom2.setVisible(true);
+        champNom3.setVisible(false);
+        champNom4.setVisible(false);
         listeNiveau.setSelectedIndex(0);
         
         listeRole1.addItemListener(
@@ -256,12 +256,12 @@ public class VueInscription extends Observe {
                 Message m = new Message();
                 m.type = TypeMessage.DEMARRER;
                 HashMap<Role, String> liste = new HashMap<Role, String>();
-                if(listeRole4.isEnabled()){ 
+                if(listeRole4.isVisible()){ 
                     Role r4 = Role.valueOf(listeRole4.getSelectedItem().toString().toUpperCase());
                     Role r3 = Role.valueOf(listeRole3.getSelectedItem().toString().toUpperCase());
                     liste.put(r4,champNom4.getText());
                     liste.put( r3,champNom3.getText());
-                }else if(listeRole3.isEnabled()){
+                }else if(listeRole3.isVisible()){
                     Role r3 = Role.valueOf(listeRole3.getSelectedItem().toString().toUpperCase());
                     liste.put(r3,champNom3.getText());
                 }
@@ -281,34 +281,34 @@ public class VueInscription extends Observe {
         addJoueur.addActionListener ( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!listeRole3.isEnabled()) {
-                    listeRole3.setEnabled(true);
-                    champNom3.setEnabled(true);
+                if (!listeRole3.isVisible()) {
+                    listeRole3.setVisible(true);
+                    champNom3.setVisible(true);
                     
         
-                    removeJoueur.setEnabled(true);
-                } else if (!listeRole4.isEnabled()) {
-                    listeRole4.setEnabled(true);
-                    champNom4.setEnabled(true);
-                    addJoueur.setEnabled(false);
-                    removeJoueur.setEnabled(true);
+                    removeJoueur.setVisible(true);
+                } else if (!listeRole4.isVisible()) {
+                    listeRole4.setVisible(true);
+                    champNom4.setVisible(true);
+                    addJoueur.setVisible(false);
+                    removeJoueur.setVisible(true);
                 }
         }});
         removeJoueur.addActionListener ( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (listeRole3.isEnabled() && listeRole4.isEnabled()) {
-                    listeRole4.setEnabled(false);
+                if (listeRole3.isVisible() && listeRole4.isVisible()) {
+                    listeRole4.setVisible(false);
                     listeRole4.setSelectedItem(null);
-                    champNom4.setEnabled(false);
-                    addJoueur.setEnabled(true);
+                    champNom4.setVisible(false);
+                    addJoueur.setVisible(true);
                     
-                } else if (listeRole4.isEnabled() == false) {
-                    listeRole3.setEnabled(false);
+                } else if (listeRole4.isVisible() == false) {
+                    listeRole3.setVisible(false);
                     listeRole3.setSelectedItem(null);
-                    champNom3.setEnabled(false);
-                    removeJoueur.setEnabled(false);
-                    addJoueur.setEnabled(true);
+                    champNom3.setVisible(false);
+                    removeJoueur.setVisible(false);
+                    addJoueur.setVisible(true);
                     
                 }
         }});
@@ -326,10 +326,10 @@ public class VueInscription extends Observe {
     
     public boolean TestDemarrer(){
         boolean test = true;
-        if(listeRole4.isEnabled()){
+        if(listeRole4.isVisible()){
             test = listeRole4.getSelectedItem()!=null && listeRole3.getSelectedItem()!=null;
             
-        }else if(listeRole3.isEnabled()){
+        }else if(listeRole3.isVisible()){
             test = listeRole3.getSelectedItem()!=null;
         }
         return test && listeRole1.getSelectedItem()!= null && listeRole2.getSelectedItem()!=null; 

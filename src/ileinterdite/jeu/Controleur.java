@@ -422,7 +422,29 @@ public class Controleur implements Observateur {
         TypeTrésor t = convertTresor((Ile) grille.getTuileP(advAct.getPosition()));
         if (t != null) {
             Tresor tres = getTresor(t);
-            if (!tres.isRecuperé() && advAct.verifGagnerT(tres)) {
+            
+            boolean estSurTresor = false;
+            
+            if (tres.getType() == TypeTrésor.CALICE && advAct.getPosition() == grille.getPositionP(Piece_liste.Le_Palais_de_Corail)) {
+                estSurTresor = true;
+            } else if (tres.getType() == TypeTrésor.CALICE && advAct.getPosition() == grille.getPositionP(Piece_liste.Le_Palais_des_Marees)) {
+                estSurTresor = true;
+            } else if (tres.getType() == TypeTrésor.CRYSTAL && advAct.getPosition() == grille.getPositionP(Piece_liste.La_Caverne_des_Ombres)) {
+                estSurTresor = true;
+            } else if (tres.getType() == TypeTrésor.CRYSTAL && advAct.getPosition() == grille.getPositionP(Piece_liste.La_Caverne_du_Brasier)) {
+                estSurTresor = true;
+            } else if (tres.getType() == TypeTrésor.PIERRE && advAct.getPosition() == grille.getPositionP(Piece_liste.Le_Temple_de_La_Lune)) {
+                estSurTresor = true;
+            } else if (tres.getType() == TypeTrésor.PIERRE && advAct.getPosition() == grille.getPositionP(Piece_liste.Le_Temple_du_Soleil)) {
+                estSurTresor = true;
+            } else if (tres.getType() == TypeTrésor.STATUE && advAct.getPosition() == grille.getPositionP(Piece_liste.Le_Jardin_des_Hurlements)) {
+                estSurTresor = true;
+            } else if (tres.getType() == TypeTrésor.STATUE && advAct.getPosition() == grille.getPositionP(Piece_liste.Le_Jardin_des_Murmures)) {
+                estSurTresor = true;
+            }
+            
+            
+            if (!tres.isRecuperé() && advAct.verifGagnerT(tres) && estSurTresor) {
                 tres.setRecuperé(true);
                 advAct.removeCT(t);
                 vue.setImgTresEtat(t, tres.isRecuperé());
@@ -479,7 +501,6 @@ public class Controleur implements Observateur {
                 }
                 return testN;
             }
-            return false;
         }
         
         return false;
@@ -492,8 +513,9 @@ public class Controleur implements Observateur {
         if (ile.estNoyee()){
             System.out.println("L'héliport s'est noyé ");
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     public boolean verifPertePartie3() {
@@ -557,7 +579,7 @@ public class Controleur implements Observateur {
                 break;
             case PIERRE:
                 ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Temple_de_La_Lune));
-                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Temple_du_soleil));
+                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Temple_du_Soleil));
                 break;
             case STATUE:
                 ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Jardin_des_Hurlements));

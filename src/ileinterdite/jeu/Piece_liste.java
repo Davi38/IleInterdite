@@ -30,7 +30,7 @@ public enum Piece_liste {
 	Le_Palais_de_Corail,
 	Le_Jardin_des_Hurlements,
 	La_Caverne_du_Brasier,
-	Le_Temple_du_soleil,
+	Le_Temple_du_Soleil,
 	Le_Temple_de_La_Lune,
 	Le_Palais_des_Marees,
 	Le_Jardin_des_Murmures,

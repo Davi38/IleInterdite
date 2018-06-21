@@ -39,7 +39,7 @@ public class BoutonTuile extends Observe {
         JLabel nomT = new JLabel(nomP.replace("_", " "));
         nomT.setFont((new Font("Arial", Font.PLAIN, 20)));
         tuile.add(nomT, BorderLayout.NORTH);
-        pions = new JPanel(new GridLayout(2, 2));
+        pions = new JPanel(new GridLayout(3, 2));
         tuile.add(pions, BorderLayout.CENTER);
         listeA = new HashMap<JButton, Aventurier>();
         this.pos = pos;
@@ -79,6 +79,15 @@ public class BoutonTuile extends Observe {
             pions.add(new JLabel(""));
         }
         pions.revalidate();
+        
+    }
+     
+    public void addSymboleTresor(Color couleur, String nom) {
+        JPanel tres = new JPanel();
+        JLabel texte = new JLabel(nom);
+        tres.add(texte);
+        tres.setBackground(couleur);
+        pions.add(tres);
     }
 
     public JButton getBoutonTuile() {
