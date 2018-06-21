@@ -468,14 +468,13 @@ public class Controleur implements Observateur {
                 ArrayList<Ile> ileT = getIlesT(t.getType());
                 boolean testN = true;
                 for(Ile iT : ileT){
-                    if (!iT.estNoyee()){
+                    if (iT.estNoyee()){
                         System.out.println("La tuile trésor " + iT.getPiece() + " est noyée");
                         testN = false;
                     }
                 }
                 return testN;
             }
-            return false;
         }
         
         return false;
@@ -486,10 +485,11 @@ public class Controleur implements Observateur {
         Position posHeliport = grille.getPositionP(Piece_liste.Heliport);
         Ile ile = (Ile) grille.getTuileP(posHeliport);
         if (ile.estNoyee()){
-            System.out.println("L'héliport s'est noyé :");
+            System.out.println("L'héliport s'est noyé");
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     public boolean verifPertePartie3() {
