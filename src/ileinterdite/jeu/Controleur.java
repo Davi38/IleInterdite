@@ -508,8 +508,7 @@ public class Controleur implements Observateur {
 
     public boolean verifPertePartie2() {
         System.out.println("verifPertePartie2 : ");
-        Position posHeliport = grille.getPositionP(Piece_liste.Heliport);
-        Ile ile = (Ile) grille.getTuileP(posHeliport);
+        Ile ile = (Ile) grille.getTuilePL(Piece_liste.Heliport);
         if (ile.estNoyee()){
             System.out.println("L'héliport s'est noyé ");
             return true;
