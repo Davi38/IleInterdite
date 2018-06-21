@@ -37,6 +37,7 @@ public class BoutonTuile extends Observe {
     BoutonTuile(String nomP, Position pos, Observateur o) {
         this.addObservateur(o);
         tuile = new JButton();
+        tuile.setOpaque(false);
         fond= new FondTuile(nomP);
         tuile.add(fond);
         /*JLabel nomT = new JLabel(nomP.replace("_", " "));
@@ -64,6 +65,7 @@ public class BoutonTuile extends Observe {
         listeA.clear();
         pions.removeAll();
         tuile.setBackground(null);
+        tuile.setOpaque(false);
         
         
         
@@ -98,6 +100,7 @@ public class BoutonTuile extends Observe {
 
     public void paint(Color bg) {
         tuile.setBackground(bg);
+        tuile.setOpaque(true);
         pions.setBackground(bg);
     }
 

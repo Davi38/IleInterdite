@@ -50,8 +50,7 @@ public class FondTuile extends JPanel{
         }else if(etat==Etat.INNONDEE) {
             g.drawImage(imgTI,0, 0,w ,h ,null,this );
         }else{
-            g.setColor(Color.BLACK);
-            g.fillRect(0, 0, w, h);
+            
         }}
     
     public void setEtat(Etat et){
