@@ -43,6 +43,7 @@ public class Controleur implements Observateur {
     private Aventurier jADonner;
     private ArrayList<Aventurier> jADepl;
     private CtBonus cBact;
+    private int nbSableRest;
 
     Controleur() {
         initJeu();
@@ -229,7 +230,7 @@ public class Controleur implements Observateur {
                     advAct.removeAct();
                     vue.majCartes(advAct);
                 }
-                if (advAct.getActRest() == 0) {
+                if (advAct.getActRest() <= 0) {
                     finTour();
                 }
                 break;
@@ -287,7 +288,7 @@ public class Controleur implements Observateur {
                 jADonner = null;
                 vue.majCartes(advAct);
 
-                if (advAct.getActRest() == 0) {
+                if (advAct.getActRest() <=  0) {
                     finTour();
                 }
 
@@ -297,13 +298,14 @@ public class Controleur implements Observateur {
                 vue.desactiverB(grille);
                 Ile tJ = (Ile) grille.getTuileP(grille.getPosition(advAct.getPosition()));
                 Position pos = grille.getPosition(m.pos);
-
                 Ile t = (Ile) grille.getTuileP(pos);
                 if (actionG == TypeMessage.DEPLACER && advAct.verifDeplacement(pos, t)) {
                     advAct.setPosition(pos);
                     tJ.getAventuriers().remove(advAct);
                     t.addAventurier(advAct);
                     advAct.removeAct();
+                    actionG = null;
+                    vue.majGrille(grille);
 
                 } else if (actionG == TypeMessage.ASSECHER && advAct.verifAssechement(m.pos, t)) {
                     t.assecher();
@@ -317,6 +319,8 @@ public class Controleur implements Observateur {
                     } else {
                         advAct.removeAct();
                     }
+                    vue.majGrille(grille);
+                    actionG = null;
 
                 } else if (actionG == TypeMessage.HELICOPTERE) {
 
@@ -326,18 +330,41 @@ public class Controleur implements Observateur {
                         ile.removeAventurier(a);
                         a.setPosition(pos);
                         t.addAventurier(a);
+                        actionG = null;
 
                     }
                     advAct.getCarteTresor().remove(cBact);
+                    defausseT.add(cBact);
                     vue.majCartes(advAct);
                     cBact = null;
+                    vue.majGrille(grille);
+                }else if(actionG==TypeMessage.SABLE){
+                    t.assecher();
+                    vue.majGrille(grille);
+                    nbSableRest -= 1;
+                    ArrayList<Position> posI = grille.getInnonde();
+                    
+                    if(nbSableRest==0 || posI.size()==0){
+                       actionG = null;
+                    }else{
+                       advAct.getCarteTresor().remove(cBact);
+                       defausseT.add(cBact);
+                       vue.majCartes(advAct);
+                       vue.colorAssechement(posI);
+                       cBact = null;
+                       
+                    }
+                    
+                    
+                    
                 }
-                vue.majGrille(grille);
-                actionG = null;
+                
+                
                 System.out.println(advAct.getActRest());
-                if (advAct.getActRest() == 0) {
+                if (advAct.getActRest() <= 0) {
                     finTour();
                 }
+                System.out.println(actionG+"B");
                 break;
 
         }
@@ -551,6 +578,8 @@ public class Controleur implements Observateur {
         vue.desactiverB(grille);
         if (cb.getType() == "SABLE") {
             actionG = TypeMessage.SABLE;
+            vue.colorAssechement(grille.getInnonde());
+            nbSableRest = 2;
 
         } else if (cb.getType() == "HELICOPTERE") {
             if (testJeuGagnant()) {

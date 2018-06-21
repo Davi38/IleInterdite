@@ -127,5 +127,20 @@ public class Grille {
         }
         return null;
     }
+    
+    public ArrayList<Position> getInnonde(){
+        ArrayList<Position> inonde = new ArrayList<Position>();
+        for(Position p : tuiles.keySet()){
+            if(tuiles.get(p) instanceof Ile){
+                Ile ile = (Ile) tuiles.get(p);
+                if (ile.estInnondee()){
+                    inonde.add(p);
+                }
+            }
+            
+        }
+        return inonde;
+        
+    }
 
 }

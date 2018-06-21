@@ -433,5 +433,13 @@ public class JeuVue extends Observe {
         }
         return false;
     }
+    
+    public void colorAssechement(ArrayList<Position> posA){
+        for(Position p : posA){
+            BoutonTuile b = getBT(p);
+            b.paint(Color.red);
+            b.getBoutonTuile().setEnabled(true);
+        }
+    }
 
 }
