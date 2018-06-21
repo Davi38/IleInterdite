@@ -10,6 +10,7 @@ import ileinterdite.jeu.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -78,9 +79,10 @@ public class JeuVue extends Observe {
         boutPieces = new HashMap<BoutonTuile, Position>();
         boutCartes = new ArrayList<JButton>();
 
-        JPanel haut = new JPanel(new GridLayout(1, 5));
+        JPanel haut = new JPanel(new BorderLayout());
         haut.setOpaque(false);
         JButton Bregles = new JButton("Regles du jeu");
+        Bregles.setPreferredSize(new Dimension(140, 30));
         Bregles.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -89,19 +91,23 @@ public class JeuVue extends Observe {
                 }
             }
         });
-        haut.add(Bregles);
-        haut.add(new JLabel());
-        etatJeu = new JLabel();
-        haut.add(etatJeu);
-        haut.add(new JLabel());
+        haut.add(Bregles,BorderLayout.WEST);
+        etatJeu = new JLabel("",SwingConstants.CENTER);
+        etatJeu.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+        etatJeu.setForeground(Color.white);
+        haut.add(etatJeu,BorderLayout.CENTER);
+        
+        
         JButton quitter = new JButton("Quitter");
+        quitter.setPreferredSize(new Dimension(140, 30));
         quitter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 window1.setVisible(false);
             }
         });
-        haut.add(quitter);
+        
+        haut.add(quitter,BorderLayout.EAST);
         mainPanel.add(haut, BorderLayout.NORTH);
 
         nv = new VueNiveau(niveauEau);
@@ -168,7 +174,7 @@ public class JeuVue extends Observe {
         } catch (IOException ex) {
             System.err.println("Erreur de lecture de assecher.png");
         }
-        PanelFond asch = new PanelFond(imgA, new BorderLayout());
+        PanelFond2 asch = new PanelFond2(imgA, new BorderLayout());
         asch.add(new JLabel("Assecher"),BorderLayout.SOUTH);
         boutonA.add(asch);
         actions.add(boutonA);
@@ -181,7 +187,7 @@ public class JeuVue extends Observe {
         } catch (IOException ex) {
             System.err.println("Erreur de lecture de iconMove.png");
         }
-        PanelFond depl = new PanelFond(imgD, new BorderLayout());
+        PanelFond2 depl = new PanelFond2(imgD, new BorderLayout());
         depl.add(new JLabel("Deplacer"),BorderLayout.SOUTH);
         boutonD.add(depl);
         actions.add(boutonA);
@@ -205,7 +211,7 @@ public class JeuVue extends Observe {
         } catch (IOException ex) {
             System.err.println("Erreur de lecture de donner.png");
         }
-        PanelFond donner = new PanelFond(imgDC, new BorderLayout());
+        PanelFond2 donner = new PanelFond2(imgDC, new BorderLayout());
         donner.add(new JLabel("Donner une carte"),BorderLayout.SOUTH);
         boutonDC.add(donner);
         
@@ -231,7 +237,7 @@ public class JeuVue extends Observe {
         } catch (IOException ex) {
             System.err.println("Erreur de lecture de tresor.png");
         }
-        PanelFond gagneT = new PanelFond(imgGT, new BorderLayout());
+        PanelFond2 gagneT = new PanelFond2(imgGT, new BorderLayout());
         gagneT.add(new JLabel("Gagner un tresor"),BorderLayout.SOUTH);
         boutonGT.add(gagneT);
         
@@ -264,6 +270,7 @@ public class JeuVue extends Observe {
         majCartes(j);
         String fullClassName = j.getClass().toString();
         etatJeu.setText("Tour de " + nomJ + " (" + fullClassName.substring(fullClassName.lastIndexOf('.') + 1) + ")");
+        etatJeu.setForeground(j.getColor());
         if (j.getCarteTresor().size() < 6) {
             boutonD.setEnabled(true);
             boutonA.setEnabled(true);
@@ -487,6 +494,12 @@ public class JeuVue extends Observe {
         boutonA.setEnabled(false);
         boutonDC.setEnabled(false);
         boutonGT.setEnabled(false);
+    }
+    
+    public void desactiverCartes(){
+        for(JButton b : boutCartes){
+            b.setEnabled(false);
+        }
     }
     
     public void activerBact(){

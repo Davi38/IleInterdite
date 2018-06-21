@@ -111,14 +111,18 @@ public abstract class Aventurier {
         return false;    
     }
 
-    void removeCT(TypeTrésor t) {
+    public ArrayList<Carte_Tresor> removeCT(TypeTrésor t) {
+        ArrayList<Carte_Tresor> listeCt = new ArrayList<Carte_Tresor>();
         for(int i=0; i<4 ;i++){
             int numC = 0;
             while(!mesCartes.get(numC).getType().equalsIgnoreCase(t.toString())){
                 numC += 1;
             }
+            listeCt.add(mesCartes.get(numC));
             mesCartes.remove(numC);
+            
         }
+        return listeCt;
     }
     
     public ArrayList<Position> getPosPossible(Grille grille) {

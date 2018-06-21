@@ -26,7 +26,7 @@ public class Navigateur extends Aventurier {
         int l = abs(posj.col-pos2.col);
         int c = abs(posj.lig-pos2.lig);
         if((l==1&&c==0)||(l==0&&c==1)) {
-            return (tuile.getEtat()==Etat.ASSECHEE || tuile.getEtat()==Etat.INNONDEE) && !posj.equals(pos2);
+            return (!tuile.estNoyee()) && !posj.equals(pos2);
         }
         return false;
     }
@@ -36,7 +36,7 @@ public class Navigateur extends Aventurier {
         Position posj = getPosition();
         int l = abs(posj.col-pos2.col);
         int c = abs(posj.lig-pos2.lig);
-        if((l==1&&c==0)||(l==0&&c==1)) {
+        if((l==1&&c==0)||(l==0&&c==1)||(l==0&&c==0)) {
             return tuile.estInnondee();
         }
         return false;

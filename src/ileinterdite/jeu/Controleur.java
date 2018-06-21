@@ -345,12 +345,14 @@ public class Controleur implements Observateur {
                     
                     if(nbSableRest==0 || posI.size()==0){
                        actionG = null;
+                       vue.majCartes(advAct);
                        testFinT();
                     }else{
                        vue.desactiverBAct();
                        advAct.getCarteTresor().remove(cBact);
                        defausseT.add(cBact);
                        vue.majCartes(advAct);
+                       vue.desactiverCartes();
                        vue.colorAssechement(posI);
                        cBact = null;  
                        
@@ -464,7 +466,7 @@ public class Controleur implements Observateur {
 
             if (!tres.isRecuperé() && advAct.verifGagnerT(tres) && estSurTresor) {
                 tres.setRecuperé(true);
-                advAct.removeCT(t);
+                defausseT.addAll(advAct.removeCT(t));
                 vue.setImgTresEtat(t, tres.isRecuperé());
                 vue.majCartes(advAct);
                 return tres.isRecuperé();
