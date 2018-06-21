@@ -518,8 +518,6 @@ public class Controleur implements Observateur {
             return true;
         }
         return false;
-        
-        
     }
     
     public void actionBonus(CtBonus cb){
