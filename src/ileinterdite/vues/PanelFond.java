@@ -23,6 +23,7 @@ public class PanelFond extends JPanel{
     public PanelFond(Image fond, LayoutManager l) {
         super(l);
         this.fond = fond;
+        this.setOpaque(false);
     }
     
     public void paintComponent(Graphics g){

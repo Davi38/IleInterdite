@@ -30,12 +30,12 @@ public class FondTuile extends JPanel{
         try {
             this.imgT = ImageIO.read(new File(System.getProperty("user.dir") + "/src/images/cartes/"+pc+".png"));
         } catch (IOException ex) {
-            System.err.println("Erreur de lecture de tresor.png");
+            System.err.println("Erreur de lecture de "+pc+".png");
         }
         try {
             this.imgTI = ImageIO.read(new File(System.getProperty("user.dir") + "/src/images/cartes/"+pc+"_Inonde.png"));
         } catch (IOException ex) {
-            System.err.println("Erreur de lecture de tresor.png");
+            System.err.println("Erreur de lecture de "+pc+"_Inonde.png");
         }
         this.setOpaque(false);
         repaint();

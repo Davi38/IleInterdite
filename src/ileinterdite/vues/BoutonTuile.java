@@ -6,6 +6,7 @@
 package ileinterdite.vues;
 
 import ileinterdite.jeu.Aventurier;
+import ileinterdite.jeu.Etat;
 import ileinterdite.jeu.Position;
 import ileinterdite.jeu.Role;
 import java.awt.BorderLayout;
@@ -28,6 +29,7 @@ import javax.swing.JPanel;
 public class BoutonTuile extends Observe {
 
     JButton tuile;
+    FondTuile fond;
     JPanel pions;
     HashMap<JButton, Aventurier> listeA;
     Position pos;
@@ -35,12 +37,14 @@ public class BoutonTuile extends Observe {
     BoutonTuile(String nomP, Position pos, Observateur o) {
         this.addObservateur(o);
         tuile = new JButton();
-        tuile.setLayout(new BorderLayout());
-        JLabel nomT = new JLabel(nomP.replace("_", " "));
+        fond= new FondTuile(nomP);
+        tuile.add(fond);
+        /*JLabel nomT = new JLabel(nomP.replace("_", " "));
         nomT.setFont((new Font("Arial", Font.PLAIN, 20)));
-        tuile.add(nomT, BorderLayout.NORTH);
+        tuile.add(nomT, BorderLayout.NORTH);*/
         pions = new JPanel(new GridLayout(3, 2));
-        tuile.add(pions, BorderLayout.CENTER);
+        pions.setOpaque(false);
+        fond.add(pions);
         listeA = new HashMap<JButton, Aventurier>();
         this.pos = pos;
         tuile.addActionListener(new ActionListener() {
@@ -54,11 +58,16 @@ public class BoutonTuile extends Observe {
         });
     }
 
-    void majTuile(ArrayList<Aventurier> listeJ, Color bg) {
-        tuile.setBackground(bg);
+    void majTuile(ArrayList<Aventurier> listeJ, Etat etat) {
+        fond.setEtat(etat);
+        fond.repaint();
         listeA.clear();
         pions.removeAll();
-        pions.setBackground(bg);
+        tuile.setBackground(null);
+        
+        
+        
+        
         for (Aventurier a : listeJ) {
             JButton pion = new JButton(a.getRole().toString());
             pion.setBackground(a.getColor());
@@ -82,13 +91,6 @@ public class BoutonTuile extends Observe {
         
     }
      
-    public void addSymboleTresor(Color couleur, String nom) {
-        JPanel tres = new JPanel();
-        JLabel texte = new JLabel(nom);
-        tres.add(texte);
-        tres.setBackground(couleur);
-        pions.add(tres);
-    }
 
     public JButton getBoutonTuile() {
         return tuile;
@@ -137,8 +139,8 @@ public class BoutonTuile extends Observe {
 
     }
 
-    public Color getColor() {
-        return tuile.getBackground();
-    }
+    //public Color getColor() {
+    //    return tuile.getBackground();
+    //}
 
 }

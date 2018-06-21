@@ -151,8 +151,9 @@ public class JeuVue extends Observe {
         // ####################################################################################
         // les actions a l'est
         JPanel actions = new JPanel(new GridLayout(5, 1));
+        actions.setOpaque(false);
         mainPanel.add(actions, BorderLayout.EAST);
-        boutonA = new JButton("Assécher");
+        boutonA = new JButton();
         boutonA.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -161,9 +162,29 @@ public class JeuVue extends Observe {
                 notifierObservateur(m);
             }
         });
+        Image imgA=null;
+        try {
+            imgA = ImageIO.read(new File(System.getProperty("user.dir") + "/src/images/autre/assecher.png"));
+        } catch (IOException ex) {
+            System.err.println("Erreur de lecture de assecher.png");
+        }
+        PanelFond asch = new PanelFond(imgA, new BorderLayout());
+        asch.add(new JLabel("Assecher"),BorderLayout.SOUTH);
+        boutonA.add(asch);
         actions.add(boutonA);
-        boutonD = new JButton("Se déplacer");
-
+        
+        
+        boutonD = new JButton();
+        Image imgD =null;
+        try {
+            imgD = ImageIO.read(new File(System.getProperty("user.dir") + "/src/images/autre/iconMove.png"));
+        } catch (IOException ex) {
+            System.err.println("Erreur de lecture de iconMove.png");
+        }
+        PanelFond depl = new PanelFond(imgD, new BorderLayout());
+        depl.add(new JLabel("Deplacer"),BorderLayout.SOUTH);
+        boutonD.add(depl);
+        actions.add(boutonA);
         boutonD.addActionListener(
                 new ActionListener() {
             @Override
@@ -175,7 +196,21 @@ public class JeuVue extends Observe {
             }
         });
         actions.add(boutonD);
-        boutonDC = new JButton("Donner une carte trésor");
+        
+        
+        boutonDC = new JButton();
+        Image imgDC =null;
+        try {
+            imgDC = ImageIO.read(new File(System.getProperty("user.dir") + "/src/images/autre/donner.png"));
+        } catch (IOException ex) {
+            System.err.println("Erreur de lecture de donner.png");
+        }
+        PanelFond donner = new PanelFond(imgDC, new BorderLayout());
+        donner.add(new JLabel("Donner une carte"),BorderLayout.SOUTH);
+        boutonDC.add(donner);
+        
+        
+        
         boutonDC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -186,7 +221,23 @@ public class JeuVue extends Observe {
         });
 
         actions.add(boutonDC);
-        boutonGT = new JButton("Gagner un trésor");
+        
+        
+        
+        boutonGT = new JButton();
+         Image imgGT =null;
+        try {
+            imgGT = ImageIO.read(new File(System.getProperty("user.dir") + "/src/images/autre/tresor.png"));
+        } catch (IOException ex) {
+            System.err.println("Erreur de lecture de tresor.png");
+        }
+        PanelFond gagneT = new PanelFond(imgGT, new BorderLayout());
+        gagneT.add(new JLabel("Gagner un tresor"),BorderLayout.SOUTH);
+        boutonGT.add(gagneT);
+        
+        
+        
+        
         boutonGT.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -304,28 +355,9 @@ public class JeuVue extends Observe {
             Position pos = boutPieces.get(bouton);
             Ile t = (Ile) g.getTuileP(pos);
             ArrayList<Aventurier> listeJ = t.getAventuriers();
-            Color bg;
-            if (t.getEtat() == Etat.INNONDEE) {
-                bg = Color.CYAN;
-
-            } else if (t.getEtat() == Etat.NOYEE) {
-                bg = Color.BLACK;
-            } else {
-                bg = Color.ORANGE;
-            }
-            
             bouton.getBoutonTuile().setEnabled(false);
-            bouton.majTuile(listeJ, bg);
+            bouton.majTuile(listeJ, t.getEtat());
             
-            if(t.getPiece() == Piece_Tresor.La_Caverne_des_Ombres.name() || t.getPiece() == Piece_Tresor.La_Caverne_du_Brasier.name()) {
-                bouton.addSymboleTresor(Color.RED, "Crystal");
-            } else if(t.getPiece() == Piece_Tresor.Le_Jardin_des_Hurlements.name() || t.getPiece() == Piece_Tresor.Le_Jardin_des_Murmures.name()) {
-                bouton.addSymboleTresor(Color.YELLOW, "Statue");
-            } else if(t.getPiece() == Piece_Tresor.Le_Palais_de_Corail.name() || t.getPiece() == Piece_Tresor.Le_Palais_des_Marees.name()) {
-                bouton.addSymboleTresor(Color.BLUE, "Calice");
-            } else if(t.getPiece() == Piece_Tresor.Le_Temple_de_La_Lune.name() || t.getPiece() == Piece_Tresor.Le_Temple_du_Soleil.name()) {
-                bouton.addSymboleTresor(Color.GRAY, "Pierre");
-            }
 
         }
     }
