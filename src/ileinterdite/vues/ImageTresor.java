@@ -34,6 +34,7 @@ public class ImageTresor extends JPanel{
             System.err.println("Erreur de lecture de tresorR.png");
         }
         recupere=false;
+        this.setOpaque(false);
         repaint();
         
     }
