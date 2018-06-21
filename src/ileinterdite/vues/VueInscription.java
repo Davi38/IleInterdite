@@ -8,14 +8,18 @@ package ileinterdite.vues;
 import ileinterdite.jeu.Role;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.imageio.ImageIO;
 import javax.naming.ldap.HasControls;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -52,15 +56,25 @@ public class VueInscription extends Observe {
 
     public VueInscription() {
         
+        Image imgFond=null;
+        try {
+            imgFond = ImageIO.read(new File(System.getProperty("user.dir") + "/src/images/autre/fond.png"));
+        } catch (IOException ex) {
+            System.err.println("Erreur de lecture de fond.png");
+        }
 
 
         //déclaration de la fenêtre
         fenetre = new JFrame("Choix des Joueurs");
-        fenetre.setLayout(new BorderLayout());
+        PanelFond main = new PanelFond(imgFond, new BorderLayout());
+        fenetre.add(main);
 
         JPanel zonehaut = new JPanel(new GridLayout(4,2));
+        zonehaut.setOpaque(false);
         JPanel zonebas = new JPanel();
+        zonebas.setOpaque(false);
         JPanel panelCentre = new JPanel(new GridLayout(4, 2));
+        panelCentre.setOpaque(false);
         
         
         listeNiveau = new JComboBox(new String[]{"Novice", "Normal" , "Elite", "Légendaire"});
@@ -212,9 +226,9 @@ public class VueInscription extends Observe {
         //positionnement des panels
         
         
-        fenetre.add(zonehaut, BorderLayout.NORTH);
-        fenetre.add(panelCentre, BorderLayout.CENTER);
-        fenetre.add(zonebas, BorderLayout.SOUTH);
+        main.add(zonehaut, BorderLayout.NORTH);
+        main.add(panelCentre, BorderLayout.CENTER);
+        main.add(zonebas, BorderLayout.SOUTH);
 
         //positionnement des boutons
         zonehaut.add(new JLabel("  "));
