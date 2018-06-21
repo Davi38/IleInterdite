@@ -469,6 +469,7 @@ public class Controleur implements Observateur {
                 boolean testN = true;
                 for(Ile iT : ileT){
                     if (!iT.estNoyee()){
+                        System.out.println("La tuile trésor " + iT.getPiece() + " est noyée");
                         testN = false;
                     }
                 }
@@ -496,11 +497,14 @@ public class Controleur implements Observateur {
             Position posJ = a.getPosition();
             Ile ile = (Ile) grille.getTuileP(posJ);
             if (ile.estNoyee()){
+                System.out.println("La tuile du " + a.getRole() + "est noyée ");
                 ArrayList<Position> deplPos = new ArrayList<Position>();
                 deplPos = a.getPosPossible(grille);
                 if(deplPos.isEmpty()){
+                    System.out.println("Il n'y a pas de tuile ou il peut se déplacer");
                     return true;
                 }
+                return false;
             }
         }
         System.out.println("verifPertePartie3");
