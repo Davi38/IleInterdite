@@ -551,7 +551,7 @@ public class Controleur implements Observateur {
                 break;
             case PIERRE:
                 ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Temple_de_La_Lune));
-                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Temple_du_soleil));
+                ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Temple_du_Soleil));
                 break;
             case STATUE:
                 ileT.add((Ile)grille.getTuilePL(Piece_liste.Le_Jardin_des_Hurlements));

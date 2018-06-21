@@ -295,9 +295,19 @@ public class JeuVue extends Observe {
             } else {
                 bg = Color.ORANGE;
             }
-
+            
             bouton.getBoutonTuile().setEnabled(false);
             bouton.majTuile(listeJ, bg);
+            
+            if(t.getPiece() == Piece_Tresor.La_Caverne_des_Ombres.name() || t.getPiece() == Piece_Tresor.La_Caverne_du_Brasier.name()) {
+                bouton.addSymboleTresor(Color.RED, "Crystal");
+            } else if(t.getPiece() == Piece_Tresor.Le_Jardin_des_Hurlements.name() || t.getPiece() == Piece_Tresor.Le_Jardin_des_Murmures.name()) {
+                bouton.addSymboleTresor(Color.YELLOW, "Statue");
+            } else if(t.getPiece() == Piece_Tresor.Le_Palais_de_Corail.name() || t.getPiece() == Piece_Tresor.Le_Palais_des_Marees.name()) {
+                bouton.addSymboleTresor(Color.BLUE, "Calice");
+            } else if(t.getPiece() == Piece_Tresor.Le_Temple_de_La_Lune.name() || t.getPiece() == Piece_Tresor.Le_Temple_du_Soleil.name()) {
+                bouton.addSymboleTresor(Color.GRAY, "Pierre");
+            }
 
         }
     }
