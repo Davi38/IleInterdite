@@ -7,6 +7,9 @@ package ileinterdite.vues;
 
 import ileinterdite.jeu.Role;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -62,12 +65,29 @@ public class VueInscription extends Observe {
         } catch (IOException ex) {
             System.err.println("Erreur de lecture de fond.png");
         }
+        
+        Image titre=null;
+        try {
+            titre = ImageIO.read(new File(System.getProperty("user.dir") + "/src/images/autre/titre.png"));
+        } catch (IOException ex) {
+            System.err.println("Erreur de lecture de titre.png");
+        }
 
 
         //déclaration de la fenêtre
         fenetre = new JFrame("Choix des Joueurs");
+        
+        JPanel pTitre = new PanelFond(titre,null);
+        pTitre.setOpaque(false);
+        pTitre.setPreferredSize(new Dimension(fenetre.getWidth(),180));
+        
+        
+        
+        
+        
         PanelFond main = new PanelFond(imgFond, new BorderLayout());
         fenetre.add(main);
+        main.add(pTitre,BorderLayout.NORTH);
 
         JPanel zonehaut = new JPanel(new GridLayout(4,2));
         zonehaut.setOpaque(false);
@@ -88,8 +108,11 @@ public class VueInscription extends Observe {
 
         //Déclaration des éléments de la fenêtre
         JLabel choixNiveau = new JLabel("Choix du niveau de difficulté :");
+        choixNiveau.setForeground(Color.WHITE);
+        choixNiveau.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
         JLabel choixJoueur = new JLabel("Choix des joueurs participants :");
-        
+        choixJoueur.setForeground(Color.WHITE);
+        choixJoueur.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
      
         //panels
         roles.add("Pilote");
@@ -224,10 +247,12 @@ public class VueInscription extends Observe {
 
         //Ajout des éléments à la fenêtre
         //positionnement des panels
+        JPanel centre = new JPanel(new BorderLayout());
+        centre.setOpaque(false);
+        main.add(centre,BorderLayout.CENTER);
         
-        
-        main.add(zonehaut, BorderLayout.NORTH);
-        main.add(panelCentre, BorderLayout.CENTER);
+        centre.add(zonehaut, BorderLayout.NORTH);
+        centre.add(panelCentre, BorderLayout.CENTER);
         main.add(zonebas, BorderLayout.SOUTH);
 
         //positionnement des boutons

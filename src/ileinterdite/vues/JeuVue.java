@@ -10,8 +10,11 @@ import ileinterdite.jeu.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.DisplayMode;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -372,8 +375,9 @@ public class JeuVue extends Observe {
     public void afficherFenetre() {
         window1.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         // Définit la taille de la fenêtre en pixels
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        window1.setSize(dim.height, dim.width);
+        DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
+
+        window1.setSize(dm.getWidth(),dm.getHeight());
         window1.setVisible(true);
     }
 
