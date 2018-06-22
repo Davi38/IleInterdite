@@ -228,7 +228,6 @@ public class Controleur implements Observateur {
                 vue.majGrille(grille);
                 if (verifGT()) {
                     advAct.removeAct();
-                    vue.majCartes(advAct);
                 }
                 testFinT();
                 break;
@@ -346,6 +345,7 @@ public class Controleur implements Observateur {
                     if(nbSableRest==0 || posI.size()==0){
                        actionG = null;
                        vue.majCartes(advAct);
+                       vue.activerBact();
                        testFinT();
                     }else{
                        vue.desactiverBAct();
