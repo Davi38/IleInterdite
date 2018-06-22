@@ -79,6 +79,12 @@ public class JeuVue extends Observe {
         regles = new VueRegles();
         JPanel zoneJeu = new JPanel(new GridLayout(6, 6));
         zoneJeu.setOpaque(false);
+        int hZJ= zoneJeu.getHeight();
+        int wZJ= zoneJeu.getWidth();
+        int tailleSJ = wZJ<hZJ?wZJ:hZJ;
+        zoneJeu.setPreferredSize(new Dimension(tailleSJ,tailleSJ));
+        
+        
         boutPieces = new HashMap<BoutonTuile, Position>();
         boutCartes = new ArrayList<JButton>();
 
@@ -155,6 +161,8 @@ public class JeuVue extends Observe {
         mainPanel.add(zoneJeu, BorderLayout.CENTER);
 
         pCartes = new JPanel();
+        pCartes.setOpaque(false);
+        pCartes.setPreferredSize(new Dimension(window1.getWidth(), 150));
 
         window1.add(pCartes, BorderLayout.SOUTH);
         // ####################################################################################
@@ -292,11 +300,22 @@ public class JeuVue extends Observe {
         boutCartes.clear();
         pCartes.setLayout(new GridLayout(1, cartes.size()));
         for (int i = 0; i < cartes.size(); i++) {
-            JButton b = new JButton(cartes.get(i).getType());
+            JButton b = new JButton();
+            b.setOpaque(false);
+            String nomC = cartes.get(i).getType();
+        Image imgFond=null;
+        try {
+            imgFond = ImageIO.read(new File(System.getProperty("user.dir") + "/src/images/carteT/"+cartes.get(i).getType()+".png"));
+        } catch (IOException ex) {
+            System.err.println("Erreur de lecture de fond.png");
+        } 
+            FondCarte fond = new FondCarte(imgFond,null);
+            
+            b.add(fond);
             pCartes.add(b);
             boutCartes.add(b);
             if (cartes.size() < 6) {
-                if (b.getText().equals("SABLE") || b.getText().equals("HELICOPTERE")) {
+                if (nomC.equals("SABLE") || nomC.equals("HELICOPTERE")) {
                     b.setEnabled(true);
                 } else {
                     b.setEnabled(false);
