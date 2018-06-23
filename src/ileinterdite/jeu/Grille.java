@@ -30,12 +30,14 @@ public class Grille {
 
         Collections.shuffle(listepiece);
         tuiles = new HashMap<>();
-        
+
         // si true : toutes les tuiles sont coulées : permet de tester la fin de jeu quand un joueur est bloquée entre des tuiles noyées.
         // si false : jeu normal
-        boolean scenario1 = false;
+        boolean scenarioAucunDeplacementPossible = false;
         
-        
+        // si true : l'heliport est innondé : permet de tester la fin de jeu
+        boolean scenarioHeliportNoye = false;
+
         for (int i = 1; i < 7; i++) {
             for (int j = 1; j < 7; j++) {
                 Position pos = new Position(i, j);
@@ -44,17 +46,31 @@ public class Grille {
                     //System.out.println(i+ "-"+j);
                     tuiles.put(pos, tuile);
                 } else {
-                    if(!scenario1) {
                     Ile tuile = new Ile(listepiece.get(0));
+                    if (scenarioAucunDeplacementPossible) {
+                        tuile.innonder();
+                        tuile.innonder();
+                    }
+                    if (scenarioHeliportNoye) {
+                        if (tuile.getPiece() == Piece_liste.Heliport.toString()) {
+                            tuile.innonder();
+                            tuile.innonder();
+                        }
+                    }
                     listepiece.remove(0);
                     tuiles.put(pos, tuile);
+                    /*
+                    if (!scenario1) {
+                        Ile tuile = new Ile(listepiece.get(0));
+                        listepiece.remove(0);
+                        tuiles.put(pos, tuile);
                     } else {
                         Ile tuile = new Ile(listepiece.get(0));
                         tuile.innonder();
                         tuile.innonder();
                         listepiece.remove(0);
                         tuiles.put(pos, tuile);
-                    }
+                    } */
                 }
 
             }
@@ -127,20 +143,20 @@ public class Grille {
         }
         return null;
     }
-    
-    public ArrayList<Position> getInnonde(){
+
+    public ArrayList<Position> getInnonde() {
         ArrayList<Position> inonde = new ArrayList<Position>();
-        for(Position p : tuiles.keySet()){
-            if(tuiles.get(p) instanceof Ile){
+        for (Position p : tuiles.keySet()) {
+            if (tuiles.get(p) instanceof Ile) {
                 Ile ile = (Ile) tuiles.get(p);
-                if (ile.estInnondee()){
+                if (ile.estInnondee()) {
                     inonde.add(p);
                 }
             }
-            
+
         }
         return inonde;
-        
+
     }
 
 }

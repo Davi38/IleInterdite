@@ -503,7 +503,6 @@ public class Controleur implements Observateur {
     }
 
     public boolean verifPertePartie1() {
-        System.out.println("1");
         System.out.println("verifPertePartie1 : ");
         int nbIleInondee = 0;
         for (Tresor t : tresors) {
@@ -517,6 +516,7 @@ public class Controleur implements Observateur {
                     }
                 }
                 if (nbIleInondee == 2) {
+                    System.out.println("Le trésor " + t.getType() + " est coulé et n'a pas été récupéré");
                     return true;
                 }
             }
@@ -525,7 +525,6 @@ public class Controleur implements Observateur {
     }
 
     public boolean verifPertePartie2() {
-        System.out.println("2");
         System.out.println("verifPertePartie2 : ");
         Position posHeliport = grille.getPositionP(Piece_liste.Heliport);
         Ile ile = (Ile) grille.getTuileP(posHeliport);
@@ -538,28 +537,26 @@ public class Controleur implements Observateur {
     }
 
     public boolean verifPertePartie3() {
-        System.out.println("3");
+        System.out.println("verifPertePartie3 : ");
         for (Aventurier a : joueurs.keySet()) {
-            Position posJ = a.getPosition();
+            //Position posJ = a.getPosition();
             ArrayList<Position> deplPos = new ArrayList<Position>();
             deplPos = a.getPosPossible(grille);
             if (deplPos.isEmpty()) {
-                System.out.println("Il n'y a pas de tuile ou il peut se déplacer");
+                System.out.println(joueurs.get(a) + " n'a pas de tuile ou se déplacer");
                 return true;
             } else {
                 System.out.println(deplPos);
-                System.out.println("Il y a des tuiles ou il peut se deplacer");
+                System.out.println(joueurs.get(a) + " a des tuiles ou se deplacer");
                 return false;
             }
 
         }
-        System.out.println("verifPertePartie3");
         return false;
     }
 
     public boolean verifPertePartie4() {
-        System.out.println("4");
-        System.out.println("verifPertePartie4 :" + niveauEau.getNv());
+        System.out.println("verifPertePartie4 : niveau de l'eau : " + niveauEau.getNv());
         if (niveauEau.getNv() > 9) {
             System.out.println("Le niveau d'eau a atteint le maximum ");
             return true;
