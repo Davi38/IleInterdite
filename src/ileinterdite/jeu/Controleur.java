@@ -574,8 +574,10 @@ public class Controleur implements Observateur {
 
         } else if (cb.getType() == "HELICOPTERE") {
             if (testJeuGagnant()) {
-                vue.cacherFenetre();
-                vueFinJeu = new VueFinJeu(true);
+                //vue.cacherFenetre();
+                VueFinJeu vueFinJeu = new VueFinJeu(true);
+                vueFinJeu.addObservateur(this);
+                vueFinJeu.afficherFenetre();
             } else {
                 actionG = TypeMessage.HELICOPTERE;
                 jADepl = new ArrayList<Aventurier>();
@@ -619,6 +621,7 @@ public class Controleur implements Observateur {
         heliport = ile.getAventuriers().size() == joueurs.size();
 
         return tres && heliport;
+        //return true;
     }
     
     public void testFinT(){

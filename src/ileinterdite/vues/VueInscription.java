@@ -149,7 +149,8 @@ public class VueInscription extends Observe {
             listeRole4.setVisible(false);   
         }
         
-        removeJoueur.setVisible(false);
+        removeJoueur.setVisible(true);
+        removeJoueur.setEnabled(false);
         champNom1.setVisible(true);
         champNom2.setVisible(true);
         champNom3.setVisible(false);
@@ -325,12 +326,13 @@ public class VueInscription extends Observe {
                     champNom3.setVisible(true);
                     
         
-                    removeJoueur.setVisible(true);
+                    
+                    removeJoueur.setEnabled(true);
                 } else if (!listeRole4.isVisible()) {
                     listeRole4.setVisible(true);
                     champNom4.setVisible(true);
-                    addJoueur.setVisible(false);
-                    removeJoueur.setVisible(true);
+                    addJoueur.setEnabled(false);
+                    removeJoueur.setEnabled(true);
                 }
         }});
         removeJoueur.addActionListener ( new ActionListener(){
@@ -340,14 +342,14 @@ public class VueInscription extends Observe {
                     listeRole4.setVisible(false);
                     listeRole4.setSelectedItem(null);
                     champNom4.setVisible(false);
-                    addJoueur.setVisible(true);
+                    addJoueur.setEnabled(true);
                     
                 } else if (listeRole4.isVisible() == false) {
                     listeRole3.setVisible(false);
                     listeRole3.setSelectedItem(null);
                     champNom3.setVisible(false);
-                    removeJoueur.setVisible(false);
-                    addJoueur.setVisible(true);
+                    removeJoueur.setEnabled(false);
+                    addJoueur.setEnabled(true);
                     
                 }
         }});
