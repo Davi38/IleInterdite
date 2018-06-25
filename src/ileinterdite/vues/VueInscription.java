@@ -150,7 +150,7 @@ public class VueInscription extends Observe {
         }
         
         removeJoueur.setVisible(true);
-        removeJoueur.setEnabled(false);
+        removeJoueur.setEnabled(true);
         champNom1.setVisible(true);
         champNom2.setVisible(true);
         champNom3.setVisible(false);
